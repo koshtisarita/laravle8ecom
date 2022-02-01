@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\TestdemosController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+ 
 Route::middleware([auth::class])->group(function () {
     // Route::get('/dashboard', function () {
     //     return view('dashboard');
@@ -37,3 +38,17 @@ Route::middleware([auth::class])->group(function () {
 });
  
 require __DIR__.'/auth.php';
+
+
+
+
+// testDemos Pages Route start from here
+// Image Crop demo routes
+Route::get('crop-image-upload', [TestdemosController::class,'index']);
+Route::post('crop-image-upload ', [TestdemosController::class,'uploadCropImage']);
+ 
+Route::get('/website', function () {
+    return view('website.pages.index');
+});
+ 
+//**************************************************/
