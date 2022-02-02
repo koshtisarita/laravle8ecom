@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestdemosController;
+use App\Http\Controllers\MainAdminController;
+use App\Http\Controllers\MainWebController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,31 +15,28 @@ use App\Http\Controllers\TestdemosController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
- 
-Route::middleware([auth::class])->group(function () {
-    // Route::get('/dashboard', function () {
-    //     return view('dashboard');
-    // })->name('dashboard');
 
-    Route::get('/admindashboard', function () {
-        return view('admin.dashboard');
-    })->name('admindashboard');
-    Route::get('/adminbrands', function () {
-        return view('admin.masters.viewbrand');
-    })->name('viewbrand');
-    Route::get('/adminsizes', function () {
-        return view('admin.masters.viewsize');
-    })->name('viewsize');
-    Route::get('/viewpincode', function () {
-        return view('admin.masters.viewpincode');
-    })->name('viewpincode');
-     
+ 
+require __DIR__.'/auth.php'; 
+   
+Route::group(['middleware' => ['IsAdmin']], function () {
+
+ 
+    Route::get('/view-dashboard',[MainAdminController::class,'dashboard'])->name('admindashboard');
+    Route::get('/view-brands',[MainAdminController::class,'viewbrand'])->name('viewbrand');
+    Route::get('/view-sizes', [MainAdminController::class,'viewsize'])->name('viewsize');
+    Route::get('/view-incode', [MainAdminController::class,'viewpincode'])->name('viewpincode');
+    Route::get('/view-setting', [MainAdminController::class,'viewsetting'])->name('viewsetting');
+    
 });
  
-require __DIR__.'/auth.php';
+ 
+Route::get('/', function () {
+    return view('website.pages.index');
+});
+ 
+
+
 
 
 
@@ -46,9 +45,6 @@ require __DIR__.'/auth.php';
 // Image Crop demo routes
 Route::get('crop-image-upload', [TestdemosController::class,'index']);
 Route::post('crop-image-upload ', [TestdemosController::class,'uploadCropImage']);
- 
-Route::get('/website', function () {
-    return view('website.pages.index');
-});
+  
  
 //**************************************************/

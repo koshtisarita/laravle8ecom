@@ -28,7 +28,7 @@
                         <a href="{{route('viewpincode')}}">Pincode </a>
                     </li>  
                     <li>                         
-                        <a href="">Settings </a>
+                        <a href="{{route('viewsetting')}}">Settings </a>
                     </li>  
                     
                 </ul>

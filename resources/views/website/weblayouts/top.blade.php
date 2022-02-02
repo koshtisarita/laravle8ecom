@@ -3,6 +3,7 @@
 	<header class="header-v3">
 		<!-- Header desktop -->
 		<div class="container-menu-desktop trans-03">
+			 
 			<div class="wrap-menu-desktop">
 				<nav class="limiter-menu-desktop p-l-45">
 					
@@ -16,24 +17,35 @@
 						<ul class="main-menu">
 							<li>
 								<a href="index.html">Home</a>
-								<ul class="sub-menu">
-									<li><a href="index.html">Homepage 1</a></li>
-									<li><a href="home-02.html">Homepage 2</a></li>
-									<li><a href="home-03.html">Homepage 3</a></li>
-								</ul>
+								 
 							</li>
 
 							<li>
-								<a href="product.html">Shop</a>
+								<a href="#">Outfit</a>
+								<ul class="sub-menu">
+									<li><a href="">Homepage 1</a></li>
+									<li><a href="">Homepage 2</a></li>
+									<li><a href="">Homepage 3</a></li>
+								</ul>
+								 
+							</li>
+							<li>
+								<a href="#">Occasionally</a>
+								<ul class="sub-menu">
+									<li><a href="">Homepage 1</a></li>
+									<li><a href="">Homepage 2</a></li>
+									<li><a href="">Homepage 3</a></li>
+								</ul>
+							 
 							</li>
 
-							<li class="label1" data-label1="hot">
+							<!-- <li class="label1" data-label1="hot">
 								<a href="shoping-cart.html">Features</a>
 							</li>
 
 							<li>
 								<a href="blog.html">Blog</a>
-							</li>
+							</li> -->
 
 							<li>
 								<a href="about.html">About</a>
@@ -92,28 +104,39 @@
 		<div class="menu-mobile">
 			<ul class="main-menu-m">
 				<li>
-					<a href="index.html">Home</a>
+					<a href="/">Home</a>
+					 
+				</li>
+
+				<li>
+					<a href="#">Outfit</a>
 					<ul class="sub-menu-m">
-						<li><a href="index.html">Homepage 1</a></li>
-						<li><a href="home-02.html">Homepage 2</a></li>
-						<li><a href="home-03.html">Homepage 3</a></li>
+						<li><a href="">Homepage 1</a></li>
+						<li><a href="">Homepage 2</a></li>
+						<li><a href="">Homepage 3</a></li>
 					</ul>
 					<span class="arrow-main-menu-m">
 						<i class="fa fa-angle-right" aria-hidden="true"></i>
 					</span>
 				</li>
-
-				<li>
-					<a href="product.html">Shop</a>
+                <li>
+					<a href="#">Occasionally</a>
+					<ul class="sub-menu-m">
+					    <li><a href="">Homepage 1</a></li>
+						<li><a href="">Homepage 2</a></li>
+						<li><a href="">Homepage 3</a></li>
+					</ul>
+					<span class="arrow-main-menu-m">
+						<i class="fa fa-angle-right" aria-hidden="true"></i>
+					</span>
 				</li>
-
-				<li>
+				<!-- <li>
 					<a href="shoping-cart.html" class="label1 rs1" data-label1="hot">Features</a>
 				</li>
 
 				<li>
 					<a href="blog.html">Blog</a>
-				</li>
+				</li> -->
 
 				<li>
 					<a href="about.html">About</a>
@@ -162,7 +185,14 @@
 							Home
 						</a>
 					</li>
-
+					@guest
+					<li class="p-b-13">
+						<a href="/login" class="stext-102 cl2 hov-cl1 trans-04">
+							Login/Register
+						</a>
+					</li>
+					@endguest
+                    @auth
 					<li class="p-b-13">
 						<a href="#" class="stext-102 cl2 hov-cl1 trans-04">
 							My Wishlist
@@ -186,7 +216,15 @@
 							Refunds
 						</a>
 					</li>
-
+					<li class="p-b-13">
+					    <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+						    <button type="submit" name="submit" class="btn-link stext-102 cl2 hov-cl1 trans-04">
+							Sign Out
+							</button>
+						</form>		
+					</li>
+                     @endauth
 					<li class="p-b-13">
 						<a href="#" class="stext-102 cl2 hov-cl1 trans-04">
 							Help & FAQs
