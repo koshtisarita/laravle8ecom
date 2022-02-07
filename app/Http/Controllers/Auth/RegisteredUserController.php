@@ -9,6 +9,10 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Validator;
+use Mail;
+use DB;
+use Log;
 // use Illuminate\Validation\Rules;
 
 class RegisteredUserController extends Controller
@@ -33,33 +37,74 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
-         
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'lname' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'min:8'],
-            'password_confirmation' => ['required', 'min:8', 'same:password'],
-            'dob'=>['require']
-        ]);
+        $request_data = $request->all();
+        Log::info($request_data);
+        $messages = [
+            'name.required' => 'Please enter first name',
+            'lname.required' => 'Please enter last name',
+            'remail.required' => 'Please enter email address',
+            'remail.unique'=>'This email address already taken',
+            'rpassword.required' => 'Please enter password',
+            'rpassword_confirmation.required' => 'Please enter confirm password',
+            'rpassword.same' => 'The confirm password and password must match',
+            'dob.required' => 'Please enter date of birth',      
 
-        $user = User::create([
-            'name' => $request->name,
-            'name' => $request->lname,
-            'dob' => $request->dob,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'is_newsletter' => ($request->is_newsletter=='on')?1:0,
-        ]);
+        ];
+        $validator = Validator::make($request_data, [       
+            'name' => 'required|string|max:255',
+            'lname' => 'required|string|max:255',
+            'remail' => 'required|email|max:255|unique:users',
+            'rpassword' => 'required|min:8',
+            'rpassword_confirmation' => 'required|min:8|same:rpassword',
+            'dob'=>'required'
+        ],$messages);
 
-        event(new Registered($user));
+        if ($validator->fails()) {
+            return redirect()->back()->with('error', 'Validation Error')->withErrors($validator)->withInput();
+        } 
+        else { 
+               try
+               {
+                   Log::info('in try');
+                    DB::beginTransaction();
+                    $user = User::create([
+                        'name' => $request->name,
+                        'lname' => $request->lname,
+                        'dob' => $request->dob,
+                        'email' => $request->remail,
+                        'role_id'=>1,
+                        'password' => Hash::make($request->password),
+                        'is_newsletter' => ($request->is_newsletter=='on')?1:0,
+                    ]);
 
-        Auth::login($user);
-         
-        if($user->role_id == 1)
-            return redirect(RouteServiceProvider::HOME);
-        else
-            return redirect(RouteServiceProvider::ADMIN);
-               
+                      event(new Registered($user));
+
+                    //Auth::login($user);//activation pending
+                    Log::info('user saved');
+                   
+                    $email= trim($user->email);
+                    $name =   $user->name.' '.$user->lname;         
+                    $data = array(
+                        'user_name' => $name,
+                        'id' => $user->id
+                    );
+                    //return redirect(RouteServiceProvider::HOME);
+                    Mail::to('your_receiver_email@gmail.com')->send(new \App\Mail\WelcomeMail($data));
+
+                    // Mail::send('website.emails.activation', array('data' => $data), function ($message) use ($email, $name) {
+                    //     $message->to($email, $name)->subject('Hire Dress :: Account Activation');
+                    // });
+                     
+                    DB::commit();
+                     
+                    return redirect()->back()->with('success','User register successfully.To active your account please check register email account');
+                    
+                   
+               }
+               catch(Exception $e) {
+                    DB::rollBack();
+                }
+                
+           }       
     }
 }

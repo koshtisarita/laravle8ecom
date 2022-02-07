@@ -46,7 +46,12 @@ class User extends Authenticatable
     ];
     
 
-
+    // public function isActive() { 
+    //     if (Auth()->user()->status == 1)
+    //         return true;
+    //     else
+    //         return false;
+    // }
     public function isAdmin() { 
         if (Auth()->user()->role_id == 0)
             return true;
@@ -54,4 +59,5 @@ class User extends Authenticatable
             return false;
     }
 
+   
 }

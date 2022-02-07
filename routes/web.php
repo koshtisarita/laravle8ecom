@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestdemosController;
 use App\Http\Controllers\MainAdminController;
 use App\Http\Controllers\MainWebController;
+ 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,9 +32,17 @@ Route::group(['middleware' => ['IsAdmin']], function () {
 });
  
  
-Route::get('/', function () {
-    return view('website.pages.index');
-});
+Route::get('/',  [MainWebController::class,'index'])->name('index');
+Route::get('/login-registration',  [MainWebController::class,'loginpage'])->name('login-page');
+Route::post('/login-registration',  [MainWebController::class,'store'])->name('loginform');
+Route::get('/active-account/{uid}',  [MainWebController::class,'activation']);
+Route::get('/contact-us',  [MainWebController::class,'contactus'])->name('contact-us');
+Route::get('/about-us',  [MainWebController::class,'aboutus'])->name('about-us');
+Route::get('/cart',  [MainWebController::class,'cart'])->name('cart');
+Route::get('/product-list',  [MainWebController::class,'product_list'])->name('product-list');
+Route::get('/product-detail',  [MainWebController::class,'product_detail'])->name('product-detail');
+
+
  
 
 
