@@ -45,15 +45,31 @@
                         <img class="how-pos4 pointer-none" src="customer_template/images/icons/download.png" alt="ICON">
                         
                     </div>
-
+                    
                     <button  type="submit" class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
                         Submit
                     </button>
                 </form>
+                <br>
+                <h2 class="ltext-50cl0 txt-center">
+                        OR
+               </h2>
+               <br>
+                <a title="Google" class="btn btn-block btn-primary bor1 btn-md socialaccount_provider btn-google" href="{{ url('redirect/google') }}">
+                     <i class="fa fa-google"></i>Log in with Google
+                 </a>
+
+                 <br>
+                 <br>
+                 <br>
+                <p>If you forgot your exising password than click on below link</p>
+                <a href="/forgot-password" class="btn btn-link">Forgot Password </a>
+
+
             </div>
 
             <div class="size-210 bor10 flex-w flex-col-m p-lr-20 p-tb-10 p-lr-15-lg w-full-md">
-             <form method="POST" action="{{ route('register') }}">
+                 <form method="POST" action="{{ route('register') }}">
                    @csrf
                     <h4 class="mtext-105 cl2 txt-center p-b-30">
                         Registration
@@ -102,6 +118,7 @@
                         Submit
                     </button>
                 </form>
+                
             </div>
         </div>
     </div>

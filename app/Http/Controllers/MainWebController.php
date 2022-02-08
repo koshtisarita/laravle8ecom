@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Log;
 use Hash;
-
+use Socialite;
 class MainWebController extends Controller
 {
      public function index()
@@ -88,7 +88,57 @@ class MainWebController extends Controller
                 return redirect()->back()->with('error','These credentials do not match our records.');
             }
      }
-
+    //  function for login with google 
+     public function redirectToProvider($driver)
+     {         
+         return Socialite::driver($driver)->redirect();
+     } 
+     public function handleGoogleCallback()
+     {
+         try {
+     
+             $user = Socialite::driver('google')->user(); 
+             $google_user_id = $user->id;
+             $finduser = User::where('google_id', $user->id)->first();
+      
+             if($finduser){
+      
+                 Auth::login($finduser);
+                 Log::info($finduser);   
+                 return redirect('/');
+      
+             }else{
+                $finduser = User::where('email',$user->email)->first();
+                if($finduser)
+                {
+                    return redirect()->back()->with('error','This email address already exist');
+                }
+                else
+                {
+                    $newUser = new User();
+                    $newUser->name = $user->name;
+                    $newUser->lname = $user->name;
+                    $newUser->email = $user->email;
+                    $newUser->dob = date('Y-m-d');
+                    $newUser->password = encrypt('123456dummy');
+                    $newUser->google_id = $google_user_id;
+                    $newUser->status = 1;
+                    $newUser->save();           
+                     
+                   
+                     Auth::login($newUser);                    
+                     return redirect('/');
+                }
+                
+             }
+     
+         } catch (Exception $e) {
+             Log::info($e->getMessage());    
+             return redirect()->back()->with('error',$e->getMessage());
+             // dd($e->getMessage());
+         }
+     }
+     // end  function for login with google 
      //function run when user click the link send on register email
      public function activation($uid)
      {
