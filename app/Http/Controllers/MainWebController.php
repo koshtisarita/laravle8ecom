@@ -153,5 +153,17 @@ class MainWebController extends Controller
          return redirect(RouteServiceProvider::HOME);
          
      }
-     
+     //account detail and update function
+     public function myaccount()
+     {
+        if (Auth::check()) {
+            // The user is logged in...
+          
+            return view('website.pages.myaccount');
+        }
+        else
+        {
+            return redirect('/');
+        }
+     }
 }
