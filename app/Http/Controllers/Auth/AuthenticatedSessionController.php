@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Log;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -29,15 +30,23 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request)
     {
         $request->authenticate();
-
         $request->session()->regenerate();
-
+        Log::info(Auth::user());
         //Admin Check
-        if (Auth::check() && Auth::user()->isAdmin()) {
+        if (Auth::check() &&  Auth::user()->isAdmin())
+        {        
             return redirect()->intended(RouteServiceProvider::ADMIN);
         } 
-        
+        else
+        {
         return redirect()->intended(RouteServiceProvider::HOME);
+        }
+        // }
+        // else
+        // {
+        //     return redirect()->back()->with('Error','Your account is inactive. please check your register email for active your account');
+        // }
+        
     }
 
     /**

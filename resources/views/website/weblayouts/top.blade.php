@@ -21,26 +21,26 @@
 							</li>
 
 							<li>
-								<a href="#">Outfit</a>
+								<a href="#">Outfits</a>
 								<ul class="sub-menu">
-									<li><a href="">Homepage 1</a></li>
-									<li><a href="">Homepage 2</a></li>
-									<li><a href="">Homepage 3</a></li>
+									<li><a href="{{route('product-list')}}">Homepage 1</a></li>
+									<li><a href="{{route('product-list')}}">Homepage 2</a></li>
+									<li><a href="{{route('product-list')}}">Homepage 3</a></li>
 								</ul>
 								 
 							</li>
 							<li>
-								<a href="#">Occasionally</a>
+								<a href="#">Occasions</a>
 								<ul class="sub-menu">
-									<li><a href="">Homepage 1</a></li>
-									<li><a href="">Homepage 2</a></li>
-									<li><a href="">Homepage 3</a></li>
+									<li><a href="{{route('product-list')}}">Homepage 1</a></li>
+									<li><a href="{{route('product-list')}}">Homepage 2</a></li>
+									<li><a href="{{route('product-list')}}">Homepage 3</a></li>
 								</ul>
 							 
 							</li>
 
 							<!-- <li class="label1" data-label1="hot">
-								<a href="shoping-cart.html">Features</a>
+								<a href="{{route('cart')}}">Features</a>
 							</li>
 
 							<li>
@@ -48,11 +48,11 @@
 							</li> -->
 
 							<li>
-								<a href="about.html">About</a>
+								<a href="{{route('about-us')}}">About</a>
 							</li>
 
 							<li>
-								<a href="contact.html">Contact</a>
+								<a href="{{route('contact-us')}}">Contact</a>
 							</li>
 						</ul>
 					</div>	
@@ -109,7 +109,7 @@
 				</li>
 
 				<li>
-					<a href="#">Outfit</a>
+					<a href="#">Outfits</a>
 					<ul class="sub-menu-m">
 						<li><a href="">Homepage 1</a></li>
 						<li><a href="">Homepage 2</a></li>
@@ -120,7 +120,7 @@
 					</span>
 				</li>
                 <li>
-					<a href="#">Occasionally</a>
+					<a href="#">Occasions</a>
 					<ul class="sub-menu-m">
 					    <li><a href="">Homepage 1</a></li>
 						<li><a href="">Homepage 2</a></li>
@@ -131,7 +131,7 @@
 					</span>
 				</li>
 				<!-- <li>
-					<a href="shoping-cart.html" class="label1 rs1" data-label1="hot">Features</a>
+					<a href="shoping-{{route('cart')}}" class="label1 rs1" data-label1="hot">Features</a>
 				</li>
 
 				<li>
@@ -139,11 +139,11 @@
 				</li> -->
 
 				<li>
-					<a href="about.html">About</a>
+					<a href="{{route('about-us')}}">About</a>
 				</li>
 
 				<li>
-					<a href="contact.html">Contact</a>
+					<a href="{{route('contact-us')}}">Contact</a>
 				</li>
 			</ul>
 		</div>
@@ -187,7 +187,7 @@
 					</li>
 					@guest
 					<li class="p-b-13">
-						<a href="/login" class="stext-102 cl2 hov-cl1 trans-04">
+						<a href="{{route('login-page')}}" class="stext-102 cl2 hov-cl1 trans-04">
 							Login/Register
 						</a>
 					</li>
@@ -379,11 +379,11 @@
 					</div>
 
 					<div class="header-cart-buttons flex-w w-full">
-						<a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+						<a href="{{route('cart')}}" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
 							View Cart
 						</a>
 
-						<a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+						<a href="{{route('cart')}}" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
 							Check Out
 						</a>
 					</div>

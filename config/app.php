@@ -167,10 +167,7 @@ return [
          * Package Service Providers...
          */
 
-        /*----------------image intervention--------------------*/
-
-        Intervention\Image\ImageServiceProvider::class,
-
+       
 
         /*
          * Application Service Providers...
@@ -180,6 +177,13 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        
+        /*---- Social Media Login ------------*/
+        Laravel\Socialite\SocialiteServiceProvider::class,
+
+         /*----------------image intervention--------------------*/
+         Intervention\Image\ImageServiceProvider::class,
+
 
        
     ],

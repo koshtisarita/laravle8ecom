@@ -164,6 +164,8 @@
         });
     });
 </script>
+
+<!---------------  delete alert ---------------->
 <script type="text/javascript">
     $(function(){
         $(document).on('click','#delete',function(e){
@@ -207,6 +209,6 @@
         });
     });
     
-      </script>
+ </script>
 @endsection
  
