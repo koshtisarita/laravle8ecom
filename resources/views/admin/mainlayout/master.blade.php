@@ -36,6 +36,11 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
+        <style>
+            .active{
+                color:rgb(88, 3, 67) !important;
+            }
+        </style>
     </head>
     <body>
 
@@ -73,6 +78,10 @@
         <!-- DataTables JavaScript -->
         <script src="{{asset('template/js/dataTables/jquery.dataTables.min.js')}}"></script>
         <script src="{{asset('template/js/dataTables/dataTables.bootstrap.min.js')}}"></script>
+
+        <!--sweetalert-->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        
  
 
 
