@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestdemosController;
 use App\Http\Controllers\MainAdminController;
 use App\Http\Controllers\MainWebController;
+use App\Http\Controllers\Backend\BrandController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,17 +19,26 @@ use App\Http\Controllers\MainWebController;
 
  
 require __DIR__.'/auth.php'; 
+
+/*-----------ADMIN CONTROLLER-------------------*/
    
 Route::group(['middleware' => ['IsAdmin']], function () {
-
- 
     Route::get('/view-dashboard',[MainAdminController::class,'dashboard'])->name('admindashboard');
     Route::get('/view-brands',[MainAdminController::class,'viewbrand'])->name('viewbrand');
     Route::get('/view-sizes', [MainAdminController::class,'viewsize'])->name('viewsize');
     Route::get('/view-incode', [MainAdminController::class,'viewpincode'])->name('viewpincode');
-    Route::get('/view-setting', [MainAdminController::class,'viewsetting'])->name('viewsetting');
-    
+    Route::get('/view-setting', [MainAdminController::class,'viewsetting'])->name('viewsetting');    
 });
+
+
+Route::prefix('brand')->group(function(){
+    Route::post('/add',[BrandController::class,'store'])->name('add.brand');
+    Route::get('/edit/{brand}',[BrandController::class,'edit'])->name('edit.brand');
+    Route::post('/update/{brand}',[BrandController::class,'update'])->name('update.brand');
+    Route::get('/delete/{brand}',[BrandController::class,'destroy'])->name('delete.brand');
+});
+
+/*---------------- END OF ADMIN ROUTES-----------------*/
  
  
 Route::get('/', function () {

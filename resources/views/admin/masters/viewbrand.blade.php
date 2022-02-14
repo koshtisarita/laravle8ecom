@@ -4,7 +4,7 @@
 @section('contents')
 <div id="page-wrapper">
     <div class="container-fluid">
-
+   
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">Brands</h1>
@@ -12,78 +12,74 @@
             <!-- /.col-lg-12 -->
         </div>
         <!-- /.row -->
+        @if(Session::has('addmessage'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                 {{Session::get('addmessage')}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        @endif
+
+        @if(session('editmessage'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                 {{session('editmessage')}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        @endif
          <!-- Add Form Start -->
-                    
+        
          <div class="row" id="addContainer" style="display:none;">
-              <div class="col-lg-12">
-                <div class="panel panel-primary">
+              <div class="col-lg-8">
+                <div class="panel panel-info">
                     <div class="panel-heading">
                        Add Brand
                     </div>
-                    <div class="panel-body">
-                        <form role="form">
+                    <div class="panel-body" >
+                        <form method="POST" action="{{route('add.brand')}}" enctype="multipart/form-data">
+                            @csrf
                             <div class="form-group">
-                                <label>Brand Name</label>
-                                <input class="form-control" name="name" id="name"> 
+                                <label>Brand Name <span style="color:red">*</span></label>
+                                <input type="text" class="form-control" name="brand_name" autocomplete="off"> 
+                                @error('brand_name')
+                                <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
+
                             
                             
                             <div class="form-group">
-                                <label>Brand Image</label>
-                                <input type="file" name="image" id="image">
+                                <label>Brand Image <span style="color:red">*</span></label>
+                                <input type="file" name="brand_image" class="form-control">
+                                @error('brand_image')
+                                <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
+
                             <div class="form-group">
-                                <label>Brand Detail</label>
-                                <textarea class="form-control" rows="3" name="bdetail" id="bdetail"></textarea>
+                                <label>Brand Short Description <span style="color:red">*</span></label>
+                                <textarea class="form-control" rows="3" name="brand_short_desc" autocomplete="off"></textarea>
+                                @error('brand_short_desc')
+                                <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                             
-                            <button type="submit" class="btn btn-outline btn-primary">Add</button>
-                            <button type="reset" class="btn btn-outline btn-default">Reset</button>
+                            <input type="submit" class="btn btn-outline btn-primary" value="submit">
+                            <input type="reset" class="btn btn-outline btn-default" value="update">
                         </form>
                      </div>                   
                 </div>                
               </div>
          </div>
     
-        <!-- Add Form End --> 
-        <!-- Edit Form Start -->
-        
-        <div class="row" id="editContainer" style="display:none;">
-            <div class="col-lg-12">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        Edit Brand
-                    </div>
-                     <div class="panel-body">
-                            <form role="form">
-                                <div class="form-group">
-                                    <label>Brand Name</label>
-                                    <input class="form-control" name="name" id="name"> 
-                                    <input class="form-control hidden" name="id" id="id"> 
-                                </div>
-                                
-                                
-                                <div class="form-group">
-                                    <label>Brand Image</label>
-                                    <input type="file" name="image" id="image">
-                                </div>
-                                <div class="form-group">
-                                    <label>Brand Detail</label>
-                                    <textarea class="form-control" rows="3" name="bdetail" id="bdetail"></textarea>
-                                </div>
-                                
-                                <button type="submit" class="btn btn-outline btn-primary">Update</button>
-                                <button type="reset" class="btn btn-outline btn-default">Reset</button>
-                            </form>
-                     </div>                   
-                </div>                
-            </div>
-        </div>
+       
         <div class="row">
-           <div class="col-lg-12">
+           <div class="col-lg-10">
                <div class="panel panel-primary">
                     <div class="panel-heading">
-                        Brand Details
+                        Brand List
                     </div>
                     <div class="panel-body">
                         <div >
@@ -95,104 +91,34 @@
                             <table class="table table-striped table-bordered table-hover" id="tableContainer">
                                 <thead>
                                     <tr>
-                                        <th>S. No</th>
                                         <th>Brands</th>
-                                        <th>Description</th>
                                         <th>Image</th>
+                                        <th>Description</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="odd gradeX">
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 4.0</td>
-                                        <td>Win 95+</td>
-                                        <td class="center">4</td>
-                                        <td class="center"> 
-                                            <button type="button" class="btn btn-warning btn-xs edit-element">Edit</button>
-                                            <button type="button" class="btn btn-primary btn-xs delete-element">Delete</button>
-                                            <button type="button" class="btn btn-success btn-xs activate-element">Active</button>
+                                   
+                                    @foreach($brands as $brand)  
+                                        <tr class="gradeU">
+                                        <td>{{$brand->brand_name}}</td>
+                                        <td><img src="{{asset($brand->brand_image)}}" style="width:70px;height:40px"></td>
+                                        <td>{{$brand->brand_short_desc}}</td>
+                                        <td>
+                                            <a href="{{route('edit.brand',$brand->id)}}" class="btn btn-warning">Edit</a>
+                                            <a href="{{route('delete.brand',$brand->id)}}" class="btn btn-danger" id="delete">Delete</a>
                                         </td>
-                                    </tr>
-                                    
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.0</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1</td>
-                                        <td class="center"> 
-                                            <button type="button" class="btn btn-warning btn-xs edit-element">Edit</button>
-                                            <button type="button" class="btn btn-primary btn-xs delete-element">Delete</button>
-                                            <button type="button" class="btn btn-success btn-xs activate-element">Active</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.1</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1.1</td>
-                                        <td class="center"> 
-                                            <button type="button" class="btn btn-warning btn-xs edit-element">Edit</button>
-                                            <button type="button" class="btn btn-primary btn-xs delete-element">Delete</button>
-                                            <button type="button" class="btn btn-success btn-xs activate-element">Active</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.2</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1.2</td>
-                                        <td class="center"> 
-                                        <button type="button" class="btn btn-warning btn-xs edit-element">Edit</button>
-                                            <button type="button" class="btn btn-primary btn-xs delete-element">Delete</button>
-                                            <button type="button" class="btn btn-success btn-xs activate-element">Active</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.3</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1.3</td>
-                                        <td class="center"> 
-                                            <button type="button" class="btn btn-warning btn-xs edit-element">Edit</button>
-                                            <button type="button" class="btn btn-primary btn-xs delete-element">Delete</button>
-                                            <button type="button" class="btn btn-success btn-xs activate-element">Active</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.4</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1.4</td>
-                                        <td class="center"> 
-                                            <button type="button" class="btn btn-warning btn-xs edit-element">Edit</button>
-                                            <button type="button" class="btn btn-primary btn-xs delete-element">Delete</button>
-                                            <button type="button" class="btn btn-success btn-xs activate-element">Active</button>
-                                        </td>
-                                    </tr>
-                                
-                                    <tr class="gradeU">
-                                        <td>Other browsers</td>
-                                        <td>All others</td>
-                                        <td>-</td>
-                                        <td class="center">-</td>
-                                        <td class="center"> 
-                                            <button type="button" class="btn btn-warning btn-xs edit-element">Edit</button>
-                                            <button type="button" class="btn btn-primary btn-xs delete-element">Delete</button>
-                                            <button type="button" class="btn btn-success btn-xs activate-element">Active</button>
-                                        </td>
-                                    </tr>
+                                        </tr>
+                                    @endforeach
+
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                    
+                    </div>     
                 </div>
             </div>
-            <!-- /.col-lg-8 -->
-            
-                
-                <!-- /.panel -->
+            <!-- /.col-lg-8 -->   
+        <!-- /.panel -->
                 
                  
             
@@ -238,5 +164,49 @@
         });
     });
 </script>
+<script type="text/javascript">
+    $(function(){
+        $(document).on('click','#delete',function(e){
+            e.preventDefault();
+            var link=$(this).attr("href");
+            const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      })
+      
+      swalWithBootstrapButtons.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = link
+          swalWithBootstrapButtons.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire(
+            'Cancelled',
+            'Your imaginary file is safe :)',
+            'error'
+          )
+        }
+      })
+        });
+    });
+    
+      </script>
 @endsection
  

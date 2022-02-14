@@ -1,3 +1,9 @@
+@php
+    $prefix=Route::current()->getName();
+    //dd($prefix); 
+@endphp  
+
+
 <div class="navbar-default sidebar" role="navigation">
     <div class="sidebar-nav navbar-collapse">
         <ul class="nav" id="side-menu">
@@ -13,16 +19,16 @@
                 <!-- /input-group -->
             </li>
             <li>
-                <a href="{{route('admindashboard')}}" class="active"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                <a href="{{route('admindashboard')}}" class="{{($prefix=='admindashboard')?'active':''}}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li>
             <li>
-                <a href="#"><i class="fa fa-life-ring  fa-fw"></i>Masters<span class="fa arrow"></span></a>
+                <a href="#" class=""><i class="fa fa-life-ring  fa-fw"></i>Masters<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>                         
-                        <a href="{{route('viewbrand')}}">Brands  </a>
+                        <a href="{{route('viewbrand')}}" class="{{($prefix=='viewbrand')?'active':''}}">Brands  </a>
                     </li> 
                     <li>                         
-                        <a href="{{route('viewsize')}}">Sizes  </a>
+                        <a href="{{route('viewsize')}}" class="{{($prefix=='viewsize')?'active':''}}" >Sizes  </a>
                     </li> 
                     <li>                         
                         <a href="{{route('viewpincode')}}">Pincode </a>

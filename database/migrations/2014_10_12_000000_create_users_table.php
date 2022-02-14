@@ -18,9 +18,9 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('lname');
             $table->dateTime('dob');
-            $table->tinyIteger('role_id')->default(0)->comment('0 -admin 1 customer');
-            $table->tinyIteger('status')->default(0)->comment('0 -inactive 1 active');
-            $table->tinyIteger('is_newsletter')->default(0)->comment('0 -not subscribe 1 subscribe');
+            $table->tinyInteger('role_id')->default(0)->comment('0 -admin 1 customer');
+            $table->tinyInteger('status')->default(0)->comment('0 -inactive 1 active');
+            $table->tinyInteger('is_newsletter')->default(0)->comment('0 -not subscribe 1 subscribe');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

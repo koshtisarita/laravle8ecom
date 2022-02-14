@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Brand;
 
 class MainAdminController extends Controller
 {
@@ -14,7 +15,8 @@ class MainAdminController extends Controller
     //master menu function
     public function viewbrand()
     {
-        return view('admin.masters.viewbrand');
+        $brands= Brand::latest()->get();
+        return view('admin.masters.viewbrand',compact('brands'));
     }
     public function viewsize()
     {
