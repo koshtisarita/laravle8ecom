@@ -35,19 +35,15 @@ class MainWebController extends Controller
                 {     
                         //Admin Check
                         if ($user->role_id == 0)
-                        {        
-                            
+                        {   
                             $request->session()->regenerate();
                             Auth::login($user);
-                            return redirect('/view-dashboard');
-                            // return redirect()->intended(RouteServiceProvider::ADMIN);
+                            return redirect('/view-dashboard'); 
                         } 
                         else
-                        {
-                             
+                        {                             
                             if($user->status == 1)
-                             {
-                                  
+                             {                                  
                                  $request->session()->regenerate();
                                  Auth::login($user);
                                  return redirect()->route('index');
@@ -85,14 +81,14 @@ class MainWebController extends Controller
              if($finduser){
       
                  Auth::login($finduser);
-                 Log::info($finduser);   
                  return redirect('/');
       
              }else{
                 $finduser = User::where('email',$user->email)->first();
                 if($finduser)
                 {
-                    return redirect()->back()->with('error','This email address already exist');
+                    Auth::login($finduser);
+                    return redirect('/');
                 }
                 else
                 {

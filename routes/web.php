@@ -30,8 +30,9 @@ Route::group(['middleware' => ['IsAdmin']], function () {
     Route::get('/view-brands',[MainAdminController::class,'viewbrand'])->name('viewbrand');
     Route::prefix('brand')->group(function(){
         Route::post('/add',[BrandController::class,'store'])->name('add.brand');
-        Route::get('/edit/{brand}',[BrandController::class,'edit'])->name('edit.brand');
-        Route::post('/update/{brand}',[BrandController::class,'update'])->name('update.brand');
+        Route::get('/get-brand/{brand}',[BrandController::class,'edit'])->name('get.brand');
+        // Route::get('/edit/{brand}',[BrandController::class,'edit'])->name('edit.brand');
+        Route::post('/update',[BrandController::class,'update'])->name('update.brand');
         Route::get('/delete/{brand}',[BrandController::class,'destroy'])->name('delete.brand');
     });
 
