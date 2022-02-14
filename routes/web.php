@@ -51,8 +51,10 @@ Route::group(['middleware' => ['IsAdmin']], function () {
  
 Route::get('/',  [MainWebController::class,'index'])->name('index');
 Route::get('/login-registration',  [MainWebController::class,'loginpage'])->name('login-page');
+//login with social media
 Route::get('redirect/{driver}', [MainWebController::class,'redirectToProvider']);
 Route::get('auth/google/callback', [MainWebController::class,'handleGoogleCallback']);
+
 Route::post('/login-registration',  [MainWebController::class,'store'])->name('loginform');
 Route::get('/myaccount',  [MainWebController::class,'myaccount'])->name('myaccount')->middleware('auth');
 Route::post('/update-account',  [MainWebController::class,'update_account'])->name('update-account')->middleware('auth');

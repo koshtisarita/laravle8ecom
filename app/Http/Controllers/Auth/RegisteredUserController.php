@@ -65,7 +65,7 @@ class RegisteredUserController extends Controller
         else { 
                try
                {
-                   Log::info('in try');
+                    
                     DB::beginTransaction();
                     $user = User::create([
                         'name' => $request->name,

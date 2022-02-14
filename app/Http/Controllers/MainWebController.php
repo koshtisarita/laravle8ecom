@@ -78,7 +78,7 @@ class MainWebController extends Controller
      {
          try {
      
-             $user = Socialite::driver('google')->user(); 
+             $user = Socialite::driver('google')->stateless()->user(); 
              $google_user_id = $user->id;
              $finduser = User::where('google_id', $user->id)->first();
       
@@ -101,11 +101,10 @@ class MainWebController extends Controller
                     $newUser->lname = $user->name;
                     $newUser->email = $user->email;
                     $newUser->dob = date('Y-m-d');
-                    $newUser->password = encrypt('123456dummy');
+                    $newUser->password = Hash::make('123456dummy');
                     $newUser->google_id = $google_user_id;
                     $newUser->status = 1;
-                    $newUser->save();           
-                     
+                    $newUser->save(); 
                    
                      Auth::login($newUser);                    
                      return redirect('/');
@@ -123,10 +122,8 @@ class MainWebController extends Controller
      //function run when user click the link send on register email
      public function activation($uid)
      {
-        $user_id = base64_decode($uid);
-        
+        $user_id = base64_decode($uid);        
          $user = User::find($user_id);
-
          //active the particular user
          $user->status = 1;
          $user->save();

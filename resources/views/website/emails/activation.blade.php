@@ -22,7 +22,7 @@
 					<p>Dear <b>{{$data['user_name']}}</b>, </p>
 					<p>Your Hire Dress account will be activate after click on the active link.</p>
 					<p class="text-center">
-						<a href="http://localhost:8000/active-account/{{base64_encode($data['id'])}}" style='color:green;font-size:20px'>ACTIVE</a>
+						<a href="{{url('active-account/base64_encode($data['id'])')}}" style='color:green;font-size:20px'>ACTIVE</a>
 					</p>
 					<p>Kind Regards,<br><b>Hire Dress</b></p>
 					<!-- <p>GiBo</p> -->
