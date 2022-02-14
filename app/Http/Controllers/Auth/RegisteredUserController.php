@@ -74,7 +74,7 @@ class RegisteredUserController extends Controller
                         'email' => $request->remail,
                         'role_id'=>1,
                         'password' => Hash::make($request->password),
-                        'is_newsletter' => ($request->is_newsletter=='on')?1:0,
+                        'is_newsletter' => (isset($request->is_newsletter)?1:0),
                     ]);
 
                       event(new Registered($user));
@@ -89,11 +89,11 @@ class RegisteredUserController extends Controller
                         'id' => $user->id
                     );
                     //return redirect(RouteServiceProvider::HOME);
-                    Mail::to('your_receiver_email@gmail.com')->send(new \App\Mail\WelcomeMail($data));
+                    
 
-                    // Mail::send('website.emails.activation', array('data' => $data), function ($message) use ($email, $name) {
-                    //     $message->to($email, $name)->subject('Hire Dress :: Account Activation');
-                    // });
+                    Mail::send('website.emails.activation', array('data' => $data), function ($message) use ($email, $name) {
+                        $message->to($email, $name)->subject('Hire Dress :: Account Activation');
+                    });
                      
                     DB::commit();
                      
@@ -103,6 +103,7 @@ class RegisteredUserController extends Controller
                }
                catch(Exception $e) {
                     DB::rollBack();
+                    return redirect()->back()->with('error','Some thing wen wrong');
                 }
                 
            }       

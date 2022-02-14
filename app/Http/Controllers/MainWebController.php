@@ -9,36 +9,17 @@ use App\Models\User;
 use Log;
 use Hash;
 use Socialite;
+use Validator;
+use DB;
 class MainWebController extends Controller
 {
-     public function index()
-     {
-         return view('website.pages.index');
-     }
-     public function contactus()
-     {
-         return view('website.pages.contactus');
-     }
-     public function aboutus()
-     {
-         return view('website.pages.aboutus');
-     }
-     public function cart()
-     {
-         return view('website.pages.cart');
-     }
-     public function product_list()
-     {
-         return view('website.pages.productlist');
-     }
-     public function product_detail()
-     {
-         return view('website.pages.productdetail');
-     }
-     public function loginpage()
-     {
-         return view('website.pages.login_registration');
-     }
+     public function index(){return view('website.pages.index');}
+     public function contactus(){ return view('website.pages.contactus'); }
+     public function aboutus(){ return view('website.pages.aboutus');}
+     public function cart(){return view('website.pages.cart');}
+     public function product_list(){return view('website.pages.productlist');}
+     public function product_detail(){return view('website.pages.productdetail');}
+     public function loginpage(){return view('website.pages.login_registration');}
      //login check
      public function store(Request $request)
      {
@@ -157,13 +138,56 @@ class MainWebController extends Controller
      public function myaccount()
      {
         if (Auth::check()) {
-            // The user is logged in...
-          
+            // The user is logged in...                      
             return view('website.pages.myaccount');
         }
         else
         {
             return redirect('/');
         }
+     }
+     public function update_account (Request $request)
+     {
+            // The user is logged in...        
+            $request_data = $request->all();
+         
+            $messages = [
+                'name.required' => 'Please enter first name',
+                'lname.required' => 'Please enter last name',                
+                'dob.required' => 'Please enter date of birth',      
+    
+            ];
+            $validator = Validator::make($request_data, [       
+                'name' => 'required|string|max:255',
+                'lname' => 'required|string|max:255',              
+                'dob'=>'required'
+            ],$messages);
+    
+            if ($validator->fails()) {
+                return redirect()->back()->with('error', 'Validation Error')->withErrors($validator)->withInput();
+            } 
+            else { 
+                   try
+                   {
+                       Log::info('in try');
+                        DB::beginTransaction();
+                        $user = Auth::user();
+                         
+                        $user->name = $request->name;
+                        $user->lname = $request->lname;
+                        $user->dob = $request->dob;                         
+                        $user->is_newsletter = (isset($request->is_newsletter))?1:0;
+                        $user->save();
+                        DB::commit();
+                     
+                        return redirect()->back()->with('success','User detail updated successfully.');
+                        
+                       
+                   }
+                   catch(Exception $e) {
+                        DB::rollBack();
+                        return redirect()->back()->with('error','Some thing wen wrong');
+                    }    
+                }
      }
 }

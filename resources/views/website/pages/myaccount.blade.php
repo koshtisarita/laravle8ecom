@@ -42,8 +42,8 @@
         @endif
         <div class="flex-w flex-tr p-lr-250 p-tb-20">       
 
-            <div class="size-300 bor10 flex-w flex-col-m p-lr-20 p-tb-10 p-lr-15-lg w-full-md">
-                 <form method="POST" action="{{ route('register') }}">
+            <div class="size-500 bor10 flex-w flex-col-m p-lr-20 p-tb-10 p-lr-15-lg w-full-md">
+                 <form method="POST" action="{{ route('update-account') }}">
                    @csrf
                    
                     <!-- First Name -->
@@ -65,15 +65,15 @@
                     <b> Date Of Birth </b> <span class="error-font text-danger">{{ $errors->first('dob')}}</span>  
 
                     <div class="bor8 m-b-10">
-                        <input class="stext-111 cl2 plh3 size-116 p-l-20 p-r-30" value="{{date('mAuth::user()->dob}}" type="date" name="dob" placeholder="Enter your date of birth">
+                        <input class="stext-111 cl2 plh3 size-116 p-l-20 p-r-30" value="{{date('Y-m-d',strtotime(Auth::user()->dob))}}" type="date" name="dob" placeholder="Enter your date of birth">
                     </div>                     
-                    @if(Auth::user()->is_newsletter == 0)
+                     
                     <div class=" m-b-10">
-                         <input id="is_newsletter" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="is_newsletter">
+                         <input id="is_newsletter" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="is_newsletter" {{(Auth::user()->is_newsletter==1?"checked":"")}} >
                         <span for="news letter"> {{__('I would like to receive exclusive promotions, the latest news and personalised information adapted to my customer profile via the following methods:') }} </span>
             
                     </div>
-                    @endif
+                   
                     <button type="submit" class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
                         update
                     </button>
