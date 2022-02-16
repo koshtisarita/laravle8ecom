@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Slider;
 use Log;
 use Hash;
 use Socialite;
@@ -13,7 +14,10 @@ use Validator;
 use DB;
 class MainWebController extends Controller
 {
-     public function index(){return view('website.pages.index');}
+     public function index(){
+         $sliders= Slider::where('status','=',1)->get();      
+         return view('website.pages.index',compact('sliders'));
+        }
      public function contactus(){ return view('website.pages.contactus'); }
      public function aboutus(){ return view('website.pages.aboutus');}
      public function cart(){return view('website.pages.cart');}

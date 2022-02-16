@@ -1,41 +1,78 @@
 <!-- Footer -->
-<footer class="bg3 p-t-75 p-b-32">
+<footer class="bg3 p-t-30 p-b-25">
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-6 col-lg-3 p-b-50">
-					<h4 class="stext-301 cl0 p-b-30">
-						Categories
+				<div class="col-sm-6 col-lg-2 p-b-50">
+					<h4 class="stext-301 cl0 p-b-10">
+						About
 					</h4>
 
 					<ul>
 						<li class="p-b-10">
 							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Women
+								About Us
 							</a>
 						</li>
 
 						<li class="p-b-10">
 							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Men
+								Contact Us
 							</a>
 						</li>
 
 						<li class="p-b-10">
 							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Shoes
+								How It Work
 							</a>
 						</li>
 
 						<li class="p-b-10">
 							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Watches
+								FAQ's
 							</a>
 						</li>
 					</ul>
 				</div>
 
-				<div class="col-sm-6 col-lg-3 p-b-50">
-					<h4 class="stext-301 cl0 p-b-30">
+				<div class="col-sm-6 col-lg-2 p-b-50">
+					<h4 class="stext-301 cl0 p-b-10">
+						Policy
+					</h4>
+
+					<ul>
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Shipping Policy
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Return Policy 
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Term & Condition
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+							    Privacy & Cookie Policy
+							</a>
+						</li>
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Sitemap
+							</a>
+						</li>
+					</ul>
+				</div>
+
+				<div class="col-sm-6 col-lg-2 p-b-50">
+					<h4 class="stext-301 cl0 p-b-10">
 						Help
 					</h4>
 
@@ -60,22 +97,44 @@
 
 						<li class="p-b-10">
 							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								FAQs
+								Order FAQs
 							</a>
 						</li>
 					</ul>
 				</div>
 
 				<div class="col-sm-6 col-lg-3 p-b-50">
-					<h4 class="stext-301 cl0 p-b-30">
+					<h4 class="stext-301 cl0 p-b-10">
 						GET IN TOUCH
 					</h4>
 
 					<p class="stext-107 cl7 size-201">
 						Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
 					</p>
+                    
+					<div class="flex-c-m flex-w p-b-18 p-t-27">
+						<a href="#" class="m-all-1">
+							<img src="{{asset('customer_template/images/icons/linkedin.png')}}" alt="ICON-PAY">
+						</a>
 
-					<div class="p-t-27">
+						<a href="#" class="m-all-1">
+							<img src="{{asset('customer_template/images/icons/whatsapp.png')}}" alt="ICON-PAY">
+						</a>
+
+						<a href="#" class="m-all-1">
+							<img src="{{asset('customer_template/images/icons/instagram.png')}}" alt="ICON-PAY">
+						</a>
+
+						<a href="#" class="m-all-1">
+							<img src="{{asset('customer_template/images/icons/facebook.png')}}" alt="ICON-PAY">
+						</a>
+
+						<a href="#" class="m-all-1">
+							<img src="{{asset('customer_template/images/icons/instagram.png')}}" alt="ICON-PAY">
+						</a>
+					</div>
+
+					<!-- <div class="p-t-27">
 						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
 							<i class="fa fa-facebook"></i>
 						</a>
@@ -87,11 +146,11 @@
 						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
 							<i class="fa fa-pinterest-p"></i>
 						</a>
-					</div>
+					</div> -->
 				</div>
 
 				<div class="col-sm-6 col-lg-3 p-b-50">
-					<h4 class="stext-301 cl0 p-b-30">
+					<h4 class="stext-301 cl0 p-b-10">
 						Newsletter
 					</h4>
 
@@ -111,28 +170,7 @@
 			</div>
 
 			<div class="p-t-40">
-				<div class="flex-c-m flex-w p-b-18">
-					<a href="#" class="m-all-1">
-						<img src="{{asset('customer_template/images/icons/linkedin.png')}}" alt="ICON-PAY">
-					</a>
-
-					<a href="#" class="m-all-1">
-						<img src="{{asset('customer_template/images/icons/whatsapp.png')}}" alt="ICON-PAY">
-					</a>
-
-					<a href="#" class="m-all-1">
-						<img src="{{asset('customer_template/images/icons/instagram.png')}}" alt="ICON-PAY">
-					</a>
-
-					<a href="#" class="m-all-1">
-						<img src="{{asset('customer_template/images/icons/facebook.png')}}" alt="ICON-PAY">
-					</a>
-
-					<a href="#" class="m-all-1">
-						<img src="{{asset('customer_template/images/icons/instagram.png')}}" alt="ICON-PAY">
-					</a>
-				</div>
-
+			
 				<p class="stext-107 cl6 txt-center">
 					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
              Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>

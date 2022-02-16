@@ -31,6 +31,9 @@
                         <a href="{{route('viewsize')}}" class="{{($prefix=='viewsize')?'active':''}}" >Sizes  </a>
                     </li> 
                     <li>                         
+                        <a href="{{route('viewslider')}}">Slider </a>
+                    </li>  
+                    <li>                         
                         <a href="{{route('viewpincode')}}">Pincode </a>
                     </li>  
                     <li>                         

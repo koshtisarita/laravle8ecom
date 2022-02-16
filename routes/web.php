@@ -5,6 +5,7 @@ use App\Http\Controllers\TestdemosController;
 use App\Http\Controllers\MainAdminController;
 use App\Http\Controllers\MainWebController;
 use App\Http\Controllers\Backend\BrandController;
+use App\Http\Controllers\Backend\SliderController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,10 +37,24 @@ Route::group(['middleware' => ['IsAdmin']], function () {
         Route::get('/delete/{brand}',[BrandController::class,'destroy'])->name('delete.brand');
     });
 
-
+    
     Route::get('/view-sizes', [MainAdminController::class,'viewsize'])->name('viewsize');
-    Route::get('/view-incode', [MainAdminController::class,'viewpincode'])->name('viewpincode');
+    Route::get('/view-pincode', [MainAdminController::class,'viewpincode'])->name('viewpincode');
     Route::get('/view-setting', [MainAdminController::class,'viewsetting'])->name('viewsetting'); 
+
+    /*----------------Slider Routes -----------------------*/
+    Route::get('/view-slider',  [MainAdminController::class,'viewslider'])->name('viewslider');
+    Route::prefix('slider')->group(function(){
+        Route::post('/add',[SliderController::class,'store'])->name('add.slider');
+        Route::get('/update-status/{slider}',[SliderController::class,'update_status'])->name('update-status.slider');
+        Route::get('/get-slider/{slider}',[SliderController::class,'edit'])->name('get.slider'); 
+        Route::post('/update',[SliderController::class,'update'])->name('update.slider');
+        Route::get('/delete/{slider}',[SliderController::class,'destroy'])->name('delete.slider');
+    });
+
+
+
+
     
    
 });
@@ -52,13 +67,14 @@ Route::group(['middleware' => ['IsAdmin']], function () {
  
 Route::get('/',  [MainWebController::class,'index'])->name('index');
 Route::get('/login-registration',  [MainWebController::class,'loginpage'])->name('login-page');
-//login with social media
+//  login with social media
 Route::get('redirect/{driver}', [MainWebController::class,'redirectToProvider']);
 Route::get('auth/google/callback', [MainWebController::class,'handleGoogleCallback']);
 
 Route::post('/login-registration',  [MainWebController::class,'store'])->name('loginform');
 Route::get('/myaccount',  [MainWebController::class,'myaccount'])->name('myaccount')->middleware('auth');
 Route::post('/update-account',  [MainWebController::class,'update_account'])->name('update-account')->middleware('auth');
+
 
 // Route::get('/wishlist',  [MainWebController::class,'wishlist'])->name('wishlist')->middleware('auth');
 

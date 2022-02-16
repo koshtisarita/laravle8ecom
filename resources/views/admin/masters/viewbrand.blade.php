@@ -32,8 +32,8 @@
          <!-- Add Form Start -->
         
          <div class="row" id="addContainer" style="display:none;">
-              <div class="col-lg-8">
-                <div class="panel panel-info">
+              <div class="col-lg-12">
+                <div class="panel panel-primary">
                     <div class="panel-heading">
                        Add Brand
                     </div>
@@ -72,8 +72,8 @@
          </div>
        
          <div class="row" id="editContainer" style="display:none">
-              <div class="col-lg-8">
-                <div class="panel panel-info">
+              <div class="col-lg-12">
+                <div class="panel panel-primary">
                     <div class="panel-heading">
                        Edit Brand
                     </div>
@@ -113,7 +113,7 @@
          </div>
          
         <div class="row">
-           <div class="col-lg-10">
+           <div class="col-lg-12">
                <div class="panel panel-primary">
                     <div class="panel-heading">
                         Brand List
@@ -142,9 +142,9 @@
                                         <td><img src="{{asset($brand->brand_image)}}" style="width:70px;height:40px"></td>
                                         <td>{{$brand->brand_short_desc}}</td>
                                         <td>
-                                            <a href="#" class="btn btn-warning edit-element" data-id="{{$brand->id}}">Edit</a>
+                                            <a href="#" class="btn btn-warning btn-sm  edit-element" data-id="{{$brand->id}}">Edit</a>
                                           
-                                            <a href="{{route('delete.brand',$brand->id)}}" class="btn btn-danger" id="delete">Delete</a>
+                                            <a href="{{route('delete.brand',$brand->id)}}" class="btn btn-danger btn-sm " id="delete">Delete</a>
                                         </td>
                                         </tr>
                                     @endforeach
