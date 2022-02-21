@@ -21,22 +21,26 @@
                        Add Pincode
                     </div>
                     <div class="panel-body">
-                        <form role="form">
+                        <form role="form" id="addForm" action="{{route('add.pincode')}}" method="POST">
+                            @csrf
                             <div class="row">
-                                <div class="col-lg-3">
+                                <div class="col-lg-2 col-sm-12">
                                     <label>Pincode Number</label>
-                                    <input type="number" class="form-control" name="name" id="name"> 
                                 </div>
-                               
-                            </div> 
-                         
-                            <div class="row">   
-                                <div class="col-lg-12">
-                                    <br>
+                                <div class="col-lg-3 col-sm-12">                                   
+                                    <input type="number" class="form-control" name="pincode" id="pincode" required> 
+                                    @error('pincode')
+                                    <span class="text-danger">{{$message}}</span>
+                                    @enderror
+                                </div>
+                                <div class="col-lg-1 col-sm-12">
                                     <button type="submit" class="btn btn-outline btn-primary">Add</button>
-                                    <button type="reset" class="btn btn-outline btn-default">Reset</button>
                                 </div>
-                            </div>
+                                <div class="col-lg-1 col-sm-12">
+                                   <button type="reset" class="btn btn-outline btn-default">Reset</button>
+                                </div>
+                            </div> 
+                          
                         </form>
                      </div>                   
                 </div>                
@@ -44,36 +48,7 @@
          </div>
     
         <!-- Add Form End --> 
-        <!-- Edit Form Start -->
-        
-        <div class="row" id="editContainer" style="display:none;">
-            <div class="col-lg-12">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        Edit Pincode
-                    </div>
-                     <div class="panel-body">
-                     <form role="form">
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <label>Pincode Number</label>
-                                    <input type="number" class="form-control" name="name" id="name"> 
-                                </div>
-                               
-                            </div> 
-                         
-                            <div class="row">   
-                                <div class="col-lg-12">
-                                    <br>
-                                    <button type="submit" class="btn btn-outline btn-primary">Add</button>
-                                    <button type="reset" class="btn btn-outline btn-default">Reset</button>
-                                </div>
-                            </div>
-                        </form>
-                     </div>                   
-                </div>                
-            </div>
-        </div>
+         
         <div class="row">
            <div class="col-lg-12">
                <div class="panel panel-primary">
@@ -82,8 +57,8 @@
                     </div>
                     <div class="panel-body">
                         <div >
-                            <button id="addToTable" class="btn btn-primary">Add <i class="fa fa-plus fa-fw"></i></button>
-                            <button id="btnCancel" class="btn btn-danger" style="display:none;">Cancel</button> 
+                            <button id="addToTable" class="btn btn-primary btn-xs">Add <i class="fa fa-plus fa-fw"></i></button>
+                            <button id="btnCancel" class="btn btn-danger btn-xs" style="display:none;">Cancel</button> 
                         </div>
                         <br>
                         <div class="table-responsive">
@@ -96,71 +71,23 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($pincodes as $key=>$pincode)
                                     <tr class="odd gradeX">
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 4.0</td> 
+                                        <td>{{$key+1}}</td>
+                                        <td>{{$pincode->pincode}}</td> 
                                         <td class="center"> 
-                                            <button type="button" class="btn btn-warning btn-xs edit-element">Edit</button>
-                                            <button type="button" class="btn btn-primary btn-xs delete-element">Delete</button>
-                                            <button type="button" class="btn btn-success btn-xs activate-element">Active</button>
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.0</td>  
-                                        <td class="center"> 
-                                            <button type="button" class="btn btn-warning btn-xs edit-element">Edit</button>
-                                            <button type="button" class="btn btn-primary btn-xs delete-element">Delete</button>
-                                            <button type="button" class="btn btn-success btn-xs activate-element">Active</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.1</td>  
-                                        <td class="center"> 
-                                            <button type="button" class="btn btn-warning btn-xs edit-element">Edit</button>
-                                            <button type="button" class="btn btn-primary btn-xs delete-element">Delete</button>
-                                            <button type="button" class="btn btn-success btn-xs activate-element">Active</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.2</td> 
-                                        <td class="center"> 
-                                        <button type="button" class="btn btn-warning btn-xs edit-element">Edit</button>
-                                            <button type="button" class="btn btn-primary btn-xs delete-element">Delete</button>
-                                            <button type="button" class="btn btn-success btn-xs activate-element">Active</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.3</td> 
-                                        <td class="center"> 
-                                            <button type="button" class="btn btn-warning btn-xs edit-element">Edit</button>
-                                            <button type="button" class="btn btn-primary btn-xs delete-element">Delete</button>
-                                            <button type="button" class="btn btn-success btn-xs activate-element">Active</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.4</td> 
-                                        <td class="center"> 
-                                            <button type="button" class="btn btn-warning btn-xs edit-element">Edit</button>
-                                            <button type="button" class="btn btn-primary btn-xs delete-element">Delete</button>
-                                            <button type="button" class="btn btn-success btn-xs activate-element">Active</button>
-                                        </td>
-                                    </tr>
-                                
-                                    <tr class="gradeU">
-                                        <td>Other browsers</td>
-                                        <td>All others</td>  
-                                        <td class="center"> 
-                                            <button type="button" class="btn btn-warning btn-xs edit-element">Edit</button>
-                                            <button type="button" class="btn btn-primary btn-xs delete-element">Delete</button>
-                                            <button type="button" class="btn btn-success btn-xs activate-element">Active</button>
-                                        </td>
-                                    </tr>
+                                            <!-- status -->
+                                            @if($pincode->status == 1)
+                                                <a href="{{route('update-status.pincode',$pincode->id)}}" class="btn btn-success btn-xs status" id="status">Active</a>
+                                            @else
+                                               <a href="{{route('update-status.pincode',$pincode->id)}}" class="btn btn-danger btn-xs  status" id="status">Inactive</a>
+                                            @endif
+                                            <!-- status end  -->
+                                             <a href="{{route('delete.pincode',$pincode->id)}}" class="btn btn-danger btn-xs " id="delete">Delete</a>
+                                       
+                                        </tr>
+                                    @endforeach
+                                  
                                 </tbody>
                             </table>
                         </div>
@@ -217,5 +144,51 @@
         });
     });
 </script>
-@endsection
+
+<!---------------  delete alert ---------------->
+<script type="text/javascript">
+    $(function(){
+        $(document).on('click','#delete',function(e){
+            e.preventDefault();
+            var link=$(this).attr("href");
+            const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      })
+      
+      swalWithBootstrapButtons.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = link
+          swalWithBootstrapButtons.fire(
+            'Deleted!',
+            'Your data has been deleted.',
+            'success'
+          )
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire(
+            'Cancelled',
+            'Your data is safe :)',
+            'error'
+          )
+        }
+      })
+        });
+    });
+    
+ </script>
+@endsection 
  

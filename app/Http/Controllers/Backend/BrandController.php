@@ -12,6 +12,21 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class BrandController extends Controller
 {
+    public function viewbrand()
+    {
+        
+        $brands= Brand::latest()->get();
+         if(Session::has('success'))
+         { 
+             Alert::success('Success!',Session::get('success'));
+         }
+         if(Session::has('error'))
+         {            
+             Alert::error('Error',Session::get('error'));
+         }
+        return view('admin.masters.viewbrand',compact('brands'));
+    }
+   
   /*-------------- add data-------------*/
     public function store(Request $request)
     {

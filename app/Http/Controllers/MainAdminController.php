@@ -19,53 +19,12 @@ class MainAdminController extends Controller
     }
 
     //master menu function
-    public function viewbrand()
-    {
-        
-        $brands= Brand::latest()->get();
-         if(Session::has('success'))
-         { 
-             Alert::success('Success!',Session::get('success'));
-         }
-         if(Session::has('error'))
-         {            
-             Alert::error('Error',Session::get('error'));
-         }
-        return view('admin.masters.viewbrand',compact('brands'));
-    }
-    public function viewsize()
-    {
-        $sizes= Size::latest()->get();
-        if(Session::has('success'))
-        { 
-            Alert::success('Success!',Session::get('success'));
-        }
-        if(Session::has('error'))
-        {            
-            Alert::error('Error',Session::get('error'));
-        }
-        return view('admin.masters.viewsize',compact('sizes'));
-    }
-    public function viewpincode()
-    {
-        return view('admin.masters.viewpincode');
-    }
+   
+  
     public function viewsetting()
     {
         return view('admin.masters.viewsetting');
     }
 
-    public function viewslider()
-    {
-        $sliders= Slider::latest()->get();
-        if(Session::has('success'))
-        { 
-            Alert::success('Success!',Session::get('success'));
-        }
-        if(Session::has('error'))
-        {            
-            Alert::error('Error',Session::get('error'));
-        }
-        return view('admin.masters.slider',compact('sliders'));
-    }
+   
 }

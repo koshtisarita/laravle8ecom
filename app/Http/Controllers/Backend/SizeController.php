@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
 use App\Models\Size;
 use Validator;
 use DB;
@@ -12,6 +11,19 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class SizeController extends Controller
 {
+    public function viewsize()
+    {
+        $sizes= Size::latest()->get();
+        if(Session::has('success'))
+        { 
+            Alert::success('Success!',Session::get('success'));
+        }
+        if(Session::has('error'))
+        {            
+            Alert::error('Error',Session::get('error'));
+        }
+        return view('admin.masters.viewsize',compact('sizes'));
+    }
     /*-------------- add data-------------*/
     public function store(Request $request)
     {
@@ -51,7 +63,7 @@ class SizeController extends Controller
                 $today_date = date('Y-m-d h:i:s');
 
                 /** Now save all data to db */
-                SIze:: insert([
+                Size:: insert([
                     'size_no'=>$request->size_no,
                     'size_shortcut'=>strtoupper($request->size_shortcut), //search, replace,subject
                     'waist_size'=>$request->waist_size,

@@ -7,6 +7,7 @@ use App\Http\Controllers\MainWebController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SizeController;
+use App\Http\Controllers\Backend\PincodeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,9 +28,8 @@ require __DIR__.'/auth.php';
 Route::group(['middleware' => ['IsAdmin']], function () {
     Route::get('/view-dashboard',[MainAdminController::class,'dashboard'])->name('admindashboard');
 
-
     /*--------- Brand Routes-----*/
-    Route::get('/view-brands',[MainAdminController::class,'viewbrand'])->name('viewbrand');
+    Route::get('/view-brands',[BrandController::class,'viewbrand'])->name('viewbrand');
     Route::prefix('brand')->group(function(){
         Route::post('/add',[BrandController::class,'store'])->name('add.brand');
         Route::get('/get-brand/{brand}',[BrandController::class,'edit'])->name('get.brand');
@@ -38,19 +38,17 @@ Route::group(['middleware' => ['IsAdmin']], function () {
         Route::get('/delete/{brand}',[BrandController::class,'destroy'])->name('delete.brand');
     });
 
-    
-    Route::get('/view-sizes', [MainAdminController::class,'viewsize'])->name('viewsize');
+    /**-------------Size Master Route ---------- */
+    Route::get('/view-sizes', [SizeController::class,'viewsize'])->name('viewsize');
     Route::prefix('size')->group(function(){
         Route::post('/add',[SizeController::class,'store'])->name('add.size'); 
         Route::get('/get-size/{size}',[SizeController::class,'edit'])->name('get.size'); 
         Route::post('/update',[SizeController::class,'update'])->name('update.size');
         Route::get('/delete/{size}',[SizeController::class,'destroy'])->name('delete.size');
-    });
-    Route::get('/view-pincode', [MainAdminController::class,'viewpincode'])->name('viewpincode');
-    Route::get('/view-setting', [MainAdminController::class,'viewsetting'])->name('viewsetting'); 
+    });   
 
     /*----------------Slider Routes -----------------------*/
-    Route::get('/view-slider',  [MainAdminController::class,'viewslider'])->name('viewslider');
+    Route::get('/view-slider',  [SliderController::class,'viewslider'])->name('viewslider');
     Route::prefix('slider')->group(function(){
         Route::post('/add',[SliderController::class,'store'])->name('add.slider');
         Route::get('/update-status/{slider}',[SliderController::class,'update_status'])->name('update-status.slider');
@@ -59,7 +57,14 @@ Route::group(['middleware' => ['IsAdmin']], function () {
         Route::get('/delete/{slider}',[SliderController::class,'destroy'])->name('delete.slider');
     });
 
+    Route::get('/view-pincode', [PincodeController::class,'viewpincode'])->name('viewpincode');
+    Route::prefix('pincode')->group(function(){
+        Route::post('/add',[PincodeController::class,'store'])->name('add.pincode');
+        Route::get('/update-status/{pincode}',[PincodeController::class,'update_status'])->name('update-status.pincode');       
+        Route::get('/delete/{pincode}',[PincodeController::class,'destroy'])->name('delete.pincode');
+    });
 
+    Route::get('/view-setting', [MainAdminController::class,'viewsetting'])->name('viewsetting'); 
 
 
     

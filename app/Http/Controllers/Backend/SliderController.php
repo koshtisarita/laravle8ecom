@@ -11,6 +11,19 @@ use DB;
 
 class SliderController extends Controller
 { 
+    public function viewslider()
+    {
+        $sliders= Slider::latest()->get();
+        if(Session::has('success'))
+        { 
+            Alert::success('Success!',Session::get('success'));
+        }
+        if(Session::has('error'))
+        {            
+            Alert::error('Error',Session::get('error'));
+        }
+        return view('admin.masters.slider',compact('sliders'));
+    }
      /*------------- adding slider into the database ----*/
      public function store(Request $request)
     {
