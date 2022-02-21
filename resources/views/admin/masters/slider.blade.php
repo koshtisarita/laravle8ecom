@@ -12,14 +12,7 @@
             <!-- /.col-lg-12 -->
         </div>
         <!-- /.row -->
-        @if(Session::has('success'))
-        <div class="alert alert-success alert-dismissibleshow" role="alert">
-                 {{Session::get('success')}}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-        @endif
+       
 
         @if(session('error'))
         <div class="alert alert-danger alert-dismissible show" role="alert">
@@ -134,8 +127,8 @@
                     </div>
                     <div class="panel-body">
                         <div >
-                            <button id="addToTable" class="btn btn-primary">Add <i class="fa fa-plus fa-fw"></i></button>
-                            <button id="btnCancel" class="btn btn-danger" style="display:none;">Cancel</button> 
+                            <button id="addToTable" class="btn btn-primary btn-xs">Add <i class="fa fa-plus fa-fw"></i></button>
+                            <button id="btnCancel" class="btn btn-danger btn-xs" style="display:none;">Cancel</button> 
                         </div>
                         <br>
                         <div class="table-responsive">
@@ -160,14 +153,14 @@
                                         <td>
                                             <!-- status -->
                                             @if($slider->status == 1)
-                                                <a href="{{route('update-status.slider',$slider->id)}}" class="btn btn-success btn-sm status" id="status">Active</a>
+                                                <a href="{{route('update-status.slider',$slider->id)}}" class="btn btn-success btn-xs status" id="status">Active</a>
                                             @else
-                                               <a href="{{route('update-status.slider',$slider->id)}}" class="btn btn-danger btn-sm  status" id="status">Inactive</a>
+                                               <a href="{{route('update-status.slider',$slider->id)}}" class="btn btn-danger btn-xs  status" id="status">Inactive</a>
                                             @endif
                                             <!-- status end  -->
-                                            <a href="#" class="btn btn-warning  btn-sm  edit-element" data-id="{{$slider->id}}">Edit</a>
+                                            <a href="#" class="btn btn-warning  btn-xs  edit-element" data-id="{{$slider->id}}">Edit</a>
                                           
-                                            <a href="{{route('delete.slider',$slider->id)}}" class="btn btn-danger btn-sm " id="delete">Delete</a>
+                                            <a href="{{route('delete.slider',$slider->id)}}" class="btn btn-danger btn-xs " id="delete">Delete</a>
                                         </td>
                                         </tr>
                                     @endforeach
@@ -335,12 +328,7 @@
         });
     });
     
-    function htmlDecode(input){
-        var e = document.createElement('textarea');
-        e.innerHTML = input;
-        // handle case of empty input
-        return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-        }
+    
  </script>
 @endsection
  

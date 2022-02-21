@@ -8,12 +8,10 @@ use Illuminate\Http\Request;
 use Image;
 use Validator;
 use DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class BrandController extends Controller
 {
-
-
-
   /*-------------- add data-------------*/
     public function store(Request $request)
     {
@@ -55,17 +53,16 @@ class BrandController extends Controller
                 ]); 
                 DB::commit();
                
-                return redirect()->back()->with('addmessage','Brand added successfully');   
+                return redirect()->route('viewbrand')->with('success','Brand added successfully');   
 
             }
             catch(Exception $e) {
                 DB::rollBack();
-                return redirect()->back()->with('error','Some thing wen wrong');
+                return redirect()->route('viewbrand')->with('error','Some thing wen wrong');
             }
 
         }    
     }
-
    
     /*------------show edit form--------------*/
 
@@ -131,7 +128,7 @@ class BrandController extends Controller
                     ]);
                     
                     // $brands=Brand::latest()->get(); 
-                    return redirect()->back()->with('success','Brand edited successfully');
+                    return redirect()->route('viewbrand')->with('success','Brand edited successfully');
                 }  
                 else{ //ie if image not uploaded
                     $brand->update([
@@ -141,13 +138,14 @@ class BrandController extends Controller
                     ]);
                     // $brands=Brand::latest()->get(); 
                     // return view('admin.masters.viewbrand',compact('brands'))->with('success','Brand edited successfully');
-                    return redirect()->back()->with('success','Brand edited successfully');
+                  
+                    return redirect()->route('viewbrand')->with('success','Brand edited successfully');
                 } 
                 
             }
             else
             {
-                return redirect()->back()->with('error','No record found');
+                return redirect()->route('viewbrand')->with('error','No record found');
             }
 
         }

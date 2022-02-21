@@ -12,23 +12,7 @@
             <!-- /.col-lg-12 -->
         </div>
         <!-- /.row -->
-        @if(Session::has('success'))
-        <div class="alert alert-success alert-dismissibleshow" role="alert">
-                 {{Session::get('success')}}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-        @endif
-
-        @if(session('error'))
-        <div class="alert alert-danger alert-dismissible show" role="alert">
-                 {{session('error')}}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-        @endif
+        
          <!-- Add Form Start -->
         
          <div class="row" id="addContainer" style="display:none;">
@@ -120,8 +104,8 @@
                     </div>
                     <div class="panel-body">
                         <div >
-                            <button id="addToTable" class="btn btn-primary">Add <i class="fa fa-plus fa-fw"></i></button>
-                            <button id="btnCancel" class="btn btn-danger" style="display:none;">Cancel</button> 
+                            <button id="addToTable" class="btn btn-primary btn-xs">Add <i class="fa fa-plus fa-fw"></i></button>
+                            <button id="btnCancel" class="btn btn-danger btn-xs" style="display:none;">Cancel</button> 
                         </div>
                         <br>
                         <div class="table-responsive">
@@ -142,9 +126,9 @@
                                         <td><img src="{{asset($brand->brand_image)}}" style="width:70px;height:40px"></td>
                                         <td>{{$brand->brand_short_desc}}</td>
                                         <td>
-                                            <a href="#" class="btn btn-warning btn-sm  edit-element" data-id="{{$brand->id}}">Edit</a>
+                                            <a href="#" class="btn btn-warning btn-xs  edit-element" data-id="{{$brand->id}}">Edit</a>
                                           
-                                            <a href="{{route('delete.brand',$brand->id)}}" class="btn btn-danger btn-sm " id="delete">Delete</a>
+                                            <a href="{{route('delete.brand',$brand->id)}}" class="btn btn-danger btn-xs " id="delete">Delete</a>
                                         </td>
                                         </tr>
                                     @endforeach

@@ -30,7 +30,7 @@ class SliderController extends Controller
         ],$messages);
         
         if ($validator->fails()) {
-            return redirect()->back()->with('error', 'Validation error occure in adding data') 
+            return redirect()->route('viewslider')->with('error', 'Validation error occure in adding data') 
             ->withErrors($validator)->withInput();
         } 
         else
@@ -54,12 +54,12 @@ class SliderController extends Controller
 
               
                 DB::commit(); 
-                return redirect()->back()->with('success','Slider added successfully');   
+                return redirect()->route('viewslider')->with('success','Slider added successfully');   
 
             }
             catch(Exception $e) {
                 DB::rollBack();
-                return redirect()->back()->with('error','Some thing wen wrong');
+                return redirect()->route('viewslider')->with('error','Some thing wen wrong');
             }
 
         }    
@@ -73,7 +73,7 @@ class SliderController extends Controller
         //dd($brand);
         $slider->delete();
         
-        return redirect()->back()->with('success','Slider deleted successfully');
+        return redirect()->route('viewslider')->with('success','Slider deleted successfully');
     }
     /*------------show the slidet information -----*/
     public function edit(Slider $slider)
@@ -109,7 +109,7 @@ class SliderController extends Controller
         ],$messages);
         
         if ($validator->fails()) {
-            return redirect()->back()->with('error', 'Validation error occure in editing data') 
+            return redirect()->route('viewslider')->with('error', 'Validation error occure in editing data') 
             ->withErrors($validator)->withInput();
         }        
         else
@@ -136,7 +136,7 @@ class SliderController extends Controller
                     ]);
                     
                     // $brands=Brand::latest()->get(); 
-                    return redirect()->back()->with('success','Slider edited successfully');
+                    return redirect()->route('viewslider')->with('success','Slider edited successfully');
                 }  
                 else{ //ie if image not uploaded
                     $slider->update([
@@ -146,13 +146,13 @@ class SliderController extends Controller
                     ]);
                     // $brands=Brand::latest()->get(); 
                     // return view('admin.masters.viewbrand',compact('brands'))->with('success','Brand edited successfully');
-                    return redirect()->back()->with('success','slider edited successfully');
+                    return redirect()->route('viewslider')->with('success','slider edited successfully');
                 } 
                 
             }
             else
             {
-                return redirect()->back()->with('error','No record found');
+                return redirect()->route('viewslider')->with('error','No record found');
             }
 
         }
@@ -173,7 +173,7 @@ class SliderController extends Controller
           }
             
         $slider->save();        
-        return redirect()->back()->with('success',$msg);
+        return redirect()->route('viewslider')->with('success',$msg);
     }
 
     public function clean_input($text)
