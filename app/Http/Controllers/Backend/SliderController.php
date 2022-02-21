@@ -8,6 +8,7 @@ use App\Models\Slider;
 use Image;
 use Validator;
 use DB;
+use Session;
 
 class SliderController extends Controller
 { 

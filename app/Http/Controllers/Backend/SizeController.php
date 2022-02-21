@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Size;
 use Validator;
 use DB;
+use Session;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class SizeController extends Controller

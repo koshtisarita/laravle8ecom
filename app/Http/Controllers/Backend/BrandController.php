@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Image;
 use Validator;
 use DB;
+use Session;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class BrandController extends Controller
