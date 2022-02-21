@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -52,7 +53,7 @@
 
         </div>
 
-
+        @include('sweetalert::alert') 
 
         <!---footer----->
 
@@ -79,11 +80,10 @@
         <script src="{{asset('template/js/dataTables/jquery.dataTables.min.js')}}"></script>
         <script src="{{asset('template/js/dataTables/dataTables.bootstrap.min.js')}}"></script>
 
-        <!--sweetalert-->
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        
- 
-
+        <!-- Sweet Alter2  ---->
+        <script src="{{asset('vendor/sweetalert/sweetalert.all.js')}}"></script>
+      
+      
 
     </body>
 </html>

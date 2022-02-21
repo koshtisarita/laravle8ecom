@@ -395,7 +395,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
   color: #fff;
 }
 .menu li a{
-  line-height:1em;
+  line-height:1.5em;
   float:left;
   color: #fff;
   text-decoration: none;

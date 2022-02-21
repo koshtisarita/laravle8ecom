@@ -12,28 +12,12 @@
             <!-- /.col-lg-12 -->
         </div>
         <!-- /.row -->
-        @if(Session::has('addmessage'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                 {{Session::get('addmessage')}}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-        @endif
-
-        @if(session('editmessage'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                 {{session('editmessage')}}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-        @endif
+        
          <!-- Add Form Start -->
         
          <div class="row" id="addContainer" style="display:none;">
-              <div class="col-lg-8">
-                <div class="panel panel-info">
+              <div class="col-lg-12">
+                <div class="panel panel-primary">
                     <div class="panel-heading">
                        Add Brand
                     </div>
@@ -42,16 +26,54 @@
                             @csrf
                             <div class="form-group">
                                 <label>Brand Name <span style="color:red">*</span></label>
-                                <input type="text" class="form-control" name="brand_name" autocomplete="off"> 
+                                <input type="text" class="form-control" name="brand_name" autocomplete="off" required> 
                                 @error('brand_name')
                                 <span class="text-danger">{{$message}}</span>
                                 @enderror
                             </div>
-
-                            
-                            
                             <div class="form-group">
                                 <label>Brand Image <span style="color:red">*</span></label>
+                                <input type="file" name="brand_image" class="form-control" required>
+                                @error('brand_image')
+                                <span class="text-danger">{{$message}}</span>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
+                                <label>Brand Short Description <span style="color:red">*</span></label>
+                                <textarea class="form-control" rows="3" name="brand_short_desc" autocomplete="off" required></textarea>
+                                @error('brand_short_desc')
+                                <span class="text-danger">{{$message}}</span>
+                                @enderror
+                            </div>
+                            
+                            <input type="submit" class="btn btn-outline btn-primary" value="Submit">
+                            <input type="reset" class="btn btn-outline btn-default" value="Reset">
+                        </form>
+                     </div>                   
+                </div>                
+              </div>
+         </div>
+       
+         <div class="row" id="editContainer" style="display:none">
+              <div class="col-lg-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                       Edit Brand
+                    </div>
+                    <div class="panel-body" >
+                        <form method="POST" id="editForm" name="editForm" action="{{route('update.brand')}}" enctype="multipart/form-data">
+                            @csrf
+                            <div class="form-group">
+                                <label>Brand Name <span style="color:red">*</span></label>
+                                <input type="hidden" class="form-control" name="brand_id">
+                                <input type="text" class="form-control" name="brand_name" autocomplete="off" required> 
+                                @error('brand_name')
+                                <span class="text-danger">{{$message}}</span>
+                                @enderror
+                            </div> 
+                            <div class="form-group">
+                                <label>Brand Image </label> 
                                 <input type="file" name="brand_image" class="form-control">
                                 @error('brand_image')
                                 <span class="text-danger">{{$message}}</span>
@@ -60,31 +82,30 @@
 
                             <div class="form-group">
                                 <label>Brand Short Description <span style="color:red">*</span></label>
-                                <textarea class="form-control" rows="3" name="brand_short_desc" autocomplete="off"></textarea>
+                                <textarea class="form-control" rows="3" name="brand_short_desc" autocomplete="off" ></textarea>
                                 @error('brand_short_desc')
                                 <span class="text-danger">{{$message}}</span>
                                 @enderror
                             </div>
                             
-                            <input type="submit" class="btn btn-outline btn-primary" value="submit">
-                            <input type="reset" class="btn btn-outline btn-default" value="update">
+                            <input type="submit" class="btn btn-outline btn-primary" value="Update">
+                            <input type="reset" class="btn btn-outline btn-default" value="Reset">
                         </form>
                      </div>                   
                 </div>                
               </div>
          </div>
-    
-       
+         
         <div class="row">
-           <div class="col-lg-10">
+           <div class="col-lg-12">
                <div class="panel panel-primary">
                     <div class="panel-heading">
                         Brand List
                     </div>
                     <div class="panel-body">
                         <div >
-                            <button id="addToTable" class="btn btn-primary">Add <i class="fa fa-plus fa-fw"></i></button>
-                            <button id="btnCancel" class="btn btn-danger" style="display:none;">Cancel</button> 
+                            <button id="addToTable" class="btn btn-primary btn-xs">Add <i class="fa fa-plus fa-fw"></i></button>
+                            <button id="btnCancel" class="btn btn-danger btn-xs" style="display:none;">Cancel</button> 
                         </div>
                         <br>
                         <div class="table-responsive">
@@ -105,8 +126,9 @@
                                         <td><img src="{{asset($brand->brand_image)}}" style="width:70px;height:40px"></td>
                                         <td>{{$brand->brand_short_desc}}</td>
                                         <td>
-                                            <a href="{{route('edit.brand',$brand->id)}}" class="btn btn-warning">Edit</a>
-                                            <a href="{{route('delete.brand',$brand->id)}}" class="btn btn-danger" id="delete">Delete</a>
+                                            <a href="#" class="btn btn-warning btn-xs  edit-element" data-id="{{$brand->id}}">Edit</a>
+                                          
+                                            <a href="{{route('delete.brand',$brand->id)}}" class="btn btn-danger btn-xs " id="delete">Delete</a>
                                         </td>
                                         </tr>
                                     @endforeach
@@ -156,11 +178,39 @@
         });
         $("#tableContainer").on("click",".edit-element",function(e){
             e.preventDefault();
-            var id = $(this).attr('id');
-            $("#addContainer").slideUp();
-            $("#btnCancel").show();		
-            $("#addToTable").hide();
-            $("#editContainer").slideDown();
+            var brand = $(this).attr('data-id');
+            $.ajax({
+                url: '/brand/get-brand/'+brand,
+                type: 'GET',                
+                success: function(data, textStatus, jqXHR) {                   
+                     console.log(data);
+                     if(data.result == 1){
+
+                        $("#addContainer").slideUp();
+                        $("#btnCancel").show();		
+                        $("#addToTable").hide();
+                        $("#editContainer").slideDown();  
+                    
+                        $("#editForm input[name='brand_name']").val(data.brand.brand_name);
+                        $("#editForm textarea[name='brand_short_desc']").val(data.brand.brand_short_desc); 
+                        $("#editForm input[name='brand_id']").val(data.brand.id); 
+
+            
+                     }
+                     else{
+                        $("#addContainer").slideDown();
+                        $("#btnCancel").hide();
+                        $("#addToTable").show();
+                        alert(result.message);
+                     }
+                      
+
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert("Some thing went wrong");
+                },
+            });
+           
         });
     });
 </script>

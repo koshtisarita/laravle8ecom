@@ -184,6 +184,8 @@ return [
          /*----------------image intervention--------------------*/
          Intervention\Image\ImageServiceProvider::class,
 
+         /* ---- Sweet Alert ---*/
+         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
 
        
     ],
@@ -241,6 +243,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
 
     ],
 

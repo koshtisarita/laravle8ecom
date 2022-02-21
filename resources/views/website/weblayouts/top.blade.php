@@ -8,44 +8,57 @@
 				<nav class="limiter-menu-desktop p-l-45">
 					
 					<!-- Logo desktop -->		
-					<a href="#" class="logo">
-						<img src="images/icons/logo-02.png" alt="IMG-LOGO">
+					<a href="{{route('index')}}" class="logo">
+						<img src="customer_template/images/icons/logo3.png" alt="IMG-LOGO" width="180" height='100'>
 					</a>
 
 					<!-- Menu desktop -->
 					<div class="menu-desktop">
 						<ul class="main-menu">
-							<li>
-								<a href="index.html">Home</a>
-								 
-							</li>
-
+							 
 							<li>
 								<a href="#">Outfits</a>
 								<ul class="sub-menu">
 									<li><a href="{{route('product-list')}}">Homepage 1</a></li>
 									<li><a href="{{route('product-list')}}">Homepage 2</a></li>
 									<li><a href="{{route('product-list')}}">Homepage 3</a></li>
-								</ul>
-								 
-							</li>
-							<li>
-								<a href="#">Occasions</a>
-								<ul class="sub-menu">
+									<li><a href="{{route('product-list')}}">Homepage 1</a></li>
+									<li><a href="{{route('product-list')}}">Homepage 2</a></li>
+									<li><a href="{{route('product-list')}}">Homepage 3</a></li>
+									<li><a href="{{route('product-list')}}">Homepage 1</a></li>
+									<li><a href="{{route('product-list')}}">Homepage 2</a></li>
+									<li><a href="{{route('product-list')}}">Homepage 3</a></li>
+									
+									<li><a href="{{route('product-list')}}">Homepage 1</a></li>
+									<li><a href="{{route('product-list')}}">Homepage 2</a></li>
+									<li><a href="{{route('product-list')}}">Homepage 3</a></li>
+									<li><a href="{{route('product-list')}}">Homepage 1</a></li>
+									<li><a href="{{route('product-list')}}">Homepage 2</a></li>
+									<li><a href="{{route('product-list')}}">Homepage 3</a></li>
 									<li><a href="{{route('product-list')}}">Homepage 1</a></li>
 									<li><a href="{{route('product-list')}}">Homepage 2</a></li>
 									<li><a href="{{route('product-list')}}">Homepage 3</a></li>
 								</ul>
-							 
+								 
+							</li>
+							<li>
+								<a href="#">Occasions</a>								 
+								<ul class="sub-menu">
+									<li><a href="{{route('product-list')}}">Homepage 1</a></li>
+									<li><a href="{{route('product-list')}}">Homepage 2</a></li>
+									<li><a href="{{route('product-list')}}">Homepage 3</a></li>
+								</ul>                               
+									 	
+ 
 							</li>
 
 							<!-- <li class="label1" data-label1="hot">
 								<a href="{{route('cart')}}">Features</a>
-							</li>
+							</li>-->
 
 							<li>
-								<a href="blog.html">Blog</a>
-							</li> -->
+								<a href="blog.html">Brands</a>
+							</li> 
 
 							<li>
 								<a href="{{route('about-us')}}">About</a>
@@ -79,7 +92,7 @@
 		<div class="wrap-header-mobile">
 			<!-- Logo moblie -->		
 			<div class="logo-mobile">
-				<a href="index.html"><img src="images/icons/logo-01.png" alt="IMG-LOGO"></a>
+				<a href="index.html"><img src="customer_template/images/icons/logo1.jpeg" alt="IMG-LOGO"></a>
 			</div>
 
 			<!-- Icon header -->
@@ -200,7 +213,7 @@
 					</li>
 
 					<li class="p-b-13">
-						<a href="#" class="stext-102 cl2 hov-cl1 trans-04">
+						<a href="{{route('myaccount')}}" class="stext-102 cl2 hov-cl1 trans-04">
 							My Account
 						</a>
 					</li>
@@ -326,7 +339,7 @@
 				<ul class="header-cart-wrapitem w-full">
 					<li class="header-cart-item flex-w flex-t m-b-12">
 						<div class="header-cart-item-img">
-							<img src="images/item-cart-01.jpg" alt="IMG">
+							<img src="customer_template/images/item-cart-01.jpg" alt="IMG">
 						</div>
 
 						<div class="header-cart-item-txt p-t-8">

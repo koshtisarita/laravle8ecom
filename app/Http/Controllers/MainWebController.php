@@ -6,39 +6,24 @@ use Illuminate\Http\Request;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Slider;
 use Log;
 use Hash;
 use Socialite;
+use Validator;
+use DB;
 class MainWebController extends Controller
 {
-     public function index()
-     {
-         return view('website.pages.index');
-     }
-     public function contactus()
-     {
-         return view('website.pages.contactus');
-     }
-     public function aboutus()
-     {
-         return view('website.pages.aboutus');
-     }
-     public function cart()
-     {
-         return view('website.pages.cart');
-     }
-     public function product_list()
-     {
-         return view('website.pages.productlist');
-     }
-     public function product_detail()
-     {
-         return view('website.pages.productdetail');
-     }
-     public function loginpage()
-     {
-         return view('website.pages.login_registration');
-     }
+     public function index(){
+         $sliders= Slider::where('status','=',1)->get();      
+         return view('website.pages.index',compact('sliders'));
+        }
+     public function contactus(){ return view('website.pages.contactus'); }
+     public function aboutus(){ return view('website.pages.aboutus');}
+     public function cart(){return view('website.pages.cart');}
+     public function product_list(){return view('website.pages.productlist');}
+     public function product_detail(){return view('website.pages.productdetail');}
+     public function loginpage(){return view('website.pages.login_registration');}
      //login check
      public function store(Request $request)
      {
@@ -54,19 +39,15 @@ class MainWebController extends Controller
                 {     
                         //Admin Check
                         if ($user->role_id == 0)
-                        {        
-                            
+                        {   
                             $request->session()->regenerate();
                             Auth::login($user);
-                            return redirect('/view-dashboard');
-                            // return redirect()->intended(RouteServiceProvider::ADMIN);
+                            return redirect('/view-dashboard'); 
                         } 
                         else
-                        {
-                             
+                        {                             
                             if($user->status == 1)
-                             {
-                                  
+                             {                                  
                                  $request->session()->regenerate();
                                  Auth::login($user);
                                  return redirect()->route('index');
@@ -97,21 +78,21 @@ class MainWebController extends Controller
      {
          try {
      
-             $user = Socialite::driver('google')->user(); 
+             $user = Socialite::driver('google')->stateless()->user(); 
              $google_user_id = $user->id;
              $finduser = User::where('google_id', $user->id)->first();
       
              if($finduser){
       
                  Auth::login($finduser);
-                 Log::info($finduser);   
                  return redirect('/');
       
              }else{
                 $finduser = User::where('email',$user->email)->first();
                 if($finduser)
                 {
-                    return redirect()->back()->with('error','This email address already exist');
+                    Auth::login($finduser);
+                    return redirect('/');
                 }
                 else
                 {
@@ -120,11 +101,10 @@ class MainWebController extends Controller
                     $newUser->lname = $user->name;
                     $newUser->email = $user->email;
                     $newUser->dob = date('Y-m-d');
-                    $newUser->password = encrypt('123456dummy');
+                    $newUser->password = Hash::make('123456dummy');
                     $newUser->google_id = $google_user_id;
                     $newUser->status = 1;
-                    $newUser->save();           
-                     
+                    $newUser->save(); 
                    
                      Auth::login($newUser);                    
                      return redirect('/');
@@ -142,10 +122,8 @@ class MainWebController extends Controller
      //function run when user click the link send on register email
      public function activation($uid)
      {
-        $user_id = base64_decode($uid);
-        
+        $user_id = base64_decode($uid);        
          $user = User::find($user_id);
-
          //active the particular user
          $user->status = 1;
          $user->save();
@@ -153,5 +131,60 @@ class MainWebController extends Controller
          return redirect(RouteServiceProvider::HOME);
          
      }
-     
+     //account detail and update function
+     public function myaccount()
+     {
+        if (Auth::check()) {
+            // The user is logged in...                      
+            return view('website.pages.myaccount');
+        }
+        else
+        {
+            return redirect('/');
+        }
+     }
+     public function update_account (Request $request)
+     {
+            // The user is logged in...        
+            $request_data = $request->all();
+         
+            $messages = [
+                'name.required' => 'Please enter first name',
+                'lname.required' => 'Please enter last name',                
+                'dob.required' => 'Please enter date of birth',      
+    
+            ];
+            $validator = Validator::make($request_data, [       
+                'name' => 'required|string|max:255',
+                'lname' => 'required|string|max:255',              
+                'dob'=>'required'
+            ],$messages);
+    
+            if ($validator->fails()) {
+                return redirect()->back()->with('error', 'Validation Error')->withErrors($validator)->withInput();
+            } 
+            else { 
+                   try
+                   {
+                       Log::info('in try');
+                        DB::beginTransaction();
+                        $user = Auth::user();
+                         
+                        $user->name = $request->name;
+                        $user->lname = $request->lname;
+                        $user->dob = $request->dob;                         
+                        $user->is_newsletter = (isset($request->is_newsletter))?1:0;
+                        $user->save();
+                        DB::commit();
+                     
+                        return redirect()->back()->with('success','User detail updated successfully.');
+                        
+                       
+                   }
+                   catch(Exception $e) {
+                        DB::rollBack();
+                        return redirect()->back()->with('error','Some thing wen wrong');
+                    }    
+                }
+     }
 }
