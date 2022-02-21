@@ -6,6 +6,7 @@ use App\Http\Controllers\MainAdminController;
 use App\Http\Controllers\MainWebController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\SliderController;
+use App\Http\Controllers\Backend\SizeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,6 +40,12 @@ Route::group(['middleware' => ['IsAdmin']], function () {
 
     
     Route::get('/view-sizes', [MainAdminController::class,'viewsize'])->name('viewsize');
+    Route::prefix('size')->group(function(){
+        Route::post('/add',[SizeController::class,'store'])->name('add.size'); 
+        Route::get('/get-size/{size}',[SizeController::class,'edit'])->name('get.size'); 
+        Route::post('/update',[SizeController::class,'update'])->name('update.size');
+        Route::get('/delete/{size}',[SizeController::class,'destroy'])->name('delete.size');
+    });
     Route::get('/view-pincode', [MainAdminController::class,'viewpincode'])->name('viewpincode');
     Route::get('/view-setting', [MainAdminController::class,'viewsetting'])->name('viewsetting'); 
 

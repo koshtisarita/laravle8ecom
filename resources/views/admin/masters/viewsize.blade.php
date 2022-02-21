@@ -21,39 +21,40 @@
                        Add Size
                     </div>
                     <div class="panel-body">
-                        <form role="form">
+                        <form role="form" id="addForm" action="{{route('add.size')}}" method="POST">
+                            @csrf
                             <div class="row">
                                 <div class="col-lg-3">
                                     <label>Size Number</label>
-                                    <input type="number" class="form-control" name="name" id="name"> 
+                                    <input type="number" class="form-control" name="size_no" id="size_no" value="{{old('size_no')}}" required> 
                                 </div>
                                 <div class="col-lg-3">
                                     <label>Size Value</label>
-                                    <input type="text"  class="form-control" name="name" id="name"> 
+                                    <input type="text"  class="form-control" name="size_shortcut" id="size_shortcut" value="{{old('size_shortcut')}}" required> 
                                 </div>
                             </div> 
                             <div class="row">   
                                 <div class="col-lg-3">
                                     <label>Waist</label>
-                                    <input type="text"  class="form-control" name="name" id="name"> 
+                                    <input type="number"  class="form-control" name="waist_size" id="waist_size" value="{{old('waist_size')}}" required> 
                                     <p class="help-block">(In CM)</p>
 
                                 </div>
                                 <div class="col-lg-3">
                                     <label>Hip</label>
-                                    <input type="text"  class="form-control" name="name" id="name"> 
+                                    <input type="number"  class="form-control" name="hip_size" id="hip_size" value="{{old('hip_size')}}" required> 
                                     <p class="help-block">(In CM)</p>
                                 </div>
                                 <div class="col-lg-3">
                                     <label>Chest</label>
-                                    <input type="text"  class="form-control" name="name" id="name">
+                                    <input type="number"  class="form-control" name="chest_size" id="chest_size" value="{{old('chest_size')}}" required>
                                     <p class="help-block">(In CM)</p> 
                                 </div>
-                                <div class="col-lg-3">
+                                <!-- <div class="col-lg-3">
                                     <label>Length</label>
                                     <input type="text"  class="form-control" name="name" id="name">
                                     <p class="help-block">(In CM)</p> 
-                                </div>
+                                </div> -->
                             </div>
                             <div class="row">   
                                 <div class="col-lg-12">
@@ -78,44 +79,46 @@
                         Edit Size
                     </div>
                      <div class="panel-body">
-                         <form role="form">
+                        <form role="form" id="editForm" action="{{route('update.size')}}" method="POST">
+                            @csrf
                             <div class="row">
                                 <div class="col-lg-3">
                                     <label>Size Number</label>
-                                    <input type="number" class="form-control" name="name" id="name"> 
+                                    <input type="hidden" name="size_id" id="size_id">
+                                    <input type="number" class="form-control" name="size_no" id="size_no" value="{{old('size_no')}}" required> 
                                 </div>
                                 <div class="col-lg-3">
                                     <label>Size Value</label>
-                                    <input type="text"  class="form-control" name="name" id="name"> 
+                                    <input type="text"  class="form-control" name="size_shortcut" id="size_shortcut" value="{{old('size_shortcut')}}" required> 
                                 </div>
                             </div> 
                             <div class="row">   
                                 <div class="col-lg-3">
                                     <label>Waist</label>
-                                    <input type="text"  class="form-control" name="name" id="name"> 
+                                    <input type="number"  class="form-control" name="waist_size" id="waist_size" value="{{old('waist_size')}}" required> 
                                     <p class="help-block">(In CM)</p>
 
                                 </div>
                                 <div class="col-lg-3">
                                     <label>Hip</label>
-                                    <input type="text"  class="form-control" name="name" id="name"> 
+                                    <input type="number"  class="form-control" name="hip_size" id="hip_size" value="{{old('hip_size')}}" required> 
                                     <p class="help-block">(In CM)</p>
                                 </div>
                                 <div class="col-lg-3">
                                     <label>Chest</label>
-                                    <input type="text"  class="form-control" name="name" id="name">
+                                    <input type="number"  class="form-control" name="chest_size" id="chest_size" value="{{old('chest_size')}}" required>
                                     <p class="help-block">(In CM)</p> 
                                 </div>
-                                <div class="col-lg-3">
+                                <!-- <div class="col-lg-3">
                                     <label>Length</label>
                                     <input type="text"  class="form-control" name="name" id="name">
                                     <p class="help-block">(In CM)</p> 
-                                </div>
+                                </div> -->
                             </div>
                             <div class="row">   
                                 <div class="col-lg-12">
                                     <br>
-                                    <button type="submit" class="btn btn-outline btn-primary">Add</button>
+                                    <button type="submit" class="btn btn-outline btn-primary">Update</button>
                                     <button type="reset" class="btn btn-outline btn-default">Reset</button>
                                 </div>
                             </div>
@@ -132,8 +135,8 @@
                     </div>
                     <div class="panel-body">
                         <div >
-                            <button id="addToTable" class="btn btn-primary">Add <i class="fa fa-plus fa-fw"></i></button>
-                            <button id="btnCancel" class="btn btn-danger" style="display:none;">Cancel</button> 
+                            <button id="addToTable" class="btn btn-primary btn-xs">Add <i class="fa fa-plus fa-fw"></i></button>
+                            <button id="btnCancel" class="btn btn-danger btn-xs" style="display:none;">Cancel</button> 
                         </div>
                         <br>
                         <div class="table-responsive">
@@ -141,85 +144,27 @@
                                 <thead>
                                     <tr>
                                         <th>S. No</th>
-                                        <th>Size Info</th>
-                                        <th>Size Description</th> 
+                                        <th>Size No/Size Shortcut</th>
+                                        <th>Waist Size</th>
+                                        <th>Hip Size</th>
+                                        <th>Chest Size</th> 
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="odd gradeX">
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 4.0</td>
-                                        
-                                        <td class="center">4</td>
-                                        <td class="center"> 
-                                            <button type="button" class="btn btn-warning btn-xs edit-element">Edit</button>
-                                            <button type="button" class="btn btn-primary btn-xs delete-element">Delete</button>
-                                            <button type="button" class="btn btn-success btn-xs activate-element">Active</button>
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.0</td> 
-                                        <td class="center">1</td>
-                                        <td class="center"> 
-                                            <button type="button" class="btn btn-warning btn-xs edit-element">Edit</button>
-                                            <button type="button" class="btn btn-primary btn-xs delete-element">Delete</button>
-                                            <button type="button" class="btn btn-success btn-xs activate-element">Active</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.1</td> 
-                                        <td class="center">1.1</td>
-                                        <td class="center"> 
-                                            <button type="button" class="btn btn-warning btn-xs edit-element">Edit</button>
-                                            <button type="button" class="btn btn-primary btn-xs delete-element">Delete</button>
-                                            <button type="button" class="btn btn-success btn-xs activate-element">Active</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.2</td>
-                                        <td>Win 95+ / OSX.1+</td> 
-                                        <td class="center"> 
-                                        <button type="button" class="btn btn-warning btn-xs edit-element">Edit</button>
-                                            <button type="button" class="btn btn-primary btn-xs delete-element">Delete</button>
-                                            <button type="button" class="btn btn-success btn-xs activate-element">Active</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.3</td>
-                                        <td>Win 95+ / OSX.1+</td> 
-                                        <td class="center"> 
-                                            <button type="button" class="btn btn-warning btn-xs edit-element">Edit</button>
-                                            <button type="button" class="btn btn-primary btn-xs delete-element">Delete</button>
-                                            <button type="button" class="btn btn-success btn-xs activate-element">Active</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.4</td>
-                                        <td>Win 95+ / OSX.1+</td> 
-                                        <td class="center"> 
-                                            <button type="button" class="btn btn-warning btn-xs edit-element">Edit</button>
-                                            <button type="button" class="btn btn-primary btn-xs delete-element">Delete</button>
-                                            <button type="button" class="btn btn-success btn-xs activate-element">Active</button>
-                                        </td>
-                                    </tr>
-                                
-                                    <tr class="gradeU">
-                                        <td>Other browsers</td>
-                                        <td>All others</td> 
-                                        <td class="center">-</td>
-                                        <td class="center"> 
-                                            <button type="button" class="btn btn-warning btn-xs edit-element">Edit</button>
-                                            <button type="button" class="btn btn-primary btn-xs delete-element">Delete</button>
-                                            <button type="button" class="btn btn-success btn-xs activate-element">Active</button>
-                                        </td>
-                                    </tr>
+                                @foreach($sizes as $key=>$size)
+                                <tr class="odd gradeX">
+                                    <td>{{$key+1}}</td>
+                                    <td>{{$size->size_no}}/{{$size->size_shortcut}}</td>
+                                    <td>{{$size->waist_size}}</td>
+                                    <td>{{$size->hip_size}}</td>
+                                    <td>{{$size->chest_size}}</td> 
+                                    <td class="center"> 
+                                    <a href="#" class="btn btn-warning btn-xs  edit-element" data-id="{{$size->id}}">Edit</a>
+                                    <a href="{{route('delete.size',$size->id)}}" class="btn btn-danger btn-xs " id="delete">Delete</a>
+                                    </td>
+                                </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -276,5 +221,93 @@
         });
     });
 </script>
-@endsection
- 
+<!-- Get the size data -->
+<script>
+    $("#tableContainer").on("click",".edit-element",function(e){
+            e.preventDefault();
+            var size = $(this).attr('data-id');
+            $.ajax({
+                url: '/size/get-size/'+size,
+                type: 'GET',                
+                success: function(data, textStatus, jqXHR) {                   
+                     console.log(data);
+                     if(data.result == 1){
+
+                        $("#addContainer").slideUp();
+                        $("#btnCancel").show();		
+                        $("#addToTable").hide();
+                        $("#editContainer").slideDown();  
+                    
+                        $("#editForm input[name='size_no']").val(data.size.size_no);
+                        $("#editForm input[name='size_shortcut']").val(data.size.size_shortcut);
+                        $("#editForm input[name='waist_size']").val(data.size.waist_size);
+                        $("#editForm input[name='hip_size']").val(data.size.hip_size);
+                        $("#editForm input[name='chest_size']").val(data.size.chest_size); 
+                        $("#editForm input[name='size_id']").val(size); 
+
+            
+                     }
+                     else{
+                        $("#addContainer").slideDown();
+                        $("#btnCancel").hide();
+                        $("#addToTable").show();
+                        alert(result.message);
+                     }
+                      
+
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert("Some thing went wrong");
+                },
+            });
+           
+    });
+     
+</script>
+
+<!---------------  delete alert ---------------->
+<script type="text/javascript">
+    $(function(){
+        $(document).on('click','#delete',function(e){
+            e.preventDefault();
+            var link=$(this).attr("href");
+            const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      })
+      
+      swalWithBootstrapButtons.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = link
+          swalWithBootstrapButtons.fire(
+            'Deleted!',
+            'Your data has been deleted.',
+            'success'
+          )
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire(
+            'Cancelled',
+            'Your data is safe :)',
+            'error'
+          )
+        }
+      })
+        });
+    });
+    
+ </script>
+@endsection 

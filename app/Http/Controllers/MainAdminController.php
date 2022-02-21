@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Brand;
 use App\Models\Slider;
+use App\Models\Size;
 use RealRashid\SweetAlert\Facades\Alert;
 use Session;
 use Log;
@@ -34,7 +35,16 @@ class MainAdminController extends Controller
     }
     public function viewsize()
     {
-        return view('admin.masters.viewsize');
+        $sizes= Size::latest()->get();
+        if(Session::has('success'))
+        { 
+            Alert::success('Success!',Session::get('success'));
+        }
+        if(Session::has('error'))
+        {            
+            Alert::error('Error',Session::get('error'));
+        }
+        return view('admin.masters.viewsize',compact('sizes'));
     }
     public function viewpincode()
     {
