@@ -192,7 +192,7 @@
             window.location.href = link
           swalWithBootstrapButtons.fire(
             'Deleted!',
-            'Your file has been deleted.',
+            'Your data has been deleted.',
             'success'
           )
         } else if (
@@ -201,7 +201,7 @@
         ) {
           swalWithBootstrapButtons.fire(
             'Cancelled',
-            'Your imaginary file is safe :)',
+            'Your data is safe with us :)',
             'error'
           )
         }

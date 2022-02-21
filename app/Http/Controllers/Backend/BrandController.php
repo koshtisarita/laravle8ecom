@@ -76,7 +76,8 @@ class BrandController extends Controller
             ]);
             
             $brands=Brand::latest()->get(); 
-            return view('admin.masters.viewbrand',compact('brands'))->with('editmessage','Brand edited successfully');
+            $editmessage="Brand edited successfully";
+            return view('admin.masters.viewbrand',compact('brands','editmessage'));
         }  
         else{ //ie if image not uploaded
             $brand->update([
@@ -85,7 +86,8 @@ class BrandController extends Controller
                 'brand_short_desc'=>$request->brand_short_desc,
             ]);
             $brands=Brand::latest()->get(); 
-            return view('admin.masters.viewbrand',compact('brands'))->with('editmessage','Brand edited successfully');
+            $editmessage="Brand edited successfully";
+            return view('admin.masters.viewbrand',compact('brands','editmessage'));
         }     
     }
     /*---------------------- delete brand data--------------------*/
@@ -96,7 +98,7 @@ class BrandController extends Controller
         unlink($image);
         //dd($brand);
         $brand->delete();
-        
+        $brands=Brand::latest()->get(); 
         return view('admin.masters.viewbrand',compact('brands'))->with('deletemessage','Brand deleted successfully');
     }
 }
