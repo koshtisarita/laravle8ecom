@@ -167,6 +167,7 @@ class BrandController extends Controller
         }
          
     }
+
     // public function update1(Request $request, Brand $brand)
     // {
     //     $old_image=$request->old_image; //path to the image
@@ -200,7 +201,6 @@ class BrandController extends Controller
     {
         
         $image=$brand->brand_image;
-
         unlink($image);
         //dd($brand);
         $brand->delete();        
