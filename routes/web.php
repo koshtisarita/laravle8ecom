@@ -8,6 +8,7 @@ use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SizeController;
 use App\Http\Controllers\Backend\PincodeController;
+use App\Http\Controllers\Backend\CategoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -62,6 +63,16 @@ Route::group(['middleware' => ['IsAdmin']], function () {
         Route::post('/add',[PincodeController::class,'store'])->name('add.pincode');
         Route::get('/update-status/{pincode}',[PincodeController::class,'update_status'])->name('update-status.pincode');       
         Route::get('/delete/{pincode}',[PincodeController::class,'destroy'])->name('delete.pincode');
+    });
+
+
+
+    Route::get('/view-category', [CategoryController::class,'viewcategory'])->name('viewcategory');
+    Route::prefix('category')->group(function(){
+        Route::post('/add',[CategoryController::class,'store'])->name('add.category');      
+        Route::get('/get-category/{category}',[CategoryController::class,'edit'])->name('get.category'); 
+        Route::post('/update',[CategoryController::class,'update'])->name('update.category');
+        Route::get('/delete/{category}',[CategoryController::class,'destroy'])->name('delete.category');
     });
 
     Route::get('/view-setting', [MainAdminController::class,'viewsetting'])->name('viewsetting'); 

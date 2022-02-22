@@ -54,7 +54,8 @@ class PincodeController extends Controller
                   /** Now save all data to db */
                   pincode:: insert([
                       'pincode'=>$request->pincode,
-                     
+                      'created_at'=>  $today_date,
+                      'updated_at' =>$today_date
                   ]); 
                   DB::commit();                 
                   return redirect()->route('viewpincode')->with('success','Pincode added successfully');   
