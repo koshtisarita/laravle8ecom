@@ -207,3 +207,10 @@ class BrandController extends Controller
         return redirect()->back()->with('deletemessage','Brand deleted successfully');
     }
 }
+image=$brand->brand_image;
+        unlink($image);
+        //dd($brand);
+        $brand->delete();        
+        return redirect()->back()->with('deletemessage','Brand deleted successfully');
+    }
+}
