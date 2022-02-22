@@ -74,7 +74,7 @@ class BrandController extends Controller
             }
             catch(Exception $e) {
                 DB::rollBack();
-                return redirect()->route('viewbrand')->with('error','Some thing went wrong');
+                return redirect()->route('viewbrand')->with('error','Some thing wen wrong');
             }
 
         }    
@@ -123,23 +123,51 @@ class BrandController extends Controller
         else
          {  
             $brand = Brand::find($request->brand_id);
+            
+            if($brand)
+            {
+                
+                $old_image=$brand->brand_image; //path to the image
+                /*------if user has uploaded a pic---------*/
+                if($request->file('brand_image')){
 
-            $brand->update([
-                'brand_name'=>$request->brand_name,
-                'brand_name_slug'=>strtolower(str_replace(' ','-',$request->brand_name)),
-                'brand_short_desc'=>$request->brand_short_desc,
-            ]);
-            $brands=Brand::latest()->get(); 
-            $editmessage="Brand edited successfully";
-            return view('admin.masters.viewbrand',compact('brands','editmessage'));
-            
-            
-            
-        }  
-        
-           
-          
+                    unlink($old_image);
+                    $image=$request->file('brand_image');
+                    $name_gen=hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+                    Image::make($image)->resize(300,300)->save('upload/brand/'.$name_gen);
+                    $save_url='upload/brand/'.$name_gen;
+                    $brand->update([
+                        'brand_name'=>$request->brand_name,
+                        // 'brand_name_slug'=>strtolower(str_replace(' ','-',$request->brand_name)),
+                        'brand_image'=>$save_url,
+                        'brand_short_desc'=>$request->brand_short_desc,
+                    ]);
+                    
+                    // $brands=Brand::latest()->get(); 
+                    return redirect()->route('viewbrand')->with('success','Brand edited successfully');
+                }  
+                else{ //ie if image not uploaded
+                    $brand->update([
+                        'brand_name'=>$request->brand_name,
+                        'brand_name_slug'=>strtolower(str_replace(' ','-',$request->brand_name)),
+                        'brand_short_desc'=>$request->brand_short_desc,
+                    ]);
+                    // $brands=Brand::latest()->get(); 
+                    // return view('admin.masters.viewbrand',compact('brands'))->with('success','Brand edited successfully');
+                  
+                    return redirect()->route('viewbrand')->with('success','Brand edited successfully');
+                } 
+                
+            }
+            else
+            {
+                return redirect()->route('viewbrand')->with('error','No record found');
+            }
+
+        }
+         
     }
+
     // public function update1(Request $request, Brand $brand)
     // {
     //     $old_image=$request->old_image; //path to the image
@@ -173,11 +201,9 @@ class BrandController extends Controller
     {
         
         $image=$brand->brand_image;
-
         unlink($image);
         //dd($brand);
-        $brand->delete();
-        $brands=Brand::latest()->get(); 
-        return view('admin.masters.viewbrand',compact('brands'))->with('deletemessage','Brand deleted successfully');
+        $brand->delete();        
+        return redirect()->back()->with('deletemessage','Brand deleted successfully');
     }
 }
