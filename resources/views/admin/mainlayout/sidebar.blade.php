@@ -35,7 +35,13 @@
                     </li>  
                     <li>                         
                         <a href="{{route('viewpincode')}}">Pincode </a>
-                    </li>  
+                    </li> 
+                    <li>                         
+                        <a href="{{route('viewcategory')}}">Category</a>
+                    </li>
+                    <li>                         
+                        <a href="{{route('viewsubcategory')}}">Sub-Category</a>
+                    </li>   
                     <li>                         
                         <a href="{{route('viewsetting')}}">Settings </a>
                     </li>  

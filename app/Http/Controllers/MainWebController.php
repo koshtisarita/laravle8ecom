@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Slider;
+use App\Models\Category;
 use Log;
 use Hash;
 use Socialite;
@@ -15,9 +16,13 @@ use DB;
 class MainWebController extends Controller
 {
      public function index(){
-         $sliders= Slider::where('status','=',1)->get();      
-         return view('website.pages.index',compact('sliders'));
+         $sliders= Slider::where('status','=',1)->get();     
+         $categories= Category::all();    
+         return view('website.pages.index',compact('sliders','categories'));
         }
+     
+
+        
      public function contactus(){ return view('website.pages.contactus'); }
      public function aboutus(){ return view('website.pages.aboutus');}
      public function cart(){return view('website.pages.cart');}
