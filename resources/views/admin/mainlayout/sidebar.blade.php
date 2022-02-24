@@ -38,6 +38,9 @@
                     </li> 
                     <li>                         
                         <a href="{{route('viewcategory')}}">Category</a>
+                    </li>
+                    <li>                         
+                        <a href="{{route('viewsubcategory')}}">Sub-Category</a>
                     </li>   
                     <li>                         
                         <a href="{{route('viewsetting')}}">Settings </a>

@@ -8,6 +8,7 @@ use App\Models\Category;
 use Validator;
 use DB;
 use Session;
+use Image;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class CategoryController extends Controller
@@ -35,9 +36,12 @@ class CategoryController extends Controller
         //Aliases
        $messages = [
            'name.required'=>'Please enter Category Name', 
+           'image.required'=>'Please upload a image',
+           'image.mimes'=>'Invalid file format'
        ];
        $validator = Validator::make($request_data, [         
            'name'=>'required', 
+           'image'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
        ],$messages);
       
        if ($validator->fails()) {
@@ -49,9 +53,16 @@ class CategoryController extends Controller
             try
             {
                DB::beginTransaction();
+               $image=$request->file('image');
+               $name_gen=hexdec(uniqid()).".".$image->getClientOriginalExtension();
+               Image::make($image)->resize(600,400)->save('upload/category/'.$name_gen);
+               $save_url='upload/category/'.$name_gen;
+
                $today_date = date('Y-m-d h:i:s');
                Category:: insert([
                    'name'=>ucfirst($request->name),
+                   'image_path'=>$save_url,
+                   'link'=>trim($request->ref_link),
                    'created_at'=>  $today_date,
                    'updated_at' =>$today_date
                ]);
@@ -91,12 +102,19 @@ class CategoryController extends Controller
         $request_data = $request->all();
         //Aliases
        $messages = [
-           'name.required'=>'Please enter Category Name', 
+           'name.required'=>'Please enter Category Name',  
+           'image.mimes'=>'Invalid file format'
        ];
+       if($request->file('image'))
+       {
+            $validator = Validator::make($request_data, [         
+                'name'=>'required', 
+                'image'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            ],$messages);
+       }
        $validator = Validator::make($request_data, [         
-           'name'=>'required', 
+        'name'=>'required',  
        ],$messages);
-      
        if ($validator->fails()) {
            return redirect()->back()->with('error', 'Validation error occure in adding data') 
            ->withErrors($validator)->withInput();
@@ -106,12 +124,32 @@ class CategoryController extends Controller
             try
             {
                DB::beginTransaction();
-               $category = Category::find($request->id);              
-               $category->name = $request->name;
-               $category->save();
-               
-               DB::commit();                 
-               return redirect()->route('viewcategory')->with('success','Category updated successfully');  
+
+               $category = Category::find($request->id);     
+               if($category)
+               {                   
+                  $old_image=$category->image_path; //path to the image
+                  if($request->file('image'))
+                   {
+                        unlink($old_image);
+                        $image=$request->file('image');
+                        $name_gen=hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+                        Image::make($image)->resize(600,400)->save('upload/category/'.$name_gen);
+                        $save_url='upload/category/'.$name_gen;  
+                        $category->image_path = $save_url;  //image path set                  
+                
+                    }
+                  $category->name = $request->name;
+                  $category->link = trim($request->ref_link);
+                  $category->save();
+                  DB::commit();                 
+                  return redirect()->route('viewcategory')->with('success','Category updated successfully');
+                 
+               }
+               else
+               {
+                return redirect()->route('viewcategory')->with('erroe','No Data Found');
+               }  
             }
             catch(Exception $e) {
                 DB::rollBack();

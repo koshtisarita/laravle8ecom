@@ -57,7 +57,7 @@
 							</li>-->
 
 							<li>
-								<a href="blog.html">Brands</a>
+								<a href="{{route('all-brands')}}">Brands</a>
 							</li> 
 
 							<li>

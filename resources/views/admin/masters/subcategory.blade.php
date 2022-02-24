@@ -1,5 +1,5 @@
 @extends('admin.mainlayout.master')
-@section('title','Admin : Category')
+@section('title','Admin : Sub-Category')
 
 @section('contents')
 <div id="page-wrapper">
@@ -7,7 +7,7 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Category</h1>
+                <h1 class="page-header">Sub-Category</h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
@@ -18,37 +18,47 @@
               <div class="col-lg-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                       Add Category
+                       Add Sub-Category
                     </div>
                     <div class="panel-body">
-                        <form role="form" id="addForm" action="{{route('add.category')}}" method="POST" enctype="multipart/form-data">
+                        <form role="form" id="addForm" action="{{route('add.subcategory')}}" method="POST">
                             @csrf
-                            <div class="form-group">
-                                <label>Category Name <span style="color:red">*</span></label> 
-                                <input type="text" class="form-control" name="name" autocomplete="off" required> 
-                                @error('name')
-                                <span class="text-danger">{{$message}}</span>
-                                @enderror
-                            </div> 
-                            <div class="form-group">
-                                <label>Category Image  <span style="color:red">*</span></label> 
-                                <input type="file" name="image" class="form-control">
-                                @error('image')
-                                <span class="text-danger">{{$message}}</span>
-                                @enderror
+                           
+                            <div class="form-group col-md-6">
+                                <label for="inputState">Select Category</label>
+                                <select id="inputState" class="form-control">
+                                    <option selected>Choose...</option>
+                                    @foreach($categories as $category)
+                                        <option value="{{$category->id}}">{{$category->name}}</option> 
+                                    @endforeach
+                                </select>
                             </div>
-
-                            <div class="form-group">
-                                <label>Category Reference Link</label>
-                                <input  type="text" name="ref_link" class="form-control" placeholder="ex: http://www.xyz.com"> 
-                                @error('ref_link')
-                                <span class="text-danger">{{$message}}</span>
-                                @enderror
+                            <div class="form-group col-md-6">
+                                <label for="">Sub-Category Name</label>
+                                <input type="text" class="form-control" id=" " name="" require>
                             </div>
-                            
-                            <button type="submit" class="btn btn-outline btn-primary">Add</button>                        
+                            <div class="form-group col-md-12">
+                                <label for="inputAddress2">Description</label> 
+                                <textarea name="" id="" class="form-control"></textarea>
+                            </div>
+                            <h5><b>SEO Prameters</b></h5> <hr>
+                            <div class="form-group col-md-4">
+                                <label for="">Title</label>
+                                <input type="text" class="form-control" id=" " name="" require>
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label for="">Keywords</label>
+                                <input type="text" class="form-control" id=" " name="" require>
+                            </div>
+                         
+                            <div class="form-group col-md-12">
+                                <label for="inputAddress2">Description</label> 
+                                <textarea name="" id="" class="form-control"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-outline btn-primary">Add</button>
                             <button type="reset" class="btn btn-outline btn-default">Reset</button>
-                             
+                               
+                            </div> 
                           
                         </form>
                      </div>                   
@@ -64,38 +74,46 @@
               <div class="col-lg-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                       Edit Category
+                       Add Sub-Category
                     </div>
                     <div class="panel-body">
-                        <form role="form" id="editForm" action="{{route('update.category')}}" method="POST" enctype="multipart/form-data">
+                        <form role="form" id="editForm" action="{{route('update.category')}}" method="POST">
                             @csrf
-                            <div class="form-group">
-                                <label>Category Name <span style="color:red">*</span></label> 
-                                <input type="hidden" class="form-control" name="id" id="id" required>                       
-                                <input type="text" class="form-control" name="name" autocomplete="off" required> 
-                                @error('name')
-                                <span class="text-danger">{{$message}}</span>
-                                @enderror
-                            </div> 
-                            <div class="form-group">
-                                <label>Category Image  <span style="color:red">*</span></label> 
-                                <input type="file" name="image" class="form-control">
-                                @error('image')
-                                <span class="text-danger">{{$message}}</span>
-                                @enderror
+                            <div class="form-group col-md-6">
+                                <label for="inputcategory">Select Category</label>
+                                <select id="category" class="form-control">
+                                    <option selected>Choose...</option>
+                                    @foreach($categories as $category)
+                                        <option value="{{$category->id}}">{{$category->name}}</option> 
+                                    @endforeach
+                                </select>
                             </div>
-
-                            <div class="form-group">
-                                <label>Category Reference Link</label>
-                                <input  type="text" name="ref_link" class="form-control" placeholder="ex: http://www.xyz.com" > 
-                                @error('ref_link')
-                                <span class="text-danger">{{$message}}</span>
-                                @enderror
+                            <div class="form-group col-md-6">
+                                <label for="">Sub-Category Name</label>
+                                <input type="text" class="form-control" id=" " name="" require>
                             </div>
-                            
+                            <div class="form-group col-md-12">
+                                <label for="inputAddress2">Description</label> 
+                                <textarea name="" id="" class="form-control"></textarea>
+                            </div>
+                            <h5><b>SEO Prameters</b></h5> <hr>
+                            <div class="form-group col-md-4">
+                                <label for="">Title</label>
+                                <input type="text" class="form-control" id=" " name="" require>
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label for="">Keywords</label>
+                                <input type="text" class="form-control" id=" " name="" require>
+                            </div>
+                         
+                            <div class="form-group col-md-12">
+                                <label for="inputAddress2">Description</label> 
+                                <textarea name="" id="" class="form-control"></textarea>
+                            </div>
                             <button type="submit" class="btn btn-outline btn-primary">Update</button>                        
                             <button type="reset" class="btn btn-outline btn-default">Reset</button>
-                               
+                                
+                          
                         </form>
                      </div>                   
                 </div>                
@@ -120,24 +138,11 @@
                                     <tr>
                                         <th>S. No</th>
                                         <th>Category Name</th> 
-                                        <th>Image</th>
-                                        <th>Ref. Link</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($categories as $key=>$category)
-                                    <tr class="odd gradeX">
-                                        <td>{{$key+1}}</td>                                       
-                                        <td>{{$category->name}}</td> 
-                                        <td> <img src="{{$category->image_path}}"}} width="60" height="50"></td>
-                                        <td>{{$category->link}}</td>
-                                        <td class="center"> 
-                                            <a href="#" class="btn btn-warning btn-xs  edit-element" data-id="{{$category->id}}">Edit</a>
-                                            <a href="{{route('delete.category',$category->id)}}" class="btn btn-danger btn-xs " id="delete">Delete</a>
-                                       
-                                        </tr>
-                                    @endforeach
+                               
                                   
                                 </tbody>
                             </table>
@@ -210,7 +215,6 @@
                         $("#editContainer").slideDown();  
                     
                         $("#editForm input[name='name']").val(data.category.name); 
-                        $("#editForm input[name='ref_link']").val(data.category.link); 
                         $("#editForm input[name='id']").val(id); 
 
             

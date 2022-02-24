@@ -88,25 +88,52 @@
 		</div>
 	</section>
 
+    	<!-- Banner -->
+	<div class="">
+		<div class="container">
+			<div class="row" style="margin-left: 187px;margin-top: -31px;">
+				<div class="col-md-10">
+					 <div class="card text-white bg-dark ">
+						<div class="card-body">
+						      <p class='text-center p-b-20'><b>BOOK YOUR RENTALS NOW</b></p>
 
+							  <form>
+								<div class="form-row">
+									<div class="col-5">
+									    <select id="" name="" class="form-control">
+                                           <option value="">Choose Size</option>
+										</select>
+									</div>
+									<div class="col-5">
+									<input type="date" class="form-control" placeholder="Devilery date">
+									</div>
+									<div class="col-2">
+									 <button type="submit" class="btn btn-warning" name="submit"> Find Outfil</button>
+									</div>
+								</div>
+							   </form>
+						</div>
+					</div>
+				</div>
+            </div>
+		</div>
+	</div>	
 	<!-- Banner -->
 	<div class="sec-banner bg0 p-t-30 p-b-10">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-6 p-b-30 m-lr-auto">
+				@foreach($categories as $category)
+				<div class="col-md-6 p-b-10 m-lr-auto">
 					<!-- Block1 -->
 					<div class="block1 wrap-pic-w">
-						<img src="customer_template/customer_template/images/banner-04.jpg" alt="IMG-BANNER">
+						<img src="{{$category->image_path}}" alt="IMG-BANNER">
 
-						<a href="product.html" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+						<a href="{{$category->link}}" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
 							<div class="block1-txt-child1 flex-col-l">
 								<span class="block1-name ltext-102 trans-04 p-b-8">
-									Casual Outfit
+								     {{$category->name}}
 								</span>
-
-								<span class="block1-info stext-102 trans-04">
-									New trands
-								</span>
+ 
 							</div>
 
 							<div class="block1-txt-child2 p-b-4 trans-05">
@@ -117,106 +144,9 @@
 						</a>
 					</div>
 				</div>
-
-				<div class="col-md-6 p-b-30 m-lr-auto">
-					<!-- Block1 -->
-					<div class="block1 wrap-pic-w">
-						<img src="customer_template/images/banner-05.jpg" alt="IMG-BANNER">
-
-						<a href="product.html" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
-							<div class="block1-txt-child1 flex-col-l">
-								<span class="block1-name ltext-102 trans-04 p-b-8">
-								  Occasionally
-								</span>
-
-								<span class="block1-info stext-102 trans-04">
-									New Trend
-								</span>
-							</div>
-
-							<div class="block1-txt-child2 p-b-4 trans-05">
-								<div class="block1-link stext-101 cl0 trans-09">
-									Shop Now
-								</div>
-							</div>
-						</a>
-					</div>
-				</div>
-
-				<!-- <div class="col-md-6 col-lg-4 p-b-30 m-lr-auto">
-					Block1
-					<div class="block1 wrap-pic-w">
-						<img src="customer_templateimages/banner-07.jpg" alt="IMG-BANNER">
-
-						<a href="product.html" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
-							<div class="block1-txt-child1 flex-col-l">
-								<span class="block1-name ltext-102 trans-04 p-b-8">
-										Casual Outfit
-								</span>
-
-								<span class="block1-info stext-102 trans-04">
-									Spring 2018
-								</span>
-							</div>
-
-							<div class="block1-txt-child2 p-b-4 trans-05">
-								<div class="block1-link stext-101 cl0 trans-09">
-									Shop Now
-								</div>
-							</div>
-						</a>
-					</div>
-				</div> -->
-
-				<!-- <div class="col-md-6 col-lg-4 p-b-30 m-lr-auto">
-					Block1
-					<div class="block1 wrap-pic-w">
-						<img src="images/banner-08.jpg" alt="IMG-BANNER">
-
-						<a href="product.html" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
-							<div class="block1-txt-child1 flex-col-l">
-								<span class="block1-name ltext-102 trans-04 p-b-8">
-									Bags
-								</span>
-
-								<span class="block1-info stext-102 trans-04">
-									Spring 2018
-								</span>
-							</div>
-
-							<div class="block1-txt-child2 p-b-4 trans-05">
-								<div class="block1-link stext-101 cl0 trans-09">
-									Shop Now
-								</div>
-							</div>
-						</a>
-					</div>
-				</div> -->
-
-				<!-- <div class="col-md-6 col-lg-4 p-b-30 m-lr-auto">
-					Block1
-					<div class="block1 wrap-pic-w">
-						<img src="images/banner-09.jpg" alt="IMG-BANNER">
-
-						<a href="product.html" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
-							<div class="block1-txt-child1 flex-col-l">
-								<span class="block1-name ltext-102 trans-04 p-b-8">
-									Accessories
-								</span>
-
-								<span class="block1-info stext-102 trans-04">
-									Spring 2018
-								</span>
-							</div>
-
-							<div class="block1-txt-child2 p-b-4 trans-05">
-								<div class="block1-link stext-101 cl0 trans-09">
-									Shop Now
-								</div>
-							</div>
-						</a>
-					</div>
-				</div> -->
+                @endforeach 
+			 
+ 
 			</div>
 		</div>
 	</div>

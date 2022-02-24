@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SizeController;
 use App\Http\Controllers\Backend\PincodeController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\SubCategoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -75,6 +76,15 @@ Route::group(['middleware' => ['IsAdmin']], function () {
         Route::get('/delete/{category}',[CategoryController::class,'destroy'])->name('delete.category');
     });
 
+
+    Route::get('/view-subcategory', [SubCategoryController::class,'viewsubcategory'])->name('viewsubcategory');
+    Route::prefix('subcategory')->group(function(){
+        Route::post('/add',[SubCategoryController::class,'store'])->name('add.subcategory');      
+        Route::get('/get-category/{subcategory}',[SubCategoryController::class,'edit'])->name('get.subcategory'); 
+        Route::post('/update',[SubCategoryController::class,'update'])->name('update.subcategory');
+        Route::get('/delete/{subcategory}',[SubCategoryController::class,'destroy'])->name('delete.subcategory');
+    });
+
     Route::get('/view-setting', [MainAdminController::class,'viewsetting'])->name('viewsetting'); 
 
 
@@ -95,9 +105,10 @@ Route::get('redirect/{driver}', [MainWebController::class,'redirectToProvider'])
 Route::get('auth/google/callback', [MainWebController::class,'handleGoogleCallback']);
 
 Route::post('/login-registration',  [MainWebController::class,'store'])->name('loginform');
-Route::get('/myaccount',  [MainWebController::class,'myaccount'])->name('myaccount')->middleware('auth');
-Route::post('/update-account',  [MainWebController::class,'update_account'])->name('update-account')->middleware('auth');
-
+Route::group(['middleware' => ['auth']], function () {
+Route::get('/myaccount',  [MainWebController::class,'myaccount'])->name('myaccount'); 
+Route::post('/update-account',  [MainWebController::class,'update_account'])->name('update-account'); 
+});
 
 // Route::get('/wishlist',  [MainWebController::class,'wishlist'])->name('wishlist')->middleware('auth');
 
@@ -105,6 +116,7 @@ Route::post('/update-account',  [MainWebController::class,'update_account'])->na
 Route::get('/active-account/{uid}',  [MainWebController::class,'activation']);
 Route::get('/contact-us',  [MainWebController::class,'contactus'])->name('contact-us');
 Route::get('/about-us',  [MainWebController::class,'aboutus'])->name('about-us');
+Route::get('/all-brands',[MainWebController::class,'aboutus'])->name('all-brands');
 Route::get('/cart',  [MainWebController::class,'cart'])->name('cart');
 
 Route::get('/product-list',  [MainWebController::class,'product_list'])->name('product-list');
