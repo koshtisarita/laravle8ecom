@@ -10,6 +10,7 @@ use Image;
 use Validator;
 use DB;
 use Session;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class SubCategoryController extends Controller
 {
@@ -17,8 +18,8 @@ class SubCategoryController extends Controller
         public function viewsubcategory()
         {
            $subcategories= Sub_Category::latest()->get();
-           $categories= Category::latest()->get();
-           
+           $categories= Category::latest()->get()->keyBy('id');
+          
            if(Session::has('success'))
            { 
                Alert::success('Success!',Session::get('success'));
@@ -27,19 +28,24 @@ class SubCategoryController extends Controller
            {            
                Alert::error('Error',Session::get('error'));
            }
-           return view('admin.masters.subcategory',compact('categories'));
+           return view('admin.masters.subcategory',compact('categories','subcategories'));
         }
    
         /**************Store data ********/
        public function store(Request $request)
        {
            $request_data = $request->all();
+          
            //Aliases
           $messages = [
-              'name.required'=>'Please enter Category Name', 
+              'category_id.required'=>'Please enter Category Name', 
+              'name.required'=>'Please enter Sub-Category Name', 
+              'description.required'=>'Please enter Category Description', 
           ];
-          $validator = Validator::make($request_data, [         
+          $validator = Validator::make($request_data, [  
+              'category_id'=>'required',        
               'name'=>'required', 
+              'description'=>'required', 
           ],$messages);
          
           if ($validator->fails()) {
@@ -52,18 +58,23 @@ class SubCategoryController extends Controller
                {
                   DB::beginTransaction();
                   $today_date = date('Y-m-d h:i:s');
-                  Category:: insert([
+                  Sub_Category:: insert([
+                       'category_id'=>$request->category_id,
                       'name'=>ucfirst($request->name),
+                      'description'=>$this->clean_input($request->description),
+                      'seo_title'=>$this->clean_input($request->seo_title),
+                      'seo_keyword'=>$this->clean_input($request->seo_keywords),
+                      'seo_description'=>$this->clean_input($request->seo_description),
                       'created_at'=>  $today_date,
                       'updated_at' =>$today_date
                   ]);
    
                   DB::commit();                 
-                  return redirect()->route('viewcategory')->with('success','Category added successfully');  
+                  return redirect()->route('viewsubcategory')->with('success','Sub-Category added successfully');  
                }
                catch(Exception $e) {
                    DB::rollBack();
-                   return redirect()->route('viewcategory')->with('error','Some thing wen wrong');
+                   return redirect()->route('viewsubcategory')->with('error','Some thing wen wrong');
                }
    
            }    
@@ -71,12 +82,12 @@ class SubCategoryController extends Controller
        }
    
        /***** get data for update  */
-       public function edit(Category $category)
+       public function edit(Sub_Category $subcategory)
        {
-           if($category){        
+           if($subcategory){        
                $response = [
                    'result'=>1,
-                   'category'=>$category
+                   'category'=>$subcategory
                ];             
            }
            else
@@ -90,42 +101,59 @@ class SubCategoryController extends Controller
        /*********update category *********/ 
        public function update(Request $request)
        {
-           $request_data = $request->all();
-           //Aliases
-          $messages = [
-              'name.required'=>'Please enter Category Name', 
-          ];
-          $validator = Validator::make($request_data, [         
-              'name'=>'required', 
-          ],$messages);
-         
-          if ($validator->fails()) {
-              return redirect()->back()->with('error', 'Validation error occure in adding data') 
-              ->withErrors($validator)->withInput();
-          } 
-          else
-           { 
-               try
-               {
+            $request_data = $request->all();
+            
+            //Aliases
+        $messages = [
+            'category_id.required'=>'Please enter Category Name', 
+            'name.required'=>'Please enter Sub-Category Name', 
+            'description.required'=>'Please enter Category Description', 
+        ];
+        $validator = Validator::make($request_data, [  
+            'category_id'=>'required',        
+            'name'=>'required', 
+            'description'=>'required', 
+        ],$messages);
+        
+        if ($validator->fails()) {
+            return redirect()->back()->with('error', 'Validation error occure in adding data') 
+            ->withErrors($validator)->withInput();
+        } 
+        else
+            { 
+                try
+                {
                   DB::beginTransaction();
-                  $category = Category::find($request->id);              
-                  $category->name = $request->name;
-                  $category->save();
+                  $subcategory = Sub_Category::find($request->id);
+                 
+                  $subcategory->category_id = $request->category_id;
+                  $subcategory->name = ucfirst($request->name);
+                  $subcategory->description = $this->clean_input($request->description);
+                  $subcategory->seo_title = $this->clean_input($request->seo_title);
+                  $subcategory->seo_keyword = $this->clean_input($request->seo_keywords);
+                  $subcategory->seo_description = $this->clean_input($request->seo_description);  
+                  $subcategory->save();
                   
                   DB::commit();                 
-                  return redirect()->route('viewcategory')->with('success','Category updated successfully');  
+                  return redirect()->route('viewsubcategory')->with('success','Sub-Category updated successfully');  
                }
                catch(Exception $e) {
                    DB::rollBack();
-                   return redirect()->route('viewcategory')->with('error','Some thing wen wrong');
+                   return redirect()->route('viewsubcategory')->with('error','Some thing wen wrong');
                }
    
            }    
        }
        /******************** Delete the category  ***********/
-       public function destroy(Category $category)
+       public function destroy(Sub_Category $subcategory)
        {    
-           $category->delete();        
-           return redirect()->back()->with('deletemessage','Category deleted successfully');
+           $subcategory->delete();        
+           return redirect()->back()->with('deletemessage','SunCategory deleted successfully');
+       }
+       public function clean_input($text)
+       {
+            $text = trim($text);
+            $text = htmlspecialchars($text);
+            return $text;
        }
 }

@@ -50,7 +50,15 @@
                 <!-- /.nav-second-level -->
             </li>
             <li>
-                <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
+                <a href="#" class=""><i class="fa fa-product-hunt fa-fw"></i>Product<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>                         
+                        <a href="{{route('newproduct')}}" class="{{($prefix=='newproduct')?'active':''}}">Add  </a>
+                    </li> 
+                    <li>                         
+                    <a href="" class="{{($prefix=='viewproduct')?'active':''}}">view  </a>
+                    </li> 
+                </ul>   
             </li>
             <li>
                 <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>

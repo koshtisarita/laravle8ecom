@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\SizeController;
 use App\Http\Controllers\Backend\PincodeController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\SubCategoryController;
+use App\Http\Controllers\Backend\ProductController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -85,6 +86,14 @@ Route::group(['middleware' => ['IsAdmin']], function () {
         Route::get('/delete/{subcategory}',[SubCategoryController::class,'destroy'])->name('delete.subcategory');
     });
 
+    Route::get('/new-product', [ProductController::class,'newproduct'])->name('newproduct');
+    Route::prefix('product')->group(function(){
+        // Route::post('/add',[SubCategoryController::class,'store'])->name('add.subcategory');      
+        // Route::get('/get-category/{subcategory}',[SubCategoryController::class,'edit'])->name('get.subcategory'); 
+        // Route::post('/update',[SubCategoryController::class,'update'])->name('update.subcategory');
+        // Route::get('/delete/{subcategory}',[SubCategoryController::class,'destroy'])->name('delete.subcategory');
+    });
+
     Route::get('/view-setting', [MainAdminController::class,'viewsetting'])->name('viewsetting'); 
 
 
@@ -103,11 +112,11 @@ Route::get('/login-registration',  [MainWebController::class,'loginpage'])->name
 //  login with social media
 Route::get('redirect/{driver}', [MainWebController::class,'redirectToProvider']);
 Route::get('auth/google/callback', [MainWebController::class,'handleGoogleCallback']);
-
 Route::post('/login-registration',  [MainWebController::class,'store'])->name('loginform');
+
 Route::group(['middleware' => ['auth']], function () {
-Route::get('/myaccount',  [MainWebController::class,'myaccount'])->name('myaccount'); 
-Route::post('/update-account',  [MainWebController::class,'update_account'])->name('update-account'); 
+    Route::get('/myaccount',  [MainWebController::class,'myaccount'])->name('myaccount'); 
+    Route::post('/update-account',  [MainWebController::class,'update_account'])->name('update-account'); 
 });
 
 // Route::get('/wishlist',  [MainWebController::class,'wishlist'])->name('wishlist')->middleware('auth');

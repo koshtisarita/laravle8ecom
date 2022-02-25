@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use Carbon\Carbon;
+use Hash;
 
 class CreateUsersSeeder extends Seeder
 {
@@ -23,7 +24,9 @@ class CreateUsersSeeder extends Seeder
             "status"=>1,
             "is_newsletter"=>0,
             "email"=>"admin@gmail.com",
-            "password"=>bcrypt("12345678"),
+            "password"=>Hash::make("12345678"),
+            "created_at"=>date('Y-m-d h:i:s'),
+            'updated_at'=>date('Y-m-d h:i:s')
         ]);
 
         User::create([
@@ -34,7 +37,9 @@ class CreateUsersSeeder extends Seeder
             "status"=>1,
             "is_newsletter"=>0,
             "email"=>"customer@gmail.com",
-            "password"=>bcrypt("12345678"),
+            "password"=>Hash::make("12345678"),
+            "created_at"=>date('Y-m-d h:i:s'),
+            'updated_at'=>date('Y-m-d h:i:s')
         ]);
     }
 }
