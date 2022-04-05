@@ -213,15 +213,7 @@
             $("#addToTable").show();
         
         });
-        $("#tableContainer").on("click",".edit-element",function(e){
-            e.preventDefault();
-            var id = $(this).attr('id');
-            $("#addContainer").slideUp();
-            $("#btnCancel").show();		
-            $("#addToTable").hide();
-            $("#editContainer").slideDown();
-        });
-
+       
         $("#tableContainer").on("click",".edit-element",function(e){
             e.preventDefault();
             var id = $(this).attr('data-id');

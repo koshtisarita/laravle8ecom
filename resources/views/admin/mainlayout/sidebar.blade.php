@@ -53,11 +53,11 @@
                 <a href="#" class=""><i class="fa fa-product-hunt fa-fw"></i>Product<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>                         
-                        <a href="{{route('newproduct')}}" class="{{($prefix=='newproduct')?'active':''}}">Add  </a>
+                        <a href="{{route('products.create.step.one')}}" class="{{($prefix=='create.step.one')?'active':''}}">New  </a>
                     </li> 
                     <li>                         
-                    <a href="" class="{{($prefix=='viewproduct')?'active':''}}">view  </a>
-                    </li> 
+                        <a href="{{route('viewproduct')}}" class="{{($prefix=='viewproduct')?'active':''}}">View  </a>
+                    </li>
                 </ul>   
             </li>
             <li>

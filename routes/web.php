@@ -77,6 +77,7 @@ Route::group(['middleware' => ['IsAdmin']], function () {
         Route::get('/delete/{category}',[CategoryController::class,'destroy'])->name('delete.category');
     });
 
+    /********** SubcategoryRoutes *************/ 
 
     Route::get('/view-subcategory', [SubCategoryController::class,'viewsubcategory'])->name('viewsubcategory');
     Route::prefix('subcategory')->group(function(){
@@ -86,12 +87,32 @@ Route::group(['middleware' => ['IsAdmin']], function () {
         Route::get('/delete/{subcategory}',[SubCategoryController::class,'destroy'])->name('delete.subcategory');
     });
 
-    Route::get('/new-product', [ProductController::class,'newproduct'])->name('newproduct');
-    Route::prefix('product')->group(function(){
-        // Route::post('/add',[SubCategoryController::class,'store'])->name('add.subcategory');      
-        // Route::get('/get-category/{subcategory}',[SubCategoryController::class,'edit'])->name('get.subcategory'); 
-        // Route::post('/update',[SubCategoryController::class,'update'])->name('update.subcategory');
-        // Route::get('/delete/{subcategory}',[SubCategoryController::class,'destroy'])->name('delete.subcategory');
+    /********** Product Routes *************/  
+    Route::get('/view-product', [ProductController::class,'viewproduct'])->name('viewproduct');
+    Route::prefix('products')->group(function(){
+        // Route::get('add_product', [ProductController::class,'createStepOne'])->name('products.create.step.one');
+        // Route::post('add_product', [ProductController::class,'store'])->name('add.product');
+ 
+        Route::get('add', [ProductController::class,'createStepOne'])->name('products.create.step.one');
+        Route::post('add', [ProductController::class,'postStepOne'])->name('add.product');
+        Route::get('edit/{product}', [ProductController::class,'edit'])->name('product.edit');
+        Route::post('update', [ProductController::class,'update'])->name('products.update');        
+        Route::get('delete/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
+        //image
+        Route::get('view-image/{product}', [ProductController::class, 'image'])->name('product.image.view');
+        Route::post('/add-image',[ProductController::class,'storeImage'])->name('add.image'); 
+        Route::get('/delete-image/{image}',[ProductController::class,'destroyImage'])->name('delete.image');
+
+
+
+	    Route::get('/slug/validate', [ProductController::class,'validateSlug'])->name('products.slug.validate');
+
+       
+
+        //Product Trash Route
+        Route::get('trash', [ProductController::class, 'trash_index'])->name('product.trash.index');
+        Route::get('restore/{id}', [ProductController::class, 'restore'])->name('product.restore');
+        Route::get('restore-all', [ProductController::class, 'restoreAll'])->name('product.restoreAll');
     });
 
     Route::get('/view-setting', [MainAdminController::class,'viewsetting'])->name('viewsetting'); 

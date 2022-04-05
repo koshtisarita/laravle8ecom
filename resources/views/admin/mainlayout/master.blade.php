@@ -30,6 +30,12 @@
 
         <!-- Custom Fonts -->
         <link href="{{asset('template/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
+        
+          <!-- summernote -->
+        <link rel="stylesheet" href="{{ asset('template/js/summernote/summernote-bs4.css') }}">  
+        
+         <!-- Livewire style  -->
+		 @livewireStyles
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -82,8 +88,16 @@
 
         <!-- Sweet Alter2  ---->
         <script src="{{asset('vendor/sweetalert/sweetalert.all.js')}}"></script>
-      
-      
 
+        <!-- Livewire script  -->
+        @livewireScripts
+      
+      <!-- Summernote -->
+      <script src="{{ asset('template/js/summernote/summernote-bs4.min.js') }}"></script>
+      <script type="text/javascript">
+        $(document).ready(function() {
+        $('.summernote').summernote();
+        });
+    </script>
     </body>
 </html>
