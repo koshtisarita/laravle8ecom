@@ -33,9 +33,12 @@ class CreateProductsTable extends Migration
             $table->tinyInteger('status')->default(0)->comment('0- inactive 1- active'); 
             $table->text('model_detail')->nullable();  
             $table->tinyInteger('is_newarrival')->default(0)->comment('0- not 1- yes');
+            $table->tinyInteger('in_stock')->default(1)->comment('0- no 1- yes');
             $table->string('meta_title')->nullable();
             $table->string('meta_keywords')->nullable();
-            $table->text('meta_discription')->nullable();  
+            $table->text('meta_description')->nullable();  
+            $table->text('view_count')->default(0)->comment('use in most view parament');            
+            $table->string('default_image')->nullable();
             $table->softDeletes();            
             $table->rememberToken();
             $table->timestamps();

@@ -74,8 +74,7 @@ class ProductController extends Controller
                 'long_description.required'=>'Please enter Product Long Description',
                 'actual_price.required'=>'Please enter Product Price',
                 'is_discount.required'=>'Please select Discount option',
-                'discount.required'=>'Please enter any value in discount',
-                'discount_in.required'=>'Please select Discount in option',
+                'discount.required'=>'Please enter any value in discount', 
                 'status.required'=>'Please select Product Status', 
                 'length.required'=>'Please select Product Length',
                 'size_id.required'=>'Please select Product Size',
@@ -92,14 +91,14 @@ class ProductController extends Controller
                 'long_description'=>'required',
                 'actual_price'=>'required',
                 'is_discount'=>'required',
-                'discount'=>'required|numeric',
-                'discount_in'=>'required',
+                'discount'=>'required|numeric', 
                 'status' => 'required',           
                 'length' => 'required',
                 'size_id'=>'required',
                 'brand_id'=>'required',
                 'categories'=>'required',
                 'sub_categories'=>'required', 
+                'image'=>'mimes:jpg,bmp,png'
             ],$messages);
         }
         else
@@ -135,6 +134,7 @@ class ProductController extends Controller
                 'brand_id'=>'required',
                 'categories'=>'required',
                 'sub_categories'=>'required', 
+                'image'=>'mimes:jpg,bmp,png'
                  
             ],$messages);
         }
@@ -173,14 +173,30 @@ class ProductController extends Controller
                    }
                    if($key == 'slug')
                    {
-                    $product[$key] = str_replace(' ','_',$product[$key]);
+                    $product[$key] = strtolower(str_replace(' ','_',$product[$key]));
                    }
                }
 
                
 
              
-               $id = DB::table('products')->insertGetId($product);     
+               $id = DB::table('products')->insertGetId($product);
+               DB::commit();
+               //insert default image on the current id
+               if($request->file('image'))
+               {
+                    $image=$request->file('image');
+                    $name_gen=hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+                    Image::make($image)->resize(900,400)->save('upload/images/'.$name_gen);
+                    $filename='upload/images/'.$name_gen;
+
+                    //update default image
+                    Product::where('id',$id)->update(['default_image'=>$filename]);                 
+
+                    
+
+               }
+
                
                DB::commit();
               
@@ -323,7 +339,32 @@ class ProductController extends Controller
                         }
                     } 
                     //update query
-                    $product_for_update->update($product);     
+                    $product_for_update->update($product);   
+                    
+                      //insert default image on the current id
+                    if($request->file('image'))
+                    {
+                        Log::info("image set");
+                            $old_image= $product_for_update->default_image;
+                            if($old_image!="")
+                            {
+                                if (File::exists($old_image)) {
+                                    Log::info("old exist");
+                                    Log::info($old_image);
+                                    File::delete($old_image);
+                                }   
+                            }
+                            $image=$request->file('image');
+                            $name_gen=hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+                            Image::make($image)->resize(900,400)->save('upload/images/'.$name_gen);
+                            $filename='upload/images/'.$name_gen;
+
+                            //update default image
+                            Product::where('id',$request->id)->update(['default_image'=>$filename]);                 
+
+                            
+
+                    }
                     
                     DB::commit();
                 
@@ -453,7 +494,7 @@ class ProductController extends Controller
                     for($i=0;$i<= $total_doc-1;$i++)
                     {
                         $name_gen=hexdec(uniqid()).'.'.$request->image[$i]->getClientOriginalExtension();
-                        Image::make($request->image[$i])->resize(300,330)->save('upload/images/'.$name_gen);
+                        Image::make($request->image[$i])->resize(900,400)->save('upload/images/'.$name_gen);
                         $filename='upload/images/'.$name_gen;
 
                         //insert the document one by one

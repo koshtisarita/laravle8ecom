@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Slider;
 use App\Models\Category;
+use App\Models\Sub_Category;
+use App\Models\Product;
+use App\Models\Sizes;
 use Log;
 use Hash;
 use Socialite;
@@ -16,9 +19,22 @@ use DB;
 class MainWebController extends Controller
 {
      public function index(){
-         $sliders= Slider::where('status','=',1)->get();     
-         $categories= Category::all();    
-         return view('website.pages.index',compact('sliders','categories'));
+         //landing page slider
+         $sliders= Slider::where('status','=',1)->get();   
+         //size for search  
+         $sizes = Size::all();
+         //category and sub_category
+         $categories= Category::all()->keyBy('id');
+         
+         $subCategories = Sub_Category::get()->keyBy('id');
+
+         $new_arrival = Product::where("status",1)->where("is_newarrival",1)->orderBy('id','DESC')->get();
+
+         $most_popular= Product::where("status",1)->orderBy('id','DESC')->get();
+
+         $most_viewed=Product::where("status",1)->orderBy('view_count','DESC')->get();
+
+         return view('website.pages.index',compact('sliders','categories','sizes','new_arrival','most_popular',''));
         }
      
 

@@ -57,7 +57,7 @@
         </div>
         <div class="row">
              <div class="col-lg-12"> 
-               <form  name="add_product" id="add_product" method="POST"  action="{{route('add.product')}}">
+               <form  name="add_product" id="add_product" method="POST"  action="{{route('add.product')}}" enctype="multipart/form-data">
                 @csrf
                     <div class="panel panel-primary"> 
                                           
@@ -160,7 +160,7 @@
                                     <div id="apply-discount" >
                                         <div class="col-lg-3">
                                             <div class="form-group">                           
-                                                <label for="discount">Discount Value:</label>
+                                                <label for="discount">Discounted Value:</label>
                                                 <input type="number"  value="{{old('discount')}}" class="form-control" id="discount" name="discount"  />
                                                 @error('discount')
                                                 <span class="text-danger">{{$message}}</span>
@@ -168,18 +168,7 @@
                                             </div>
                                         </div>
                                     
-                                        <div class="col-lg-3">
-                                            <div class="form-group">
-                                                <label for="description">Discount in:</label> 
-                                                <select id="discount_in" name="discount_in" class="form-control" value="{{old('discount_in')}}"  >
-                                                <option value="0">Percentage</option>
-                                                <option value="1">Bulk</option>
-                                            </select>
-                                            @error('discount_in')
-                                            <span class="text-danger">{{$message}}</span>
-                                            @enderror    
-                                            </div>
-                                        </div>
+                                        
                                     </div>
                                 </div> 
                                                               
@@ -347,7 +336,27 @@
                                         </div>
                                         </div>
                                 </div>  
-                                 
+                                <div class="row">
+                                    <div class="col-lg-12 header">
+                                        <h4>Default Image</h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <hr>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">                                       
+                                            <label for="title">Select Image:</label>
+                                            <input type="file"  class="form-control" id="image"  name="image">
+                                            @error('image')
+                                            <span class="text-danger">{{$message}}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>    
                                 <div class="row">
                                
                                 <div class="col-lg-12 text-center">

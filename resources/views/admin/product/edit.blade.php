@@ -48,7 +48,7 @@
         </div>
         <div class="row">
              <div class="col-lg-12"> 
-               <form  name="add_product" id="add_product" method="POST"  action="{{route('products.update')}}">
+               <form  name="add_product" id="add_product" method="POST"  action="{{route('products.update')}}" enctype="multipart/form-data">
                 @csrf
                     <div class="panel panel-primary">                            
                         <div class="panel-body" >
@@ -338,7 +338,27 @@
                                         </div>
                                         </div>
                                 </div>  
-                               
+                                <div class="row">
+                                    <div class="col-lg-12 header">
+                                        <h4>Default Image</h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <hr>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">                                       
+                                            <label for="title">Select Image:</label>
+                                            <input type="file"  class="form-control" id="image"  name="image">
+                                            @error('image')
+                                            <span class="text-danger">{{$message}}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>    
                                 
                                 <div class="row">
                                
