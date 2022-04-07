@@ -9,6 +9,7 @@ use Image;
 use Validator;
 use DB;
 use Session;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class SliderController extends Controller
 { 

@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\SizeController;
 use App\Http\Controllers\Backend\PincodeController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\SubCategoryController;
+use App\Http\Controllers\Backend\CustomerfeedbackController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -137,3 +138,11 @@ Route::post('crop-image-upload ', [TestdemosController::class,'uploadCropImage']
   
  
 //**************************************************/
+
+
+
+/*--------------------- CUSTOMER PANEL------------------------*/
+Route::get('/customerfeedback',function(){
+    return view('website.pages.customerfeedback');
+})->name('customerfeedback');
+Route::post('/customerfeedback/store',[CustomerfeedbackController::class,'store'])->name('customerfeedback.store');

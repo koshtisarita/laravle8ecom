@@ -4,7 +4,7 @@
 
 
 	<!-- Slider -->
-	<section class="section-slide">
+	<section class="section-slide" style="z-index=1000;">
 		<div class="wrap-slick1 rs2-slick1">
 			<div class="slick1">
 				@foreach($sliders as $slider)
@@ -105,10 +105,10 @@
 										</select>
 									</div>
 									<div class="col-5">
-									<input type="date" class="form-control" placeholder="Devilery date">
+									<input type="date" class="form-control" placeholder="Delivery date">
 									</div>
 									<div class="col-2">
-									 <button type="submit" class="btn btn-warning" name="submit"> Find Outfil</button>
+									 <button type="submit" class="btn btn-warning" name="submit"> Find Your Dress</button>
 									</div>
 								</div>
 							   </form>

@@ -88,12 +88,13 @@
 								Returns 
 							</a>
 						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Customer Feedback
-							</a>
-						</li>
+						@if(Auth::user())
+							<li class="p-b-10">
+								<a href="{{route('customerfeedback')}}" class="stext-107 cl7 hov-cl1 trans-04">
+									Customer Feedback
+								</a>
+							</li>
+						@endif
 
 						<li class="p-b-10">
 							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
