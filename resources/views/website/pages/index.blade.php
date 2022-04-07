@@ -92,7 +92,7 @@
 	<div class="">
 		<div class="container">
 			<div class="row" style="margin-left: 187px;margin-top: -31px;">
-				<div class="col-md-10">
+				<div class="col-md-10 col-xs-12 col-sm-12 respon5">
 					 <div class="card text-white bg-dark ">
 						<div class="card-body">
 						      <p class='text-center p-b-20'><b>BOOK YOUR RENTALS NOW</b></p>

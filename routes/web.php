@@ -77,6 +77,7 @@ Route::group(['middleware' => ['IsAdmin']], function () {
         Route::get('/delete/{category}',[CategoryController::class,'destroy'])->name('delete.category');
     });
 
+    /********** SubcategoryRoutes *************/ 
 
     Route::get('/view-subcategory', [SubCategoryController::class,'viewsubcategory'])->name('viewsubcategory');
     Route::prefix('subcategory')->group(function(){
@@ -84,6 +85,38 @@ Route::group(['middleware' => ['IsAdmin']], function () {
         Route::get('/get-category/{subcategory}',[SubCategoryController::class,'edit'])->name('get.subcategory'); 
         Route::post('/update',[SubCategoryController::class,'update'])->name('update.subcategory');
         Route::get('/delete/{subcategory}',[SubCategoryController::class,'destroy'])->name('delete.subcategory');
+    });
+
+    /********** Product Routes *************/  
+    Route::get('/view-product', [ProductController::class,'viewproduct'])->name('viewproduct');
+    Route::prefix('products')->group(function(){
+        // Route::get('add_product', [ProductController::class,'createStepOne'])->name('products.create.step.one');
+        // Route::post('add_product', [ProductController::class,'store'])->name('add.product');
+ 
+        Route::get('add', [ProductController::class,'createStepOne'])->name('products.create.step.one');
+        Route::post('add', [ProductController::class,'postStepOne'])->name('add.product');
+        Route::get('edit/{product}', [ProductController::class,'edit'])->name('product.edit');
+        Route::post('update', [ProductController::class,'update'])->name('products.update');        
+        Route::get('delete/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
+        Route::get('/update-status/{product}',[ProductController::class,'update_status'])->name('update-status.product');
+        Route::get('/update-stock/{product}',[ProductController::class,'update_stock'])->name('update-stock.product');
+        Route::post('/get-description',[ProductController::class,'get_description'])->name('get.description.product');
+
+        //image
+        Route::get('view-image/{product}', [ProductController::class, 'image'])->name('product.image.view');
+        Route::post('/add-image',[ProductController::class,'storeImage'])->name('add.image'); 
+        Route::get('/delete-image/{image}',[ProductController::class,'destroyImage'])->name('delete.image');
+        
+
+
+	    Route::get('/slug/validate', [ProductController::class,'validateSlug'])->name('products.slug.validate');
+
+       
+
+        //Product Trash Route
+        Route::get('trash', [ProductController::class, 'trash_index'])->name('product.trash.index');
+        Route::get('restore/{id}', [ProductController::class, 'restore'])->name('product.restore');
+        Route::get('restore-all', [ProductController::class, 'restoreAll'])->name('product.restoreAll');
     });
 
     Route::get('/view-setting', [MainAdminController::class,'viewsetting'])->name('viewsetting'); 
@@ -104,11 +137,11 @@ Route::get('/login-registration',  [MainWebController::class,'loginpage'])->name
 //  login with social media
 Route::get('redirect/{driver}', [MainWebController::class,'redirectToProvider']);
 Route::get('auth/google/callback', [MainWebController::class,'handleGoogleCallback']);
-
 Route::post('/login-registration',  [MainWebController::class,'store'])->name('loginform');
+
 Route::group(['middleware' => ['auth']], function () {
-Route::get('/myaccount',  [MainWebController::class,'myaccount'])->name('myaccount'); 
-Route::post('/update-account',  [MainWebController::class,'update_account'])->name('update-account'); 
+    Route::get('/myaccount',  [MainWebController::class,'myaccount'])->name('myaccount'); 
+    Route::post('/update-account',  [MainWebController::class,'update_account'])->name('update-account'); 
 });
 
 // Route::get('/wishlist',  [MainWebController::class,'wishlist'])->name('wishlist')->middleware('auth');

@@ -26,7 +26,7 @@
                            
                             <div class="form-group col-md-6">
                                 <label for="inputState">Select Category</label>
-                                <select id="inputState" class="form-control">
+                                <select id="inputState" class="form-control" name="category_id" require>
                                     <option selected>Choose...</option>
                                     @foreach($categories as $category)
                                         <option value="{{$category->id}}">{{$category->name}}</option> 
@@ -34,26 +34,26 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="">Sub-Category Name</label>
-                                <input type="text" class="form-control" id=" " name="" require>
+                                <label for="name">Sub-Category Name</label>
+                                <input type="text" class="form-control" id="name" name="name" require>
                             </div>
                             <div class="form-group col-md-12">
-                                <label for="inputAddress2">Description</label> 
-                                <textarea name="" id="" class="form-control"></textarea>
+                                <label for="description">Description</label> 
+                                <textarea class="form-control" name="description" id="description" require></textarea>
                             </div>
                             <h5><b>SEO Prameters</b></h5> <hr>
                             <div class="form-group col-md-4">
                                 <label for="">Title</label>
-                                <input type="text" class="form-control" id=" " name="" require>
+                                <input type="text" class="form-control" id="seo_title" name="seo_title" require>
                             </div>
                             <div class="form-group col-md-8">
                                 <label for="">Keywords</label>
-                                <input type="text" class="form-control" id=" " name="" require>
+                                <input type="text" class="form-control" id="seo_keywords" name="seo_keywords" require>
                             </div>
                          
                             <div class="form-group col-md-12">
                                 <label for="inputAddress2">Description</label> 
-                                <textarea name="" id="" class="form-control"></textarea>
+                                <textarea name="seo_description" id="seo_description" class="form-control" ></textarea>
                             </div>
                             <button type="submit" class="btn btn-outline btn-primary">Add</button>
                             <button type="reset" class="btn btn-outline btn-default">Reset</button>
@@ -74,14 +74,14 @@
               <div class="col-lg-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                       Add Sub-Category
+                       Edit Sub-Category
                     </div>
                     <div class="panel-body">
-                        <form role="form" id="editForm" action="{{route('update.category')}}" method="POST">
+                        <form role="form" id="editForm" action="{{route('update.subcategory')}}" method="POST">
                             @csrf
                             <div class="form-group col-md-6">
                                 <label for="inputcategory">Select Category</label>
-                                <select id="category" class="form-control">
+                                <select id="category_id" class="form-control" name="category_id">
                                     <option selected>Choose...</option>
                                     @foreach($categories as $category)
                                         <option value="{{$category->id}}">{{$category->name}}</option> 
@@ -89,26 +89,27 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="">Sub-Category Name</label>
-                                <input type="text" class="form-control" id=" " name="" require>
+                                <label for="name">Sub-Category Name</label>
+                                <input type="hidden" class="form-control" id="id" name="id" required>
+                                <input type="text" class="form-control" id="name" name="name" required>
                             </div>
                             <div class="form-group col-md-12">
-                                <label for="inputAddress2">Description</label> 
-                                <textarea name="" id="" class="form-control"></textarea>
+                                <label for="description">Description</label> 
+                                <textarea name="description" id="description" class="form-control" required></textarea>
                             </div>
                             <h5><b>SEO Prameters</b></h5> <hr>
                             <div class="form-group col-md-4">
-                                <label for="">Title</label>
-                                <input type="text" class="form-control" id=" " name="" require>
+                                <label for="seo_title">Title</label>
+                                <input type="text" class="form-control" id="seo_title" name="seo_title">
                             </div>
                             <div class="form-group col-md-8">
-                                <label for="">Keywords</label>
-                                <input type="text" class="form-control" id=" " name="" require>
+                                <label for="seo_keywords">Keywords</label>
+                                <input type="text" class="form-control" id="seo_keywords" name="seo_keywords" require>
                             </div>
                          
                             <div class="form-group col-md-12">
-                                <label for="inputAddress2">Description</label> 
-                                <textarea name="" id="" class="form-control"></textarea>
+                                <label for="seo_description">Description</label> 
+                                <textarea name="seo_description" id="seo_description" class="form-control"></textarea>
                             </div>
                             <button type="submit" class="btn btn-outline btn-primary">Update</button>                        
                             <button type="reset" class="btn btn-outline btn-default">Reset</button>
@@ -136,13 +137,35 @@
                             <table class="table table-striped table-bordered table-hover" id="tableContainer">
                                 <thead>
                                     <tr>
-                                        <th>S. No</th>
-                                        <th>Category Name</th> 
-                                        <th>Action</th>
+                                        <th width="3%">S. No</th>
+                                        <th width="8%">Parent Category Name</th> 
+                                        <th width="8%">Sub Category Name</th> 
+                                        <th width="40%">Description</th> 
+                                        <th width="30%">SEO Parameters</th>                                       
+                                        <th width="10%">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                               
+                                  @foreach($subcategories as $key=>$subcategory)
+                                  <tr>
+                                        <td>{{$key+1}}</td>
+                                        <td>{{$categories[$subcategory->category_id]->name}}</td>
+                                        <td>{{$subcategory->name}}</td>
+                                        <td>{!!$subcategory->description !!}</td>
+                                        <td><b>Title: </b>{!!$subcategory->seo_title !!} <br>
+                                            <b>Keywords:</b>{!!$subcategory->seo_keyword !!} <br>
+                                            <b>Description:</b> {!!$subcategory->seo_description !!}<br>
+                                        </td>
+                                       
+                                        <td> 
+                                            <a href="#" class="btn btn-warning  btn-xs  edit-element" data-id="{{$subcategory->id}}">Edit</a>
+                                             
+                                            <a href="{{route('delete.subcategory',$subcategory->id)}}" class="btn btn-danger btn-xs " id="delete">Delete</a>
+                                        </td>
+
+                                  </tr>
+
+                                  @endforeach
                                   
                                 </tbody>
                             </table>
@@ -190,20 +213,12 @@
             $("#addToTable").show();
         
         });
-        $("#tableContainer").on("click",".edit-element",function(e){
-            e.preventDefault();
-            var id = $(this).attr('id');
-            $("#addContainer").slideUp();
-            $("#btnCancel").show();		
-            $("#addToTable").hide();
-            $("#editContainer").slideDown();
-        });
-
+       
         $("#tableContainer").on("click",".edit-element",function(e){
             e.preventDefault();
             var id = $(this).attr('data-id');
             $.ajax({
-                url: '/category/get-category/'+id,
+                url: '/subcategory/get-category/'+id,
                 type: 'GET',                
                 success: function(data, textStatus, jqXHR) {                   
                      console.log(data);
@@ -214,7 +229,12 @@
                         $("#addToTable").hide();
                         $("#editContainer").slideDown();  
                     
+                        $("#editForm select[name='category_id']").val(data.category.category_id); 
                         $("#editForm input[name='name']").val(data.category.name); 
+                        $("#editForm textarea[name='description']").val(data.category.description); 
+                        $("#editForm input[name='seo_title']").val(data.category.seo_title); 
+                        $("#editForm input[name='seo_keywords']").val(data.category.seo_keyword); 
+                        $("#editForm textarea[name='seo_description']").val(data.category.seo_description);                         
                         $("#editForm input[name='id']").val(id); 
 
             
