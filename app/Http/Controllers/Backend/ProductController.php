@@ -29,7 +29,10 @@ class ProductController extends Controller
     }
     public function viewproduct()
     {
-        $products = Product::latest()->get();
+        $products = Product::leftJoin('brands','products.brand_id','=','brands.id')
+        ->select('products.*','brands.brand_name')
+        ->get();
+
         if(Session::has('success'))
         { 
             Alert::success('Success!',Session::get('success'));
@@ -38,9 +41,69 @@ class ProductController extends Controller
         {            
             Alert::error('Error',Session::get('error'));
         }
-        return view('admin.product.viewproduct',compact('products'));
+
+        //size,category,subcategory 
+        $sizes = Size::all()->keyBy('id');
+        $categories = Category::all()->keyBy('id');
+        $sub_categories = Sub_Category::all()->KeyBy('id')->keyBy('id');
+        return view('admin.product.viewproduct',compact('products','categories','sub_categories','sizes'));
     }
 
+
+      /*----------- active, inactive product with this command -----*/
+      public function update_status(Product $product)
+      {
+           if($product->status == 1)
+           {
+               $product->status = 0;
+               $msg = "Product de-activated successfully";
+           }             
+            else
+            {
+                 $product->status = 1; 
+                 $msg = "Product activated successfully";
+            }
+              
+          $product->save();        
+          return redirect()->route('viewproduct')->with('success',$msg);
+      }
+    /*----------- active, inactive product stock with this command -----*/
+    public function update_stock(Product $product)
+    {
+         if($product->in_stock == 1)
+         {
+             $product->in_stock = 0;
+             $msg = "Product set out of stock successfully";
+         }             
+          else
+          {
+               $product->in_stock = 1; 
+               $msg = "Product set in stock successfully";
+          }
+            
+        $product->save();        
+        return redirect()->route('viewproduct')->with('success',$msg);
+    }
+    //get discription
+    public function get_description(Request $request)
+    {  
+        $product = Product::where('id',$request->id)->first();
+        
+        if($product != null){
+            // $flag ="edit";            
+            // return view('admin.masters.viewbrand',compact('brand','flag'));            
+            $response = [
+                'result'=>1,
+                'long_description'=>htmlspecialchars_decode($product->long_description)
+            ];             
+        }
+        else
+        {
+            $response = ['result'=>0];
+
+        }
+        return $response;
+    }   
     /**
      * Show the step One Form for creating a new product.
      *
@@ -187,7 +250,7 @@ class ProductController extends Controller
                {
                     $image=$request->file('image');
                     $name_gen=hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-                    Image::make($image)->resize(900,400)->save('upload/images/'.$name_gen);
+                    Image::make($image)->resize(900,1100)->save('upload/images/'.$name_gen);
                     $filename='upload/images/'.$name_gen;
 
                     //update default image
@@ -356,7 +419,7 @@ class ProductController extends Controller
                             }
                             $image=$request->file('image');
                             $name_gen=hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-                            Image::make($image)->resize(900,400)->save('upload/images/'.$name_gen);
+                            Image::make($image)->resize(900,1100)->save('upload/images/'.$name_gen);
                             $filename='upload/images/'.$name_gen;
 
                             //update default image
@@ -494,7 +557,7 @@ class ProductController extends Controller
                     for($i=0;$i<= $total_doc-1;$i++)
                     {
                         $name_gen=hexdec(uniqid()).'.'.$request->image[$i]->getClientOriginalExtension();
-                        Image::make($request->image[$i])->resize(900,400)->save('upload/images/'.$name_gen);
+                        Image::make($request->image[$i])->resize(900,1100)->save('upload/images/'.$name_gen);
                         $filename='upload/images/'.$name_gen;
 
                         //insert the document one by one

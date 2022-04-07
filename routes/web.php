@@ -98,11 +98,15 @@ Route::group(['middleware' => ['IsAdmin']], function () {
         Route::get('edit/{product}', [ProductController::class,'edit'])->name('product.edit');
         Route::post('update', [ProductController::class,'update'])->name('products.update');        
         Route::get('delete/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
+        Route::get('/update-status/{product}',[ProductController::class,'update_status'])->name('update-status.product');
+        Route::get('/update-stock/{product}',[ProductController::class,'update_stock'])->name('update-stock.product');
+        Route::post('/get-description',[ProductController::class,'get_description'])->name('get.description.product');
+
         //image
         Route::get('view-image/{product}', [ProductController::class, 'image'])->name('product.image.view');
         Route::post('/add-image',[ProductController::class,'storeImage'])->name('add.image'); 
         Route::get('/delete-image/{image}',[ProductController::class,'destroyImage'])->name('delete.image');
-
+        
 
 
 	    Route::get('/slug/validate', [ProductController::class,'validateSlug'])->name('products.slug.validate');

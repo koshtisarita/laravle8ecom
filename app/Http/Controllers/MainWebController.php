@@ -10,7 +10,7 @@ use App\Models\Slider;
 use App\Models\Category;
 use App\Models\Sub_Category;
 use App\Models\Product;
-use App\Models\Sizes;
+use App\Models\Size;
 use Log;
 use Hash;
 use Socialite;
@@ -34,7 +34,7 @@ class MainWebController extends Controller
 
          $most_viewed=Product::where("status",1)->orderBy('view_count','DESC')->get();
 
-         return view('website.pages.index',compact('sliders','categories','sizes','new_arrival','most_popular',''));
+         return view('website.pages.index',compact('sliders','categories','sizes','new_arrival','most_popular','most_viewed'));
         }
      
 
