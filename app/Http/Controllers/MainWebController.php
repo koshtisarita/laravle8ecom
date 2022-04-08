@@ -15,10 +15,12 @@ use Log;
 use Hash;
 use Socialite;
 use Validator;
-use DB;
+use Illuminate\Support\Facades\DB;
 class MainWebController extends Controller
 {
      public function index(){
+
+        $setting=DB::table('sitesettings')->first();
          //landing page slider
          $sliders= Slider::where('status','=',1)->get();   
          //size for search  
@@ -34,17 +36,35 @@ class MainWebController extends Controller
 
          $most_viewed=Product::where("status",1)->orderBy('view_count','DESC')->get();
 
-         return view('website.pages.index',compact('sliders','categories','sizes','new_arrival','most_popular','most_viewed'));
+         return view('website.pages.index',compact('sliders','categories','sizes','new_arrival','most_popular','most_viewed','setting'));
         }
      
 
-        
-     public function contactus(){ return view('website.pages.contactus'); }
-     public function aboutus(){ return view('website.pages.aboutus');}
+    /*** contact us */  
+    
+     public function contactus(){
+        $setting=DB::table('sitesettings')->first();
+          return view('website.pages.contactus',compact('setting'));
+     }
+
+    /*--------end of contact us **/
+
+
+     public function aboutus(){ 
+         return view('website.pages.aboutus');
+    }
      public function cart(){return view('website.pages.cart');}
      public function product_list(){return view('website.pages.productlist');}
      public function product_detail(){return view('website.pages.productdetail');}
-     public function loginpage(){return view('website.pages.login_registration');}
+
+     public function loginpage(){
+        $setting=DB::table('sitesettings')->first();
+         return view('website.pages.login_registration',compact('setting'))
+         
+    ;}
+
+
+    
      //login check
      public function store(Request $request)
      {
