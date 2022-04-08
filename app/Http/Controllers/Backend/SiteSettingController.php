@@ -10,12 +10,14 @@ class SiteSettingController extends Controller
 {
     public function viewsitesetting()
     {
-        $setting=DB::table('sitesettings')->first();
+        $setting=DB::table('sitesettings')->first(); 
+       // dd($setting->id);
         return view('admin.masters.viewsetting',compact('setting'));
     }
 
     public function updatesitesetting(Request $request)
     {
+
         $request->validate([
             'phone_one'=>'required',
             'phone_two'=>'nullable',
@@ -30,6 +32,9 @@ class SiteSettingController extends Controller
             'created_by_company'=>'required',
 
         ]);
+
+      //dd($request->id);
+
         $id=$request->id;
         $data=[];
         $data['phone_one']=$request->phone_one;
@@ -44,7 +49,13 @@ class SiteSettingController extends Controller
         $data['created_by_company_link']=$request->created_by_company_link;
         $data['created_by_company']=$request->created_by_company;
       
-       DB::table('sitesettings')->where('id',$id)->update($data);
+        if(isset($request->id) && $request->id !=""){
+            DB::table('sitesettings')->where('id',$id)->update($data);
+        }
+      
+        else{
+            DB::table('sitesettings')->insert($data);
+        }
        return redirect()->back()->with('success','Website Settings Updated Successfully');
     }
 }

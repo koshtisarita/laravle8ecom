@@ -45,8 +45,8 @@
                         </span>
 
                         <p class="stext-115 cl6 size-213 p-t-18">
-                        <span><strong> {{$setting->company_name}}</strong></span><br>
-                           <span>{{$setting->company_address}}</span>
+                        <span><strong> {{isset($setting->company_name)?$setting->company_name:''}}</strong></span><br>
+                           <span>{{isset($setting->company_address)?$setting->company_address:''}}</span>
                         </p>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
                         </span>
 
                         <p class="stext-115 cl1 size-213 p-t-18">
-                            {{$setting->phone_one}}
+                            {{isset($setting->phone_one)?$setting->phone_one:''}}
                         </p>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
                         </span>
 
                         <p class="stext-115 cl1 size-213 p-t-18">
-                            {{$setting->email}}
+                            {{isset($setting->email)?$setting->email:''}}
                         </p>
                     </div>
                 </div>

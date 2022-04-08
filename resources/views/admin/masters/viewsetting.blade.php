@@ -30,55 +30,55 @@
                         <form role="form" id="addSettinForm" action="{{route('sitesetting.update')}}" method="POST">
                             @csrf
 
-                            <input type="hidden" value="{{$setting->id}}" name="id">
+                            <input type="hidden" value="{{isset($setting->id)? $setting->id : ''}}" name="id">
                             <div class="row">
                                 <div class="col-lg-4 col-sm-12 form-group">
                                     <label class="form-control-label">Phone 1: <span class="text-danger">*</span></label>
-                                    <input type="text" value="{{$setting->phone_one}}" name="phone_one" required class="form-control">
+                                    <input type="text" value="{{isset($setting->phone_one)? $setting->phone_one : ''}}" name="phone_one" required class="form-control">
                                 </div>
                                 <div class="col-lg-4 col-sm-12 form-group">                                   
                                     <label class="form-control-label">Phone 2:</label>
-                                    <input type="text" value="{{$setting->phone_two}}" name="phone_two" class="form-control">
+                                    <input type="text" value="{{isset($setting->phone_two)?$setting->phone_two: ''}}" name="phone_two" class="form-control">
                                 </div>
 
                                 <div class="col-lg-4 col-sm-12 form-group">                                   
                                     <label class="form-control-label">Company Email: <span class="text-danger">*</span></label>
-                                    <input type="email" value="{{$setting->email}}" name="email" required class="form-control">
+                                    <input type="email" value="{{isset($setting->email)?$setting->email:''}}" name="email" required class="form-control">
                                 </div>
                             </div>
                             <div class="row">
 
                                 <div class="col-lg-4 col-sm-12 form-group">                                   
                                     <label class="form-control-label">Company Name <span class="text-danger">*</span></label>
-                                    <input type="text" value="{{$setting->company_name}}" name="company_name" required class="form-control">
+                                    <input type="text" value="{{isset($setting->company_name)?$setting->company_name:''}}" name="company_name" required class="form-control">
                                 </div>
                             
                         
                                 <div class="col-lg-4 col-sm-12 form-group">                                   
                                     <label class="form-control-label">Company Address <span class="text-danger">*</span></label>
-                                    <input type="text" value="{{$setting->company_address}}" name="company_address" required class="form-control">
+                                    <input type="text" value="{{isset($setting->company_address)?$setting->company_address : ''}}" name="company_address" required class="form-control">
                                 </div>
                                 <div class="col-lg-4 col-sm-12 form-group">                                   
                                     <label class="form-control-label">Facebook</label>
-                                    <input type="text" value="{{$setting->facebook}}" name="facebook" class="form-control">
+                                    <input type="text" value="{{isset($setting->facebook)?$setting->facebook :''}}" name="facebook" class="form-control">
                                 </div>
                             </div>
                             <div class="row">
 
                                 <div class="col-lg-4 col-sm-12 form-group">                                   
                                     <label class="form-control-label">You tube</label>
-                                    <input type="text" value="{{$setting->youtube}}" name="youtube" class="form-control">
+                                    <input type="text" value="{{isset($setting->youtube)?$settung->youtube:''}}" name="youtube" class="form-control">
                                 </div>
 
                                 <div class="col-lg-4 col-sm-12 form-group">                                   
                                     <label class="form-control-label">Instagram </label>
-                                    <input type="text" value="{{$setting->instagram}}" name="instagram" class="form-control">
+                                    <input type="text" value="{{isset($setting->instagram)?$setting->instagram:''}}" name="instagram" class="form-control">
                                 </div>
                             
 
                                 <div class="col-lg-4 col-sm-12 form-group">                                   
                                     <label class="form-control-label">Twitter</label>
-                                    <input type="text" value="{{$setting->twitter}}" name="twitter" class="form-control">
+                                    <input type="text" value="{{isset($setting->twitter)?$setting->twitter:''}}" name="twitter" class="form-control">
                                 </div>
                             </div>
 
@@ -86,12 +86,12 @@
 
                                 <div class="col-lg-4 col-sm-12 form-group">                                   
                                     <label class="form-control-label">Developed By <span class="text-danger">*</span></label>
-                                    <input type="text" value="{{$setting->created_by_company}}" required name="created_by_company" class="form-control">
+                                    <input type="text" value="{{isset($setting->created_by_company)?$setting->created_by_company:''}}" required name="created_by_company" class="form-control">
                                 </div>
 
                                 <div class="col-lg-4 col-sm-12 form-group">                                   
                                     <label class="form-control-label">URL of IT company<span class="text-danger">*</span></label>
-                                    <input type="text" value="{{$setting->created_by_company_link}}" required name="created_by_company_link" class="form-control">
+                                    <input type="text" value="{{isset($setting->created_by_company_link)?$setting->created_by_company_link:''}}" required name="created_by_company_link" class="form-control">
                                 </div>
 
                             </div>
