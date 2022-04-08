@@ -270,7 +270,33 @@
     [ Show modal1 ]*/
     $('.js-show-modal1').on('click',function(e){
         e.preventDefault();
-        $('.js-modal1').addClass('show-modal1');
+        var product_id = $(this).attr('data-id');
+        $.ajax({
+            url: '/get-quick-view-data/'+product_id,
+            type: 'GET',                
+            success: function(data, textStatus, jqXHR) {                   
+                 console.log(data);
+                 if(data.result == 1){               
+                    $("#quick_view_images").html(data.image_div); 
+                    $("#quick_view_title").html(data.title); 
+                    $("#quick_view_price").html(data.price); 
+                    $("#quick_view_short_description").html(data.short_description); 
+                    $("#quick_add_to_cart #product_id").val(data.id);
+
+                    $('.js-modal1').addClass('show-modal1');
+                 }
+                 else{
+                   
+                    alert(result.message);
+                 }
+                  
+
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert("Some thing went wrong");
+            },
+        });
+        
     });
 
     $('.js-hide-modal1').on('click',function(){

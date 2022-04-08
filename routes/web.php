@@ -131,8 +131,12 @@ Route::group(['middleware' => ['IsAdmin']], function () {
 
 /*---------------- END OF ADMIN ROUTES-----------------*/
  
- 
+/*----------- LANDING PAGE ROUTE---------------*/
 Route::get('/',  [MainWebController::class,'index'])->name('index');
+Route::get('/get-quick-view-data/{product}', [MainWebController::class,'quick_view_data'])->name('get.quick_product');
+
+/*----------- END LANDING PAGE ROUTE---------------*/
+
 Route::get('/login-registration',  [MainWebController::class,'loginpage'])->name('login-page');
 //  login with social media
 Route::get('redirect/{driver}', [MainWebController::class,'redirectToProvider']);

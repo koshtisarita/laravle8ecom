@@ -10,6 +10,7 @@ use App\Models\Slider;
 use App\Models\Category;
 use App\Models\Sub_Category;
 use App\Models\Product;
+use App\Models\ProductImage;
 use App\Models\Size;
 use Log;
 use Hash;
@@ -35,15 +36,86 @@ class MainWebController extends Controller
          $most_viewed=Product::where("status",1)->orderBy('view_count','DESC')->get();
 
          return view('website.pages.index',compact('sliders','categories','sizes','new_arrival','most_popular','most_viewed'));
-        }
+    }
      
+    public function quick_view_data(Product $product)
+    { 
+        if($product){
+            $id = $product->id;
+            $product_images =[];
+            $product_images = ProductImage::where('product_id',$product->id)->get();   
+            
+            $image_html = "";
+            $image_html .='<div class="wrap-slick3 flex-sb flex-w">';
+            $image_html .='<div class="wrap-slick3-dots"></div>';
+            $image_html .='<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>';
 
+            $image_html .='<div class="slick3 gallery-lb">';
+            $image_html .='<div class="item-slick3" data-thumb="'.$product->default_image.'">';
+            $image_html .='<div class="wrap-pic-w pos-relative">';
+            $image_html .='<img src="'.$product->default_image.'" alt="IMG-PRODUCT">';
+
+            $image_html .='<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href=""'.$product->default_image.'"">
+                            <i class="fa fa-expand"></i>';
+            $image_html .='</a>';
+            $image_html .=' </div>
+                </div>';
+            if(count($product_images))
+            {
+              
+
+                foreach($product_images as $images)
+                {
+                    $image_html .='<div class="item-slick3" data-thumb="'.$images->image_path.'">';
+                    $image_html .='<div class="wrap-pic-w pos-relative">';
+                    $image_html .='<img src="'.$images->image_path.'" alt="IMG-PRODUCT">';
+
+                    $image_html .='<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href=""'.$images->image_path.'"">
+                                    <i class="fa fa-expand"></i>';
+                    $image_html .='</a>';
+                    $image_html .=' </div>
+                        </div>';
+
+               }    
+                $image_html .=' </div>
+                </div>';
+            }
+            else
+            {
+                $image_html .='Image not available'; 
+            }
+
+
+            //price
+            if($product->is_discount)
+            {
+                $price = "<b>£$product->discount</b> <br>RRP <strike>£$product->actual_price</strike>";
+            }
+            else
+            {
+                $price = "<b>£$product->actual_price</b>";
+            }
+            $response = [
+                'result'=>1,
+                'id'=>$product->id,               
+                'price'=>$price,               
+                'short_description'=>htmlspecialchars_decode($product->short_description),
+                'title'=>$product->title,
+                'image_div'=>$image_html 
+            ];             
+        }
         
-     public function contactus(){ return view('website.pages.contactus'); }
+        return $response;
+    }
+     
+    public function contactus(){ return view('website.pages.contactus'); }
      public function aboutus(){ return view('website.pages.aboutus');}
      public function cart(){return view('website.pages.cart');}
      public function product_list(){return view('website.pages.productlist');}
-     public function product_detail(){return view('website.pages.productdetail');}
+     public function product_detail(){
+        $sizes = Size::all();
+         return view('website.pages.productdetail',compact('sizes'));
+        }
      public function loginpage(){return view('website.pages.login_registration');}
      //login check
      public function store(Request $request)
