@@ -188,20 +188,27 @@
 	</div>
 
 	<!-- Modal1 -->
-	<div class="wrap-modal1 js-modal1 p-t-60 p-b-20" id="quick_view">
-		<div class="overlay-modal1 js-hide-modal1"></div>
+	<div class="wrap-modal1 js-modal2 p-t-60 p-b-20" id="quick_view">
+		<div class="overlay-modal1 js-hide-modal2"></div>
 
 		<div class="container">
 			<div class="bg0 p-t-60 p-b-30 p-lr-15-lg how-pos3-parent">
-				<button class="how-pos3 hov3 trans-04 js-hide-modal1">
-					<img src="images/icons/icon-close.png" alt="CLOSE">
+				<button class="how-pos3 hov3 trans-04 js-hide-modal2">
+					<img src="{{asset('customer_template/images/icons/icon-close.png')}}" alt="CLOSE">
 				</button>
 
 				<div class="row">
 					<div class="col-md-6 col-lg-7 p-b-30">
 						<div class="p-l-25 p-r-30 p-lr-0-lg">
-							 <div id="quick_view_images"></div>
-						</div>
+							
+							<div class="wrap-slick3 flex-sb flex-w">  
+							     <div class="wrap-slick3-dots"></div> 
+					            <div class="wrap-slick3-arrows flex-sb-m flex-w"></div> 
+								<div  id='quick_view_images'> 
+								     <!-- image area in quick view --> 
+								</div>
+							</div> 		 
+						</div>	
 					</div>
 					
 					<div class="col-md-6 col-lg-5 p-b-30">
@@ -230,12 +237,11 @@
 
 									<div class="size-204 respon6-next">
 										<div class="rs1-select2 bor8 bg0">
+										<span class="size_dropdown"></span>
 											<input type="hidden" name="prodcut_id" id="product_id"/>
-											<select class="js-select2" name="size_id" id="size_id">  
+											<select class="js-select2 quick_size_id" data-type="size" name="quick_size_id" id="quick_size_id">  
 												<option>Choose an option</option>
-												@foreach($sizes as $key=>$size)
-										         <option value="{{$size->id}}">{{$size->size_no}}/{{$size->size_shortcut}}</option>
-										        @endforeach
+											 
 											</select>
 											<div class="dropDownSelect2"></div>
 										</div>
@@ -249,7 +255,7 @@
 
 									<div class="size-204 respon6-next">
 										<div class="rs1-select2 bor8 bg0">
-											<select class="js-select2" name="time">
+											<select class="js-select2 " data-type="rental_length" name="rental_length" id="rental_length">
 												<option>Choose an option</option>
 												<option value="4">4 Days</option>
 												<option value="10">10 Days</option>

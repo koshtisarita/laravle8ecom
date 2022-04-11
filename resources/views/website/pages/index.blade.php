@@ -174,7 +174,7 @@
 							<div class="block2-pic hov-img0">
 								<img src="{{$product->default_image}}" alt="{{$product->title}}">
 
-								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" data-id="{{$product->id}}">
+								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal2" data-id="{{$product->id}}">
 								
 									Quick View
 								</a>
@@ -210,7 +210,7 @@
 							<div class="block2-pic hov-img0">
 								<img src="customer_template/images/product-02.jpg" alt="IMG-PRODUCT">
 
-								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal2">
 									Quick View
 								</a>
 							</div>
@@ -242,7 +242,7 @@
 							<div class="block2-pic hov-img0">
 								<img src="customer_template/images/product-03.jpg" alt="IMG-PRODUCT">
 
-								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal2">
 									Quick View
 								</a>
 							</div>
@@ -274,7 +274,7 @@
 							<div class="block2-pic hov-img0">
 								<img src="customer_template/images/product-04.jpg" alt="IMG-PRODUCT">
 
-								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal2">
 									Quick View
 								</a>
 							</div>
@@ -305,7 +305,7 @@
 							<div class="block2-pic hov-img0">
 								<img src="customer_template/images/product-05.jpg" alt="IMG-PRODUCT">
 
-								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal2">
 									Quick View
 								</a>
 							</div>
@@ -336,7 +336,7 @@
 							<div class="block2-pic hov-img0">
 								<img src="customer_template/images/product-06.jpg" alt="IMG-PRODUCT">
 
-								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal2">
 									Quick View
 								</a>
 							</div>
@@ -368,7 +368,7 @@
 							<div class="block2-pic hov-img0">
 								<img src="customer_template/images/product-07.jpg" alt="IMG-PRODUCT">
 
-								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal2">
 									Quick View
 								</a>
 							</div>
@@ -400,7 +400,7 @@
 							<div class="block2-pic hov-img0">
 								<img src="customer_template/images/product-08.jpg" alt="IMG-PRODUCT">
 
-								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal2">
 									Quick View
 								</a>
 							</div>
@@ -450,7 +450,7 @@
 							<div class="block2-pic hov-img0">
 								<img src="{{$product->default_image}}" alt="{{$product->title}}">
 
-								<a href="#" data-id="{{$product->id}}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+								<a href="#" data-id="{{$product->id}}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal2">
 									Quick View
 								</a>
 							</div>
@@ -504,7 +504,7 @@
 							<div class="block2-pic hov-img0">
 								<img src="{{$product->default_image}}" alt="{{$product->title}}">
 
-								<a href="#" data-id="{{$product->id}}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04"><!--js-show-modal1-->
+								<a href="#" data-id="{{$product->id}}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04"><!--js-show-modal2-->
 									Quick View
 								</a>
 							</div>

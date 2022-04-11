@@ -89,7 +89,113 @@
 	<script src="{{asset('customer_template/vendor/isotope/isotope.pkgd.min.js')}}"></script>
 <!--===============================================================================================-->
 	<script src="{{asset('customer_template/vendor/sweetalert/sweetalert.min.js')}}"></script>
+
+<!--===============================================================================================-->
+	<script src="{{asset('customer_template/js/main.js')}}"></script>
 	<script>
+		$("#from_date").on("blur",function(e){
+			e.preventDefault();
+			debugger;
+			 var rental_length = ($("#rental_length").val()!=="")?parseInt($("#rental_length").val()):"";
+			 if(!isNaN(rental_length))
+			 {
+					var from_date = new Date($("#from_date").val());
+				from_date.setDate(from_date.getDate() + rental_length);
+				$("#to_date").val(from_date.toInputFormat());
+			 }
+			 else
+			 {
+				swal("Please select the rental Length. ");
+			 }
+			
+		    
+            
+		});
+		Date.prototype.toInputFormat = function() {
+	
+       var yyyy = this.getFullYear().toString();
+       var mm = (this.getMonth()+1).toString(); // getMonth() is zero-based
+       var dd  = this.getDate().toString();
+       return yyyy + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]); // padding
+    };
+	</script>	
+	<script>
+	  $('.js-show-modal2').on('click',function(e){
+        e.preventDefault();
+        var html ='';
+		$("#quick_view_images").html(html); 
+        var product_id = $(this).attr('data-id');
+        $.ajax({
+            url: '/get-quick-view-data/'+product_id,
+            type: 'GET',                
+            success: function(data, textStatus, jqXHR) {                   
+                 console.log(data);
+                 if(data.result == 1){        
+ 
+                     
+					// html+='<div class="wrap-slick3-dots"></div>';
+					// html+='<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>';
+					html+='<div class="slick3 gallery-lb">'
+                    html+='<div class="item-slick3" data-thumb="'+data.default_image+'">';
+                    html+='<div class="wrap-pic-w pos-relative">';
+                    html+='        <img src="'+data.default_image+'" alt="IMG-PRODUCT">';
+
+                    html+='<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="'+data.default_image+'">';
+                    html+='<i class="fa fa-expand"></i>';
+                    html+='</a></div></div>';                  
+              
+
+                    if(data.is_detail_image_div)
+                    {
+                        for(var i=0; i<data.is_detail_image_div; i++)
+                        {
+                            
+                            html+='<div class="item-slick3" data-thumb="'+data.detail_image[i]['image_path']+'">';
+                            html+='<div class="wrap-pic-w pos-relative">';
+                            html+='        <img src="'+data.detail_image[i]['image_path']+'" alt="IMG-PRODUCT">';
+        
+                            html+='<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="'+data.detail_image[i]['image_path']+'">';
+                            html+='<i class="fa fa-expand"></i>';
+                            html+='</a></div></div>';                  
+                         
+                        }
+                    }
+					html+='</div>';     
+                    if(data.is_size > 0)
+					{
+						var size_value = '<option value="">Choose Size </option>';							
+						$(".quick_size_id").empty();
+						$(".quick_size_id").append(size_value);
+						for(var i=0;i<data.is_size;i++ )
+						{
+							  var size_value = '<option value="'+data.product_size[i]["id"]+'">'+data.product_size[i]["size_no"]+'/'+data.product_size[i]["size_shortcut"]+'</option>';
+							  $(".quick_size_id").append(size_value);
+						}
+					}
+                    $("#quick_view_images").append(html); 
+                    $("#quick_view_title").html(data.title); 
+                    $("#quick_view_price").html(data.price); 
+                    $("#quick_view_short_description").html(data.short_description); 
+                    $("#quick_add_to_cart #product_id").val(data.id);
+
+                    $('.js-modal2').addClass('show-modal1');
+                 }
+                 else{
+                   
+                    alert(result.message);
+                 }
+                  
+
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert("Some thing went wrong");
+            },
+        });
+        
+    });
+		  $('.js-hide-modal2').on('click',function(){
+				$('.js-modal2').removeClass('show-modal1');
+			});
 		$('.js-addwish-b2').on('click', function(e){
 			e.preventDefault();
 		});
@@ -125,7 +231,7 @@
 		});
 	</script>
 <!--===============================================================================================-->
-	<script src="{{asset('customer_template/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
+	<script src="{{asset('customer_template/vendor/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
 	<script>
 		$('.js-pscroll').each(function(){
 			$(this).css('position','relative');
@@ -141,8 +247,7 @@
 			})
 		});
 	</script>
-<!--===============================================================================================-->
-	<script src="{{asset('customer_template/js/main.js')}}"></script>
+
 
 </body>
 </html>

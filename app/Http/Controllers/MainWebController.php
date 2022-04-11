@@ -43,47 +43,48 @@ class MainWebController extends Controller
         if($product){
             $id = $product->id;
             $product_images =[];
-            $product_images = ProductImage::where('product_id',$product->id)->get();   
+            $product_images = ProductImage::where('product_id',$product->id)->get()->toArray();   
             
-            $image_html = "";
-            $image_html .='<div class="wrap-slick3 flex-sb flex-w">';
-            $image_html .='<div class="wrap-slick3-dots"></div>';
-            $image_html .='<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>';
+            // $image_html = "";
+            // $image_html .='<link rel="stylesheet" type="text/css" href="customer_template/vendor/slick/slick.css">';
+            // $image_html .='<script src="customer_template/vendor/slick/slick.min.js"></script>';
+            // $image_html .='<link rel="stylesheet" type="text/css" href="customer_template/css/main.css">';
+            // $image_html .='<div class="wrap-slick3 flex-sb flex-w">';
+            // $image_html .='<div class="wrap-slick3-dots"></div>';
+            // $image_html .='<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>';
 
-            $image_html .='<div class="slick3 gallery-lb">';
-            $image_html .='<div class="item-slick3" data-thumb="'.$product->default_image.'">';
-            $image_html .='<div class="wrap-pic-w pos-relative">';
-            $image_html .='<img src="'.$product->default_image.'" alt="IMG-PRODUCT">';
+            // $image_html .='<div class="slick3 gallery-lb">';
+            // $image_html .='<div class="item-slick3" data-thumb="'.$product->default_image.'">';
+            // $image_html .='<div class="wrap-pic-w pos-relative">';
+            // $image_html .='<img src="'.$product->default_image.'" alt="IMG-PRODUCT">';
 
-            $image_html .='<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href=""'.$product->default_image.'"">
-                            <i class="fa fa-expand"></i>';
-            $image_html .='</a>';
-            $image_html .=' </div>
-                </div>';
-            if(count($product_images))
-            {
+            // $image_html .='<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="'.$product->default_image.'">
+            //                 <i class="fa fa-expand"></i>';
+            // $image_html .='</a>';
+            // $image_html .=' </div>
+            //     </div>';
+            // if(count($product_images))
+            // {
               
 
-                foreach($product_images as $images)
-                {
-                    $image_html .='<div class="item-slick3" data-thumb="'.$images->image_path.'">';
-                    $image_html .='<div class="wrap-pic-w pos-relative">';
-                    $image_html .='<img src="'.$images->image_path.'" alt="IMG-PRODUCT">';
+            //     foreach($product_images as $images)
+            //     {
+                   
+            //         $image_html .='<div class="item-slick3" data-thumb="'.$images->image_path.'">';
+            //         $image_html .='<div class="wrap-pic-w pos-relative">';
+            //         $image_html .='<img src="'.$images->image_path.'" alt="IMG-PRODUCT">';
 
-                    $image_html .='<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href=""'.$images->image_path.'"">
-                                    <i class="fa fa-expand"></i>';
-                    $image_html .='</a>';
-                    $image_html .=' </div>
-                        </div>';
+            //         $image_html .='<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="'.$images->image_path.'">
+            //                         <i class="fa fa-expand"></i>';
+            //         $image_html .='</a>';
+            //         $image_html .=' </div>
+            //             </div>';
 
-               }    
-                $image_html .=' </div>
-                </div>';
-            }
-            else
-            {
-                $image_html .='Image not available'; 
-            }
+            //    }    
+            //     $image_html .=' </div>
+            //     </div>';
+            // }
+            
 
 
             //price
@@ -95,34 +96,43 @@ class MainWebController extends Controller
             {
                 $price = "<b>£$product->actual_price</b>";
             }
+
+            $sizes = Size::whereIn('id',json_decode($product->size_id))->get()->toArray();  
+
             $response = [
                 'result'=>1,
-                'id'=>$product->id,               
+                'id'=>$product->id,   
+                'is_size'=> count(json_decode($product->size_id)), 
+                'product_size'=>$sizes,       
                 'price'=>$price,               
                 'short_description'=>htmlspecialchars_decode($product->short_description),
                 'title'=>$product->title,
-                'image_div'=>$image_html 
+                'is_detail_image_div'=>count($product_images),
+                'detail_image'=>$product_images,
+                'default_image'=>$product->default_image
+                
             ];             
         }
         
         return $response;
     }
      
-    public function contactus(){ return view('website.pages.contactus'); }
-     public function aboutus(){ return view('website.pages.aboutus');}
-     public function cart(){return view('website.pages.cart');}
-     public function product_list(){return view('website.pages.productlist');}
+    public function contactus(){ $sizes = Size::all(); return view('website.pages.contactus',compact('sizes')); }
+     public function aboutus(){ $sizes = Size::all(); return view('website.pages.aboutus',compact('sizes'));}
+     public function cart(){ $sizes = Size::all(); return view('website.pages.cart',compact('sizes'));}
+     public function product_list(){$sizes = Size::all(); return view('website.pages.productlist',compact('sizes'));}
      public function product_detail(){
         $sizes = Size::all();
          return view('website.pages.productdetail',compact('sizes'));
         }
-     public function loginpage(){return view('website.pages.login_registration');}
+     public function loginpage(){   $sizes = Size::all(); return view('website.pages.login_registration',compact('sizes'));}
      //login check
      public function store(Request $request)
      {
           
             $email = trim($request->email);
 
+            
             $user = User::where('email','=',$email)->get()->first();
             Log::info($user);
             if($user != null)
