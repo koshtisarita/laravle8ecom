@@ -88,12 +88,13 @@
 								Returns 
 							</a>
 						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Customer Feedback
-							</a>
-						</li>
+						@if(Auth::user())
+							<li class="p-b-10">
+								<a href="{{route('customerfeedback')}}" class="stext-107 cl7 hov-cl1 trans-04">
+									Customer Feedback
+								</a>
+							</li>
+						@endif
 
 						<li class="p-b-10">
 							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
@@ -109,29 +110,31 @@
 					</h4>
 
 					<p class="stext-107 cl7 size-201">
-						Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
+						Any questions? <br>
+						Mail us at <span class="text-danger">{{isset($setting->email)? $setting->email:''}}</span><br>
+						 OR 
+						 <br>
+						 Call us on <span class="text-danger">{{isset($setting->phone_one)? $setting->phone_one:''}}</span>
 					</p>
                     
 					<div class="flex-c-m flex-w p-b-18 p-t-27">
-						<a href="#" class="m-all-1">
+						<a href="#" class="m-all-1" >
 							<img src="{{asset('customer_template/images/icons/linkedin.png')}}" alt="ICON-PAY">
 						</a>
 
-						<a href="#" class="m-all-1">
+						<a href="#" class="m-all-1" target="_blank">
 							<img src="{{asset('customer_template/images/icons/whatsapp.png')}}" alt="ICON-PAY">
 						</a>
 
-						<a href="#" class="m-all-1">
+						<a href="#" class="m-all-1" target="_blank">
 							<img src="{{asset('customer_template/images/icons/instagram.png')}}" alt="ICON-PAY">
 						</a>
 
-						<a href="#" class="m-all-1">
+						<a href="{{isset($setting->facebook) ? $setting->facebook : '#'}}" target="_blank" class="m-all-1">
 							<img src="{{asset('customer_template/images/icons/facebook.png')}}" alt="ICON-PAY">
 						</a>
 
-						<a href="#" class="m-all-1">
-							<img src="{{asset('customer_template/images/icons/instagram.png')}}" alt="ICON-PAY">
-						</a>
+						
 					</div>
 
 					<!-- <div class="p-t-27">
@@ -173,7 +176,7 @@
 			
 				<p class="stext-107 cl6 txt-center">
 					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-             Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+             Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | With <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="{{isset($setting->created_by_company_link)? $setting->created_by_company_link:'#'}}" target="_blank">{{isset($setting->created_by_company)?$setting->created_by_company:''}}</a>
                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 
 				</p>
@@ -304,11 +307,11 @@
 									</a>
 								</div>
 
-								<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Facebook">
+								<a href="{{isset($setting->facebook)?$setting->facebook:'#'}}" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Facebook">
 									<i class="fa fa-facebook"></i>
 								</a>
 
-								<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Twitter">
+								<a href="{{isset($setting->facebook)?$setting->facebook:'#'}}" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Twitter">
 									<i class="fa fa-twitter"></i>
 								</a>
 

@@ -43,7 +43,7 @@
                         <a href="{{route('viewsubcategory')}}">Sub-Category</a>
                     </li>   
                     <li>                         
-                        <a href="{{route('viewsetting')}}">Settings </a>
+                        <a href="{{route('viewsitesetting')}}">Site Settings </a>
                     </li>  
                     
                 </ul>

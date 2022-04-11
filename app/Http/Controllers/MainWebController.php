@@ -16,10 +16,12 @@ use Log;
 use Hash;
 use Socialite;
 use Validator;
-use DB;
+use Illuminate\Support\Facades\DB;
 class MainWebController extends Controller
 {
      public function index(){
+
+        $setting=DB::table('sitesettings')->first();
          //landing page slider
          $sliders= Slider::where('status','=',1)->get();   
          //size for search  
@@ -35,8 +37,8 @@ class MainWebController extends Controller
 
          $most_viewed=Product::where("status",1)->orderBy('view_count','DESC')->get();
 
-         return view('website.pages.index',compact('sliders','categories','sizes','new_arrival','most_popular','most_viewed'));
-    }
+         return view('website.pages.index',compact('sliders','categories','sizes','new_arrival','most_popular','most_viewed','setting'));
+        }
      
     public function quick_view_data(Product $product)
     { 
@@ -44,49 +46,7 @@ class MainWebController extends Controller
             $id = $product->id;
             $product_images =[];
             $product_images = ProductImage::where('product_id',$product->id)->get()->toArray();   
-            
-            // $image_html = "";
-            // $image_html .='<link rel="stylesheet" type="text/css" href="customer_template/vendor/slick/slick.css">';
-            // $image_html .='<script src="customer_template/vendor/slick/slick.min.js"></script>';
-            // $image_html .='<link rel="stylesheet" type="text/css" href="customer_template/css/main.css">';
-            // $image_html .='<div class="wrap-slick3 flex-sb flex-w">';
-            // $image_html .='<div class="wrap-slick3-dots"></div>';
-            // $image_html .='<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>';
-
-            // $image_html .='<div class="slick3 gallery-lb">';
-            // $image_html .='<div class="item-slick3" data-thumb="'.$product->default_image.'">';
-            // $image_html .='<div class="wrap-pic-w pos-relative">';
-            // $image_html .='<img src="'.$product->default_image.'" alt="IMG-PRODUCT">';
-
-            // $image_html .='<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="'.$product->default_image.'">
-            //                 <i class="fa fa-expand"></i>';
-            // $image_html .='</a>';
-            // $image_html .=' </div>
-            //     </div>';
-            // if(count($product_images))
-            // {
-              
-
-            //     foreach($product_images as $images)
-            //     {
-                   
-            //         $image_html .='<div class="item-slick3" data-thumb="'.$images->image_path.'">';
-            //         $image_html .='<div class="wrap-pic-w pos-relative">';
-            //         $image_html .='<img src="'.$images->image_path.'" alt="IMG-PRODUCT">';
-
-            //         $image_html .='<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="'.$images->image_path.'">
-            //                         <i class="fa fa-expand"></i>';
-            //         $image_html .='</a>';
-            //         $image_html .=' </div>
-            //             </div>';
-
-            //    }    
-            //     $image_html .=' </div>
-            //     </div>';
-            // }
-            
-
-
+           
             //price
             if($product->is_discount)
             {

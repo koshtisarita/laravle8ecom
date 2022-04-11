@@ -19,12 +19,8 @@ class MainAdminController extends Controller
     }
 
     //master menu function
-   
-  
-    public function viewsetting()
-    {
-        return view('admin.masters.viewsetting');
-    }
+
+ 
 
    
 }

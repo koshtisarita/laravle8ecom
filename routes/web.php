@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestdemosController;
 use App\Http\Controllers\MainAdminController;
@@ -10,7 +11,8 @@ use App\Http\Controllers\Backend\SizeController;
 use App\Http\Controllers\Backend\PincodeController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\SubCategoryController;
-use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\CustomerfeedbackController;
+use App\Http\Controllers\Backend\SiteSettingController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -119,7 +121,12 @@ Route::group(['middleware' => ['IsAdmin']], function () {
         Route::get('restore-all', [ProductController::class, 'restoreAll'])->name('product.restoreAll');
     });
 
-    Route::get('/view-setting', [MainAdminController::class,'viewsetting'])->name('viewsetting'); 
+
+    /*******Admin Site Settings--- Company name, address, phone nos etc etc */
+
+    Route::get('/view-sitesetting', [SiteSettingController::class,'viewsitesetting'])->name('viewsitesetting');
+    Route::post('/update-sitesetting', [SiteSettingController::class,'updatesitesetting'])->name('sitesetting.update'); 
+    
 
 
     
@@ -175,3 +182,11 @@ Route::post('crop-image-upload ', [TestdemosController::class,'uploadCropImage']
   
  
 //**************************************************/
+
+
+
+/*--------------------- CUSTOMER PANEL------------------------*/
+Route::get('/customerfeedback',function(){
+    return view('website.pages.customerfeedback');
+})->name('customerfeedback');
+Route::post('/customerfeedback/store',[CustomerfeedbackController::class,'store'])->name('customerfeedback.store');

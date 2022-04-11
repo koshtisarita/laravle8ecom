@@ -4,7 +4,7 @@
 
 
 	<!-- Slider -->
-	<section class="section-slide">
+	<section class="section-slide" style="z-index=1000;">
 		<div class="wrap-slick1 rs2-slick1">
 			<div class="slick1">
 				@foreach($sliders as $slider)
