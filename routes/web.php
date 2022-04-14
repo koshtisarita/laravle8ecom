@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestdemosController;
 use App\Http\Controllers\MainAdminController;
 use App\Http\Controllers\MainWebController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SizeController;
@@ -141,7 +142,9 @@ Route::group(['middleware' => ['IsAdmin']], function () {
 /*----------- LANDING PAGE ROUTE---------------*/
 Route::get('/',  [MainWebController::class,'index'])->name('index');
 Route::get('/get-quick-view-data/{product}', [MainWebController::class,'quick_view_data'])->name('get.quick_product');
-
+Route::post('/add-to-cart', [ProductController::class,'addToCart'])->name('add-to-cart');
+Route::post('/cart-items', [ProductController::class,'getCartItems'])->name('get.cart.item');
+Route::get('/remove-cart',  [ProductController::class,'removeCartItem'])->name('remove.cart.item');
 /*----------- END LANDING PAGE ROUTE---------------*/
 
 Route::get('/login-registration',  [MainWebController::class,'loginpage'])->name('login-page');

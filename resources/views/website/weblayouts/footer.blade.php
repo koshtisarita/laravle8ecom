@@ -216,7 +216,7 @@
 					
 					<div class="col-md-6 col-lg-5 p-b-30">
 						<!-- start quick view form -->
-					  <form id="quick_add_to_cart" name="quick_add_to_cart">
+					  <form id="quick_add_to_cart" name="quick_add_to_cart" method="post" action="{{route('add-to-cart')}}">
 						@csrf
 						<div class="p-r-50 p-t-5 p-lr-0-lg">
 							<h4 class="mtext-105 cl2 js-name-detail p-b-14">
@@ -241,7 +241,7 @@
 									<div class="size-204 respon6-next">
 										<div class="rs1-select2 bor8 bg0">
 										<span class="size_dropdown"></span>
-											<input type="hidden" name="prodcut_id" id="product_id"/>
+											<input type="hidden" name="product_id" id="product_id"/>
 											<select class="js-select2 quick_size_id" data-type="size" name="quick_size_id" id="quick_size_id">  
 												<option>Choose an option</option>
 											 
