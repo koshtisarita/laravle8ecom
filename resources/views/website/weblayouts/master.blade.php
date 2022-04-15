@@ -126,8 +126,7 @@
 			var price =0;
 			if(discount !== "")
 			{ 
-			   price = discount;
-			  
+			   price = discount;		  
          
 			}
 			else
@@ -138,9 +137,11 @@
 			total = total + (price * parseInt(item.quantity));
 	 
             cart_html += ' <li class="header-cart-item flex-w flex-t m-b-12">';
-            cart_html += ' <div class="header-cart-item-img"><a href="'+remove_url+'"><img src="'+product_image+'" alt="IMG"></a></div>';
+            cart_html += ' <div class="header-cart-item-img"><img src="'+product_image+'" alt="IMG"></div>';
             cart_html += '<div class="header-cart-item-txt p-t-8"><a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">'+product_name+'</a>';
             cart_html +=  '<span class="header-cart-item-info"> 1 X £ '+price+'</span></div>';
+			
+			cart_html +=' <div  class="quick-remove"><a href="'+remove_url+'"><img src="customer_template/images/icons/icon-close2.png" alt="IMG" width="10px" height="10px"></a></div>';
             cart_html += '</li>';
 
           });
@@ -160,6 +161,7 @@
             else
             {
                   $(".mini-cart__content").html('<h3>Card is empty</h3>'); 
+				  $('.cart_count').attr('data-notify',cart_items_count);
             }
         },
         error: function(err) {
@@ -291,22 +293,45 @@
 		$('.js-addwish-detail').each(function(){
 			var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
 
-			$(this).on('click', function(){
+			$(this).on('click', function(){				 
+
 				swal(nameProduct, "is added to wishlist !", "success");
 
 				$(this).addClass('js-addedwish-detail');
+
 				$(this).off('click');
 			});
 		});
 
 		/*---------------------------------------------*/
 
-		$('.js-addcart-detail').each(function(){
-			var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
-			$(this).on('click', function(){
-				$('#quick_add_to_cart').submit();
-				swal(nameProduct, "is added to cart !", "success");
-			});
+		//$('.js-addcart-detail').each(function(){
+		$('#quick_add_to_cart').on('submit',function(e){	
+			e.preventDefault();
+		    debugger
+			var form_data = $('#quick_add_to_cart').serialize(); 		 		
+			$.ajax({
+					url : '{{route("add-to-cart")}}', // or whatever 
+					type: 'POST',
+					data: form_data,
+					success: function(data, textStatus, jqXHR) {
+                     console.log(data);
+					 var nameProduct = $('#quick_view_title').html();
+                        if(data.error == false)
+						{
+							 
+							swal(nameProduct, "is added to cart !", "success");
+							location.reload();
+						}
+						else
+						{
+							swal(nameProduct, "is not added to cart. Please try again", "success");
+						}
+					
+					}
+				});
+			 
+			 
 		});
 	</script>
 <!--===============================================================================================-->

@@ -73,7 +73,7 @@
 					<!-- Icon header -->
 					<div class="wrap-icon-header flex-w flex-r-m h-full">							
 						<div class="flex-c-m h-full p-r-25 bor6">
-							<div class="icon-header-item cl0 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart cart_count" data-notify="2">
+							<div class="icon-header-item cl0 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart cart_count" data-notify="0">
 								<i class="zmdi zmdi-shopping-cart"></i>
 							</div>
 						</div>
@@ -92,13 +92,13 @@
 		<div class="wrap-header-mobile">
 			<!-- Logo moblie -->		
 			<div class="logo-mobile">
-				<a href="index.html"><img src="customer_template/images/icons/logo1.jpeg" alt="IMG-LOGO"></a>
+				<a href="/"><img src="customer_template/images/icons/logo3.png" alt="IMG-LOGO"></a>
 			</div>
 
 			<!-- Icon header -->
 			<div class="wrap-icon-header flex-w flex-r-m h-full m-r-15">
 				<div class="flex-c-m h-full p-r-5">
-					<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="2">
+					<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart cart_count" data-notify="2">
 						<i class="zmdi zmdi-shopping-cart"></i>
 					</div>
 				</div>

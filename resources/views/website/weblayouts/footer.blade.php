@@ -216,7 +216,7 @@
 					
 					<div class="col-md-6 col-lg-5 p-b-30">
 						<!-- start quick view form -->
-					  <form id="quick_add_to_cart" name="quick_add_to_cart" method="post" action="{{route('add-to-cart')}}">
+					  <form id="quick_add_to_cart" name="quick_add_to_cart">
 						@csrf
 						<div class="p-r-50 p-t-5 p-lr-0-lg">
 							<h4 class="mtext-105 cl2 js-name-detail p-b-14">
@@ -288,7 +288,7 @@
 								<div class="flex-w flex-r-m p-b-10">
 									<div class="size-204 flex-w flex-m respon6-next">
 									 
-											<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+											<button type="submit" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
 												Add to cart
 											</button>
 										

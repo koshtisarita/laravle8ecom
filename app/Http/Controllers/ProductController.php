@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Size;
 use Auth;
 use Session;
+use Log;
 
 
 class ProductController extends Controller
@@ -15,6 +16,7 @@ class ProductController extends Controller
     
     public function addToCart(Request $request) {
         $request_data = $request->all();
+        Log::info($request_data);
         $product_id = $request->product_id;
        
         $cart_count = 0;    
@@ -52,13 +54,13 @@ class ProductController extends Controller
             $obj_session_products->to_date = $request->to_date;
             $obj_session_products->quantity = 1;
             $products = [];
-            //Session::forget('products');
+            
             if(Session::has('products')) {
                 $products = Session::get('products');
                
                 if(isset($products[$product_id])){
                     $session_product = $products[$product_id];
-                    $session_product->quantity = $quantity;
+                    $session_product->quantity = 1;
                     $products[$product_id] = $session_product;
                 } else {
                     $obj_session_products->id = sizeof($products) + 1;
@@ -80,16 +82,16 @@ class ProductController extends Controller
         
         if(isset($request_data['page']))
         {
-            return response()->json(['error'=>false,'message'=>'Product added in cart.', 'cart_count' => $cart_count]);
+            return response()->json(['error'=>false,'message'=>'Product added in cart.', 'cart_items_count' => $cart_count]);
         }
-            return redirect()->back()->with('cart-success', 'Product added in cart.')->with('cart_items_count',$cart_count);
+            return response()->json(['error'=>false,'message'=>'Product added in cart.', 'cart_items_count' => $cart_count]);
         
         
     }
     
     public function getCartItems() {
 		$cart_items = [];
-		//Session::forget('products');
+		// Session::forget('products');
 
 		if(Auth::check()) {
 			$cart_items = Cart::where('user_id', Auth::user()->id)->get();
@@ -99,10 +101,10 @@ class ProductController extends Controller
 
 		if(count($cart_items)>0)
 		{
-			// foreach($cart_items as $key=>$item){
-			// 	Log::info($cart_items[$key]->id);
-			// }
-			//dd($cart_items);
+			foreach($cart_items as $key=>$item){
+				Log::info($cart_items[$key]->id);
+			}
+			Log::info($cart_items);
 			$products = Product::orderBy('id','DESC')
             ->select('products.id','title','default_image', 'actual_price','discount')
             ->get()
@@ -128,7 +130,7 @@ class ProductController extends Controller
         $request_data = $request->all();
         $product_id = base64_decode($request_data['product-id']);
         if(Auth::check()) {
-            $cart_items = Cart::where('user_id', Auth::user()->id)->where('product_variant_id', $product_id)->delete();
+            $cart_items = Cart::where('user_id', Auth::user()->id)->where('product_id', $product_id)->delete();
         } else {
             if(Session::has('products')) {
                 $products = Session::get('products');

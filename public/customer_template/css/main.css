@@ -1021,7 +1021,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 }
 
 .header-cart-item-img::after {
-  content: '\e870';
+  /* content: '\e870'; */
   font-family: Linearicons-Free;
   font-size: 16px;
   display: -webkit-box;
@@ -1051,7 +1051,20 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 
 /*---------------------------------------------*/
 .header-cart-item-txt {
-  width: calc(100% - 80px);
+  /* width: calc(100% - 90px); */
+  width: 65%;
+}
+
+/* new added css quick-remove*/
+.quick-remove
+{
+  
+    padding-top: 25px;
+    width: 10px;
+    height: 10px;
+    position: relative;
+    margin-right: 10px;
+ 
 }
 
 .header-cart-item-name {

@@ -16,7 +16,12 @@ use Log;
 use Hash;
 use Socialite;
 use Validator;
+use Session;
+use App\Models\Cart;
 use Illuminate\Support\Facades\DB;
+
+
+
 class MainWebController extends Controller
 {
      public function index(){
@@ -110,9 +115,36 @@ class MainWebController extends Controller
                         else
                         {                             
                             if($user->status == 1)
-                             {                                  
+                             {     
+                                Auth::login($user);
+                                if(Session::has('products')) {
+                                    $products = Session::get('products');
+                            
+                                    $cart_items = Cart::where('user_id', Auth::user()->id)->get()->keyBy('product_id');
+                                    if(count($products)>0)
+                                    {					
+                                        foreach(json_decode(json_encode($products)) as $product_id => $product) {
+                                            //Log::info($product->quantity);							
+                                            if(!isset($cart_items[$product_id])) {
+                                                //Log::info($product->product_variant_id);
+                                                //Log::info($product->quantity);
+                                                $obj_cart = new Cart();
+                                                $obj_cart->user_id = Auth::user()->id;
+                                                $obj_cart->product_id = $product->product_id;
+                                                $obj_cart->size_id =$product->quick_size_id;;
+                                                $obj_cart->rental_length =$product->rental_length;
+                                                $obj_cart->from_date =$product->from_date;
+                                                $obj_cart->to_date =$product->to_date;                                                
+                                                $obj_cart->save();
+  
+                                            }
+                                        }
+                                    }
+                                    Session::forget('products');
+                                }
+
                                  $request->session()->regenerate();
-                                 Auth::login($user);
+                                
                                  return redirect()->route('index');
                                 //  return redirect()->intended(RouteServiceProvider::HOME);
                             }

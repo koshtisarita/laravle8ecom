@@ -18,7 +18,8 @@ class CreateCartsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('size_id');
-            $table->integer('rental_lenght')->comment('number shows no. of days');
+            $table->integer('quantity')->default(1);
+            $table->integer('rental_length')->comment('number shows no. of days');
             $table->dateTime('from_date');
             $table->dateTime('to_date');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');            
