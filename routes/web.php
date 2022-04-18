@@ -145,6 +145,8 @@ Route::get('/get-quick-view-data/{product}', [MainWebController::class,'quick_vi
 Route::post('/add-to-cart', [ProductController::class,'addToCart'])->name('add-to-cart');
 Route::post('/cart-items', [ProductController::class,'getCartItems'])->name('get.cart.item');
 Route::get('/remove-cart',  [ProductController::class,'removeCartItem'])->name('remove.cart.item');
+Route::get('/cart',  [ProductController::class,'getCartDetail'])->name('cart');
+Route::post('/update-cart',  [ProductController::class,'updateCart'])->name('update-cart');
 /*----------- END LANDING PAGE ROUTE---------------*/
 
 Route::get('/login-registration',  [MainWebController::class,'loginpage'])->name('login-page');
@@ -165,7 +167,6 @@ Route::get('/active-account/{uid}',  [MainWebController::class,'activation']);
 Route::get('/contact-us',  [MainWebController::class,'contactus'])->name('contact-us');
 Route::get('/about-us',  [MainWebController::class,'aboutus'])->name('about-us');
 Route::get('/all-brands',[MainWebController::class,'aboutus'])->name('all-brands');
-Route::get('/cart',  [MainWebController::class,'cart'])->name('cart');
 
 Route::get('/product-list',  [MainWebController::class,'product_list'])->name('product-list');
 Route::get('/product-detail',  [MainWebController::class,'product_detail'])->name('product-detail');

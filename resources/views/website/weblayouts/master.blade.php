@@ -123,6 +123,7 @@
 			var product_image = products[item.product_id].default_image;
 			var actual_price = products[item.product_id].actual_price;
 			var discount = products[item.product_id].discount;
+			var quantity = parseInt(item.quantity); 
 			var price =0;
 			if(discount !== "")
 			{ 
@@ -139,7 +140,7 @@
             cart_html += ' <li class="header-cart-item flex-w flex-t m-b-12">';
             cart_html += ' <div class="header-cart-item-img"><img src="'+product_image+'" alt="IMG"></div>';
             cart_html += '<div class="header-cart-item-txt p-t-8"><a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">'+product_name+'</a>';
-            cart_html +=  '<span class="header-cart-item-info"> 1 X £ '+price+'</span></div>';
+            cart_html +=  '<span class="header-cart-item-info">'+ quantity+' X £ '+price+'</span></div>';
 			
 			cart_html +=' <div  class="quick-remove"><a href="'+remove_url+'"><img src="customer_template/images/icons/icon-close2.png" alt="IMG" width="10px" height="10px"></a></div>';
             cart_html += '</li>';
@@ -319,9 +320,12 @@
 					 var nameProduct = $('#quick_view_title').html();
                         if(data.error == false)
 						{
+							swal(nameProduct, data.message, "success");
 							 
-							swal(nameProduct, "is added to cart !", "success");
-							location.reload();
+							//wait 3 second sand then reload the page
+
+							setTimeout(function(){location.reload();}, 2000);  
+							
 						}
 						else
 						{
@@ -330,8 +334,6 @@
 					
 					}
 				});
-			 
-			 
 		});
 	</script>
 <!--===============================================================================================-->

@@ -13,7 +13,7 @@ use Log;
 
 class ProductController extends Controller
 {
-    
+    //============Add product into the cart ====================
     public function addToCart(Request $request) {
         $request_data = $request->all();
         Log::info($request_data);
@@ -32,6 +32,7 @@ class ProductController extends Controller
                 $obj_cart->from_date = $request->from_date;
                 $obj_cart->to_date = $request->to_date;
                 $obj_cart->save();
+                $msg = "Product detail updated to cart";
                 
             } else {
                 $obj_cart = new Cart();
@@ -42,6 +43,7 @@ class ProductController extends Controller
                 $obj_cart->from_date = $request->from_date;
                 $obj_cart->to_date = $request->to_date;
                 $obj_cart->save();
+                $msg = "Product has been added into the cart";
             }
             $cart_items = Cart::where('user_id', Auth::user()->id)->get();
             $cart_count = count($cart_items);
@@ -62,9 +64,13 @@ class ProductController extends Controller
                     $session_product = $products[$product_id];
                     $session_product->quantity = 1;
                     $products[$product_id] = $session_product;
-                } else {
+                    $msg = "Product have already been added to cart";
+                } 
+                else
+                {
                     $obj_session_products->id = sizeof($products) + 1;
                     $products[$product_id] = $obj_session_products;
+                    $msg = "Product has been added into the cart";
                 }
               
                 Session::put('products', $products);
@@ -75,23 +81,19 @@ class ProductController extends Controller
                 $products[$product_id] = $obj_session_products;
                 Session::put('products', $products);
                 $cart_count = count($products);
+                $msg = "Product has been added into the cart";
                 //dd(Session::get('products'));
             }
         }
         
-        
-        if(isset($request_data['page']))
-        {
-            return response()->json(['error'=>false,'message'=>'Product added in cart.', 'cart_items_count' => $cart_count]);
-        }
-            return response()->json(['error'=>false,'message'=>'Product added in cart.', 'cart_items_count' => $cart_count]);
+        return response()->json(['error'=>false,'message'=>$msg, 'cart_items_count' => $cart_count]);
         
         
     }
-    
+    // ==========   get the home page right cart detail ===========
     public function getCartItems() {
 		$cart_items = [];
-		// Session::forget('products');
+		 // Session::forget('products');
 
 		if(Auth::check()) {
 			$cart_items = Cart::where('user_id', Auth::user()->id)->get();
@@ -101,15 +103,17 @@ class ProductController extends Controller
 
 		if(count($cart_items)>0)
 		{
+			$product_id_array = array();
 			foreach($cart_items as $key=>$item){
 				Log::info($cart_items[$key]->id);
+                array_push($product_id_array,$cart_items[$key]->id);
 			}
-			Log::info($cart_items);
+			 
 			$products = Product::orderBy('id','DESC')
             ->select('products.id','title','default_image', 'actual_price','discount')
+            ->whereIn('products.id',$product_id_array)
             ->get()
 			->keyBy('id'); 
-
             $sizes  = Size::get()->keyBy('id');
 			//dd($product_variants);
 		}
@@ -125,7 +129,7 @@ class ProductController extends Controller
 		return $data;
 	}
 	
-    //remove item from cart
+     // ==========  remove item from cart ==============
     public function removeCartItem(Request $request) {
         $request_data = $request->all();
         $product_id = base64_decode($request_data['product-id']);
@@ -133,20 +137,102 @@ class ProductController extends Controller
             $cart_items = Cart::where('user_id', Auth::user()->id)->where('product_id', $product_id)->delete();
         } else {
             if(Session::has('products')) {
-                $products = Session::get('products');
-                //dd($products);
+                $products = Session::get('products'); 
                 if(isset($products[$product_id])){
                     // delete this product
                     unset($products[$product_id]);
                 }
-                //dd($products);
+               
                 Session::put('products', $products);
-                //dd(Session::get('products'));
+              
             }
         }
         return redirect()->back();
     }
 
+
+    /*--=============Get the product detail into the cart page================ */
+    public function getCartDetail() {
+        $cart_items = []; 
+        if(Auth::check()) {
+            $cart_items = Cart::where('user_id', Auth::user()->id)->get();
+        } else if(Session::has('products')){
+            $cart_items = Session::get('products');
+        }
+        Log::info($cart_items);
+        if(count($cart_items)>0)
+		{
+            $product_id_array = array();
+			foreach($cart_items as $key=>$item){
+				 
+                array_push($product_id_array,$cart_items[$key]->id);
+			}
+			 
+			$products = Product::orderBy('id','DESC')
+            ->select('products.id','title','default_image', 'actual_price','discount')
+            ->whereIn('products.id',$product_id_array)
+            ->get()
+			->keyBy('id')->toArray(); 
+
+           
+            $sizes  = Size::get()->keyBy('id');
+			//dd($product_variants);
+		}
+		else
+		{
+			$sizes = [];
+			$products = [];
+		}
+	   
+	 
+        return view('website.pages.cart')
+            ->with('cart_items',$cart_items) 
+            ->with('products',$products)
+            ->with('sizes',$sizes);
+		
+		 
+    }
+
+    /*******************Update cart  from cart page*************** */
+    public function updateCart(Request $request)
+    {
+        Log::info("Update cart function");
+       
+        if(Auth::check()) {
+            for($i =0 ;$i<count($request->num_product1);$i++)
+            {
+                $obj_cart = Cart::where('user_id', Auth::user()->id)->where('product_id', $request->id_product1[$i])->first();                
+                $obj_cart->quantity = $request->num_product1[$i];
+                $obj_cart->save();
+            } 
+         
+            $cart_items = Cart::where('user_id', Auth::user()->id)->get();
+            $cart_count = count($cart_items);
+            $this->getCartDetail(); 
+        } else {
+ 
+            
+            if(Session::has('products')) {
+                $products = Session::get('products');
+                for($i =0 ;$i<count($request->num_product1);$i++)
+                {
+                    if(isset($products[$request->id_product1[$i]])){
+                        $session_product = $products[$request->id_product1[$i]];
+                        $session_product->quantity = $request->num_product1[$i];
+                        $products[$request->id_product1[$i]] = $session_product;                        
+                        
+                    } 
+                }
+               
+                Session::put('products', $products);
+               
+                $cart_count = count($products);
+                $this->getCartDetail(); 
+            } 
+        }
+        
+       
+    }
 }
 class SessionProducts
 {

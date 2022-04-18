@@ -83,8 +83,7 @@ class MainWebController extends Controller
     }
      
     public function contactus(){ $sizes = Size::all(); return view('website.pages.contactus',compact('sizes')); }
-     public function aboutus(){ $sizes = Size::all(); return view('website.pages.aboutus',compact('sizes'));}
-     public function cart(){ $sizes = Size::all(); return view('website.pages.cart',compact('sizes'));}
+     public function aboutus(){ $sizes = Size::all(); return view('website.pages.aboutus',compact('sizes'));} 
      public function product_list(){$sizes = Size::all(); return view('website.pages.productlist',compact('sizes'));}
      public function product_detail(){
         $sizes = Size::all();
