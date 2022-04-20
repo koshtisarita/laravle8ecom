@@ -420,7 +420,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
   overflow:auto;
   /**overflow-y:scroll;**/
   border-radius:20px;
-  height:200px;
+  height:auto;
 
   box-shadow: 0 1px 5px 0px rgba(0,0,0,0.2);
   -moz-box-shadow: 0 1px 5px 0px rgba(0,0,0,0.2);

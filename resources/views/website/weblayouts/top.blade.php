@@ -14,50 +14,38 @@
 
 					<!-- Menu desktop -->
 					<div class="menu-desktop">
+					@if(isset($dynamicMenu))
 						<ul class="main-menu">
-							 
-							<li>
-								<a href="#">Outfits</a>
-								<ul class="sub-menu">
-									<li><a href="{{route('product-list')}}">Homepage 1</a></li>
-									<li><a href="{{route('product-list')}}">Homepage 2</a></li>
-									<li><a href="{{route('product-list')}}">Homepage 3</a></li>
-									<li><a href="{{route('product-list')}}">Homepage 1</a></li>
-									<li><a href="{{route('product-list')}}">Homepage 2</a></li>
-									<li><a href="{{route('product-list')}}">Homepage 3</a></li>
-									<li><a href="{{route('product-list')}}">Homepage 1</a></li>
-									<li><a href="{{route('product-list')}}">Homepage 2</a></li>
-									<li><a href="{{route('product-list')}}">Homepage 3</a></li>
-									
-									<li><a href="{{route('product-list')}}">Homepage 1</a></li>
-									<li><a href="{{route('product-list')}}">Homepage 2</a></li>
-									<li><a href="{{route('product-list')}}">Homepage 3</a></li>
-									<li><a href="{{route('product-list')}}">Homepage 1</a></li>
-									<li><a href="{{route('product-list')}}">Homepage 2</a></li>
-									<li><a href="{{route('product-list')}}">Homepage 3</a></li>
-									<li><a href="{{route('product-list')}}">Homepage 1</a></li>
-									<li><a href="{{route('product-list')}}">Homepage 2</a></li>
-									<li><a href="{{route('product-list')}}">Homepage 3</a></li>
-								</ul>
-								 
-							</li>
-							<li>
-								<a href="#">Occasions</a>								 
-								<ul class="sub-menu">
-									<li><a href="{{route('product-list')}}">Homepage 1</a></li>
-									<li><a href="{{route('product-list')}}">Homepage 2</a></li>
-									<li><a href="{{route('product-list')}}">Homepage 3</a></li>
-								</ul>                               
-									 	
- 
-							</li>
+							 @foreach($dynamicMenu as $cat)  
 
+							<li>
+								<a href="#">{{ucfirst($cat['cat_name'])}}</a>
+								@if($cat['has_child'])
+								 
+								<ul class="sub-menu">
+								    @foreach($cat['child_cat_array'] as $child_link)
+									
+									<li><a href="{{route('product-list')}}"> {{ucfirst($child_link['child_cat_name'])}}</a></li>
+									@endforeach
+									 
+								</ul>
+								 @endif
+							</li>
+						 
+                             @endforeach
 							<!-- <li class="label1" data-label1="hot">
 								<a href="{{route('cart')}}">Features</a>
 							</li>-->
 
-							<li>
+							<li class="main-menu">
 								<a href="{{route('all-brands')}}">Brands</a>
+								<ul class="sub-menu">
+								    @foreach($brands as $brand)
+									
+									<li><a href="{{route('product-list')}}"> {{ucfirst($brand->brand_name)}}</a></li>
+									@endforeach
+									 
+								</ul>
 							</li> 
 
 							<li>
@@ -68,6 +56,7 @@
 								<a href="{{route('contact-us')}}">Contact</a>
 							</li>
 						</ul>
+					@endif	
 					</div>	
 
 					<!-- Icon header -->

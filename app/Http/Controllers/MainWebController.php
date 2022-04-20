@@ -12,6 +12,7 @@ use App\Models\Sub_Category;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\Size;
+use App\Models\Brand;
 use Log;
 use Hash;
 use Socialite;
@@ -28,21 +29,23 @@ class MainWebController extends Controller
 
         $setting=DB::table('sitesettings')->first();
          //landing page slider
-         $sliders= Slider::where('status','=',1)->get();   
+        $sliders= Slider::where('status','=',1)->get();   
          //size for search  
-         $sizes = Size::all();
+        $sizes = Size::all();
          //category and sub_category
          $categories= Category::all()->keyBy('id');
-         
          $subCategories = Sub_Category::get()->keyBy('id');
-
+        //Brands 
+        $brands = Brand::all();
+         $dynamicMenu = $this->dynamicMenu();
+        
          $new_arrival = Product::where("status",1)->where("is_newarrival",1)->orderBy('id','DESC')->get();
 
          $most_popular= Product::where("status",1)->orderBy('id','DESC')->get();
 
          $most_viewed=Product::where("status",1)->orderBy('view_count','DESC')->get();
 
-         return view('website.pages.index',compact('sliders','categories','sizes','new_arrival','most_popular','most_viewed','setting'));
+         return view('website.pages.index',compact('sliders','categories','sizes','new_arrival','most_popular','most_viewed','setting','dynamicMenu','brands'));
         }
      
     public function quick_view_data(Product $product)
@@ -82,14 +85,41 @@ class MainWebController extends Controller
         return $response;
     }
      
-    public function contactus(){ $sizes = Size::all(); return view('website.pages.contactus',compact('sizes')); }
-     public function aboutus(){ $sizes = Size::all(); return view('website.pages.aboutus',compact('sizes'));} 
-     public function product_list(){$sizes = Size::all(); return view('website.pages.productlist',compact('sizes'));}
-     public function product_detail(){
-        $sizes = Size::all();
-         return view('website.pages.productdetail',compact('sizes'));
+    public function contactus(){ 
+         //Brands 
+         $brands = Brand::all();
+         //menu for navigation bar
+         $dynamicMenu = $this->dynamicMenu();
+        $sizes = Size::all(); return view('website.pages.contactus',compact('sizes','dynamicMenu','brands')); 
+    }
+     public function aboutus(){ 
+          //Brands 
+          $brands = Brand::all();
+          //menu for navigation bar
+          $dynamicMenu = $this->dynamicMenu();
+         $sizes = Size::all(); return view('website.pages.aboutus',compact('sizes','dynamicMenu','brands')); 
+        } 
+     public function product_list(){
+        $brands = Brand::all();
+        //menu for navigation bar
+        $dynamicMenu = $this->dynamicMenu();
+         $sizes = Size::all(); return view('website.pages.productlist',compact('sizes','dynamicMenu','brands')); 
+        
         }
-     public function loginpage(){   $sizes = Size::all(); return view('website.pages.login_registration',compact('sizes'));}
+     public function product_detail(){
+        $brands = Brand::all();
+        //menu for navigation bar
+        $dynamicMenu = $this->dynamicMenu();
+        $sizes = Size::all();
+         return view('website.pages.productdetail',compact('sizes','dynamicMenu','brands')); 
+        }
+     public function loginpage(){ 
+        $brands = Brand::all();
+        //menu for navigation bar
+        $dynamicMenu = $this->dynamicMenu();
+        $sizes = Size::all();
+            return view('website.pages.login_registration',compact('sizes','dynamicMenu','brands')); 
+        }
      //login check
      public function store(Request $request)
      {
@@ -280,5 +310,34 @@ class MainWebController extends Controller
                         return redirect()->back()->with('error','Some thing wen wrong');
                     }    
                 }
+     }
+     public function dynamicMenu()
+     {
+        $categories= Category::all()->keyBy('id');
+        $level_1 =array();
+        foreach($categories as $key=>$parent_category)
+        {
+           $child_categories_array = array();
+           $parent_id = $parent_category->id;
+           $child_categories = Sub_Category::where('category_id', '=', $parent_id)->get();
+           $has_child_level1 = count($child_categories)>0?true:false;
+           $level_2 = array();
+           foreach($child_categories as $child_cat)
+           {                
+               array_push($level_2,array(
+                   'level'=>2,
+                   'child_cat_id'=>$child_cat->id, 
+                   'child_cat_name'=>$child_cat->name, 
+               ));
+           }
+           array_push($level_1 ,array(
+               'level'=>1,
+               'cat_id'=>$parent_category->id, 
+               'has_child'=>$has_child_level1,
+               'cat_name'=>$parent_category->name, 
+               'child_cat_array'=>$level_2
+           ));   
+        }
+        return $level_1 ;
      }
 }

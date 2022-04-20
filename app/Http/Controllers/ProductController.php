@@ -159,7 +159,7 @@ class ProductController extends Controller
         } else if(Session::has('products')){
             $cart_items = Session::get('products');
         }
-        Log::info($cart_items);
+        // Log::info($cart_items);
         if(count($cart_items)>0)
 		{
             $product_id_array = array();
@@ -208,12 +208,12 @@ class ProductController extends Controller
          
             $cart_items = Cart::where('user_id', Auth::user()->id)->get();
             $cart_count = count($cart_items);
-            $this->getCartDetail(); 
+            
         } else {
  
             
             if(Session::has('products')) {
-                $products = Session::get('products');
+                $cart_items = $products = Session::get('products');
                 for($i =0 ;$i<count($request->num_product1);$i++)
                 {
                     if(isset($products[$request->id_product1[$i]])){
@@ -224,14 +224,14 @@ class ProductController extends Controller
                     } 
                 }
                
-                Session::put('products', $products);
-               
+                Session::put('products', $products);               
                 $cart_count = count($products);
-                $this->getCartDetail(); 
+                 
             } 
         }
-        
        
+       $this->getCartDetail();  
+        
     }
 }
 class SessionProducts
