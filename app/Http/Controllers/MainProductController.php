@@ -6,12 +6,15 @@ use Illuminate\Http\Request;
 use App\models\Cart;
 use App\Models\Product;
 use App\Models\Size;
+use App\Models\Brand;
+use App\Models\Sub_Category;
+use App\Models\Category;
 use Auth;
 use Session;
 use Log;
 
 
-class ProductController extends Controller
+class MainProductController extends Controller
 {
     //============Add product into the cart ====================
     public function addToCart(Request $request) {
@@ -233,6 +236,142 @@ class ProductController extends Controller
        $this->getCartDetail();  
         
     }
+   /****************** product listing page ******************/
+    public function product_list(Request $request,$sub_cat_id){
+         
+        $sub_category = Sub_Category::where('sub_categories.id',$sub_cat_id)
+        ->leftJoin('categories','sub_categories.category_id','=','categories.id')
+        ->select('sub_categories.name','sub_categories.description','categories.name as cat_name')
+        ->first();
+
+        //dd($sub_category);
+        $response = $this->getProduct( $request,$sub_cat_id,'');
+        // dd($response);
+        $products = $response['products'];
+        $product_count = $response['product_count'];
+        $start = $response['start']; 
+
+       
+        $brands = Brand::all();
+        //menu for navigation bar
+        $dynamicMenu =  MainWebController::dynamicMenu();
+ 
+         $sizes = Size::all(); 
+         
+         return view('website.pages.productlist',compact('sizes','dynamicMenu','brands','products','product_count','start','sub_category')); 
+        
+    }
+ 
+    function getProduct(Request $request,$sub_cat_id,$brand_id){
+        $request_data = $request->all();
+        $categories = array();
+        $subcategories = array();
+        $brands = array();
+      
+        $category_detail = [];
+        
+        if(isset($sub_cat_id) && $sub_cat_id > 0){
+            $subcategories[] = $sub_cat_id;
+            
+        }
+       
+       
+      
+
+        $others = array(); 
+        $sizes = array(); 
+
+         
+            
+        $filter_product = Product::select('products.*','brands.brand_name')
+        ->leftJoin('brands','brands.id','products.brand_id')
+        ->where('products.status', 1) ;
+       
+        // if(isset($request_data['sizes']))
+        // {
+        //     $sizes = $request_data['sizes'];
+        //     $filter_product = $filter_product->whereIn('size_id', $sizes);
+        // }			
+
+
+        if(isset($brand_id) && $brand_id > 0){
+            $filter_product = $filter_product->where('brand_id', $brand_id);
+        }
+
+
+        if(isset($request_data['sizes']))
+        {
+            $size = $request_data['sizes'];
+            $filter_product = $filter_product->where('products.size_id', 'LIKE', '%"'.$size.'"%');
+        }
+
+
+    
+        if(count($subcategories) > 0){
+            // $filter_category_ids = array_unique(array_merge($subcategories));
+            $filter_category_ids = $subcategories;
+            $filter_product =  $filter_product->where(function($query)use ($filter_category_ids) {
+                foreach( $filter_category_ids as $key => $category_id) {
+                    if($key == 0){
+                        $query = $query->where('products.sub_categories', 'LIKE', '%"'.$category_id.'"%');
+                    }else{
+                        $query = $query->orWhere('products.sub_categories', 'LIKE', '%"'.$category_id.'"%');
+                    }
+                }
+            });
+
+        } 
+      
+
+        // if(isset($request_data['other']) && $request_data['other']=='1')
+        // {
+        //     $products = $products->orderBy('product.name', 'ASC'); //1 = 'A to Z';
+        // }        
+        // elseif(isset($request_data['other']) && $request_data['other']=='2' )//2 = 'Z to A';
+        // {
+        //     $products = $products->orderBy('product.name', 'DESC');
+        // }elseif(isset($request_data['other']) && $request_data['other']=='3')//3 = 'Price high to low';
+        // {	
+        //     $ids_ordered = implode(',', $filter_product_variants_product_id);
+        //     $products = $products->orderByRaw("FIELD(product.id, $ids_ordered)");
+        // }
+        // elseif(isset($request_data['other']) && $request_data['other']=='4')//4 = 'Price low to high';
+        // {	          
+        //     $ids_ordered = implode(',', $filter_product_variants_product_id);
+        //     $products = $products->orderByRaw("FIELD(product.id, $ids_ordered)");
+        // }
+        // else if(!isset($request_data['other']))
+        // {
+        //     $products = $products->orderBy('product.name', 'ASC'); //1 = 'A to Z';
+        // }
+
+        $products = $filter_product->get();
+        $product_count = count( $products);
+        $limit = 24;
+        $start = 0;
+        if(isset($request_data['start']) && $request_data['start'] != "") {
+            $start = $request_data['start'];
+        }
+		$products = collect($products)->slice($start, $limit)->all();
+        
+        $response = array();
+        $response['products'] = $products;
+        $response['product_count'] = $product_count;
+        $response['start'] = $start; 
+        return $response;
+
+    }
+
+
+
+     /****************** product Detail page ******************/
+     public function product_detail(){
+        $brands = Brand::all();
+        //menu for navigation bar
+        $dynamicMenu =  MainWebController::dynamicMenu();
+        $sizes = Size::all();
+         return view('website.pages.productdetail',compact('sizes','dynamicMenu','brands')); 
+        }
 }
 class SessionProducts
 {

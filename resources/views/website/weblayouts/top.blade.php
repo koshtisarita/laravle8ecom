@@ -9,7 +9,7 @@
 					
 					<!-- Logo desktop -->		
 					<a href="{{route('index')}}" class="logo">
-						<img src="customer_template/images/icons/logo3.png" alt="IMG-LOGO" width="180" height='100'>
+						<img src="/customer_template/images/icons/logo3.png" alt="IMG-LOGO" width="180" height='100'>
 					</a>
 
 					<!-- Menu desktop -->
@@ -25,7 +25,7 @@
 								<ul class="sub-menu">
 								    @foreach($cat['child_cat_array'] as $child_link)
 									
-									<li><a href="{{route('product-list')}}"> {{ucfirst($child_link['child_cat_name'])}}</a></li>
+									<li><a href="/product-list/{{$child_link['child_cat_id']}}"> {{ucfirst($child_link['child_cat_name'])}}</a></li>
 									@endforeach
 									 
 								</ul>
@@ -42,7 +42,7 @@
 								<ul class="sub-menu">
 								    @foreach($brands as $brand)
 									
-									<li><a href="{{route('product-list')}}"> {{ucfirst($brand->brand_name)}}</a></li>
+									<li><a href="/brand-list/{{$brand->id}}">{{ucfirst($brand->brand_name)}}</a></li>
 									@endforeach
 									 
 								</ul>
@@ -81,7 +81,7 @@
 		<div class="wrap-header-mobile">
 			<!-- Logo moblie -->		
 			<div class="logo-mobile">
-				<a href="/"><img src="customer_template/images/icons/logo3.png" alt="IMG-LOGO"></a>
+				<a href="/"><img src="/customer_template/images/icons/logo3.png" alt="IMG-LOGO"></a>
 			</div>
 
 			<!-- Icon header -->

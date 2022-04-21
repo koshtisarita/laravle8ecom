@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestdemosController;
 use App\Http\Controllers\MainAdminController;
 use App\Http\Controllers\MainWebController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\MainProductController;
+use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SizeController;
@@ -142,11 +143,11 @@ Route::group(['middleware' => ['IsAdmin']], function () {
 /*----------- LANDING PAGE ROUTE---------------*/
 Route::get('/',  [MainWebController::class,'index'])->name('index');
 Route::get('/get-quick-view-data/{product}', [MainWebController::class,'quick_view_data'])->name('get.quick_product');
-Route::post('/add-to-cart', [ProductController::class,'addToCart'])->name('add-to-cart');
-Route::post('/cart-items', [ProductController::class,'getCartItems'])->name('get.cart.item');
-Route::get('/remove-cart',  [ProductController::class,'removeCartItem'])->name('remove.cart.item');
-Route::get('/cart',  [ProductController::class,'getCartDetail'])->name('cart');
-Route::post('/update-cart',  [ProductController::class,'updateCart'])->name('update-cart');
+Route::post('/add-to-cart', [MainProductController::class,'addToCart'])->name('add-to-cart');
+Route::post('/cart-items', [MainProductController::class,'getCartItems'])->name('get.cart.item');
+Route::get('/remove-cart',  [MainProductController::class,'removeCartItem'])->name('remove.cart.item');
+Route::get('/cart',  [MainProductController::class,'getCartDetail'])->name('cart');
+Route::post('/update-cart',  [MainProductController::class,'updateCart'])->name('update-cart');
 /*----------- END LANDING PAGE ROUTE---------------*/
 
 Route::get('/login-registration',  [MainWebController::class,'loginpage'])->name('login-page');
@@ -168,11 +169,12 @@ Route::get('/contact-us',  [MainWebController::class,'contactus'])->name('contac
 Route::get('/about-us',  [MainWebController::class,'aboutus'])->name('about-us');
 Route::get('/all-brands',[MainWebController::class,'aboutus'])->name('all-brands');
 
-Route::get('/product-list',  [MainWebController::class,'product_list'])->name('product-list');
-Route::get('/product-detail',  [MainWebController::class,'product_detail'])->name('product-detail');
 
 
- 
+Route::any('/product-list/{sub_cat_id}',  [MainProductController::class,'product_list'])->name('product-list');
+Route::get('/brand-list/{brand_id}',  [MainProductController::class,'product_list'])->name('brand-list');
+Route::get('/product-detail',  [MainProductController::class,'product_detail'])->name('product-detail');
+
 
 
 

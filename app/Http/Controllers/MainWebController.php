@@ -99,20 +99,7 @@ class MainWebController extends Controller
           $dynamicMenu = $this->dynamicMenu();
          $sizes = Size::all(); return view('website.pages.aboutus',compact('sizes','dynamicMenu','brands')); 
         } 
-     public function product_list(){
-        $brands = Brand::all();
-        //menu for navigation bar
-        $dynamicMenu = $this->dynamicMenu();
-         $sizes = Size::all(); return view('website.pages.productlist',compact('sizes','dynamicMenu','brands')); 
-        
-        }
-     public function product_detail(){
-        $brands = Brand::all();
-        //menu for navigation bar
-        $dynamicMenu = $this->dynamicMenu();
-        $sizes = Size::all();
-         return view('website.pages.productdetail',compact('sizes','dynamicMenu','brands')); 
-        }
+   
      public function loginpage(){ 
         $brands = Brand::all();
         //menu for navigation bar
