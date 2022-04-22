@@ -99,12 +99,13 @@
   //get the cart detail to fill the landing page data
   function getCartItems()
   {
+
     $.ajax({
         url: '/cart-items',
         type: 'POST',
         data:{"_token": "{{ csrf_token() }}"},
         success: function(data, textStatus, jqXHR) { 
-        
+			debugger;
           var cart_items = data['cart-items'];          
           var products = data['products'];
           var sizes = data['sizes'];
@@ -142,7 +143,7 @@
             cart_html += '<div class="header-cart-item-txt p-t-8"><a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">'+product_name+'</a>';
             cart_html +=  '<span class="header-cart-item-info">'+ quantity+' X £ '+price+'</span></div>';
 			
-			cart_html +=' <div  class="quick-remove"><a href="'+remove_url+'"><img src="customer_template/images/icons/icon-close2.png" alt="IMG" width="10px" height="10px"></a></div>';
+			cart_html +=' <div  class="quick-remove"><a href="'+remove_url+'"><img src="/customer_template/images/icons/icon-close2.png" alt="IMG" width="10px" height="10px"></a></div>';
             cart_html += '</li>';
 
           });

@@ -70,152 +70,76 @@
 					<!-- Filter -->
 					<div class="dis-none panel-filter w-full p-t-10">
 					<form>
+ 
 						<div class="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
 					
 							<div class="filter-col1 p-r-15 p-b-27">
 								<div class="mtext-102 cl2 p-b-15">
 									Sort By
 								</div>
-                             
-								<ul>
-									 
-									<li class="p-b-6">
-										<a href="#" class="filter-link stext-106 trans-04 filter-link-active sort_option" data-id='1'>
-											Newness
-										</a>
-									</li>
-									<li class="p-b-6">
-										<a href="#" class="filter-link stext-106 trans-04 sort_option" data-id='2'>
-											Product: A to Z
-										</a>
-									</li>
-									<li class="p-b-6">
-										<a href="#" class="filter-link stext-106 trans-04 sort_option" data-id='3'>
-											Product: Z to A
-										</a>
-									</li>
-									<li class="p-b-6">
-										<a href="#" class="filter-link stext-106 trans-04 sort_option" data-id='4'>
-											Price: Low to High
-										</a>
-									</li>
+                                <select class="filter-inputs" id="" name="">
+                                     <option value="1">Newness</option>
+									 <option value="1">Product: A to Z</option>
+									 <option value="1">Product: Z to A</option>
+									 <option value="1">Price: Low to High</option>
+									 <option value="1">Price: High to Low</option>
 
-									<li class="p-b-6">
-										<a href="#" class="filter-link stext-106 trans-04 sort_option" data-id='5'>
-											Price: High to Low
-										</a>
-									</li>
-								</ul>
+								</select>
+							 
 							</div>
 
 							<div class="filter-col2 p-r-15 p-b-27">
 								<div class="mtext-102 cl2 p-b-15">
 									Price
 								</div>
+								<select class="filter-inputs" id="" name="">
+                                     <option value="1">All</option>
+									 <option value="1">£0.00 - £ 50.00</option>
+									 <option value="1">£ 50.00 - £ 100.00</option>
+									 <option value="1">£ 100.00 - £ 150.00</option>
+									 <option value="1">£ 150.00 - £ 200.00</option>
+									 <option value="1">£ 200.00+</option>
 
-								<ul>
-									<li class="p-b-6">
-										<a href="#" class="filter-link stext-106 trans-04 filter-link-active">
-											All
-										</a>
-									</li>
-
-									<li class="p-b-6">
-										<a href="#" class="filter-link stext-106 trans-04">
-										£0.00 - £ 50.00
-										</a>
-									</li>
-
-									<li class="p-b-6">
-										<a href="#" class="filter-link stext-106 trans-04">
-											£ 50.00 - £ 100.00
-										</a>
-									</li>
-
-									<li class="p-b-6">
-										<a href="#" class="filter-link stext-106 trans-04">
-											£ 100.00 - £ 150.00
-										</a>
-									</li>
-
-									<li class="p-b-6">
-										<a href="#" class="filter-link stext-106 trans-04">
-											£ 150.00 - £ 200.00
-										</a>
-									</li>
-
-									<li class="p-b-6">
-										<a href="#" class="filter-link stext-106 trans-04">
-											£ 200.00+
-										</a>
-									</li>
-								</ul>
+								</select>
+							 
 							</div>
 
 							<div class="filter-col3 p-r-15 p-b-27">
 								<div class="mtext-102 cl2 p-b-15">
 									Size
 								</div>
-								<div class="flex-w p-t-4 m-r--5">
+								 
+								<select class="filter-inputs" id="" name=""> 
 									@foreach($sizes as $size)
-									<button  name="size[]" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-										{{$size->size_no}}/{{$size->size_shortcut}}
-									</button>
+											<option value="{{$size->id}}">{{$size->size_no}}/{{$size->size_shortcut}}</option>
+										
 									@endforeach
-									<!-- <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									18/M
-									</a>
-
-									<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-										20/L
-										</a> -->
-								</div>
-							
+								</select>	
+								 
 							</div>
 
 							<div class="filter-col4 p-b-27">
 								<div class="mtext-102 cl2 p-b-15">
 									Brands
 								</div>
-
-								<div class="flex-w p-t-4 m-r--5">
-									<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-										H&M
-									</a>
-
-									<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-										Lifestyle
-									</a>
-
-									<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-										Denim
-									</a>
-
-									<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-										Streetstyle
-									</a>
-
-									<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-										Crafts
-									</a>
-								</div>
+								<select class="filter-inputs" id="" name=""> 
+									@foreach($brands as $brand)
+											<option value="{{$brand->id}}">{{$brand->brand_name}}</option>
+										
+									@endforeach
+								</select>	
+								 
 							</div>
 							<div class="filter-col5 p-b-27">
 								<div class="mtext-102 cl2 p-b-15">
 									Length
 								</div>
-
-								<div class="flex-w p-t-4 m-r--5">
-									<button class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-										MIDI
-									</button>
-
-									<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-										Long
-									</a>
-
-								
-								</div>
+								<select class="filter-inputs" id="" name="">
+                                     <option value="1">All</option>
+									 <option value="1">MIDI</option>
+									 <option value="1">LONG</option>
+								</select>
+							 
 							</div>
 						</div>
 						
@@ -234,7 +158,7 @@
 							<img  src="{{$product->default_image}}" alt="{{$product->title}}">
 
 
-							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal2" data-id="{{$product->id}}">
 								Quick View
 							</a>
 						</div>
@@ -285,5 +209,187 @@
 		</div>
 	</div>
 		
+<script>
+$(function()
+{ 
+	var start = 0;
+	var fetch_more = true;
+			
+	$(window).scroll(function() {
+				//loadNextProducts();
+			});
 
+	
+	$(document).on("click", "#load_more" , function() {
+		loadNextProducts();
+		});
+
+	$(document.body).on('touchmove', loadNextProducts);
+   	
+   function loadNextProducts() 
+    { 
+      console.log('fetch more ',fetch_more);
+ 
+		if(fetch_more)
+		{
+      
+			start = start + 24;      
+      
+			var filter_url;
+		    sub_cat_id = $('#sub_cat_id').val().trim();
+			brand_id=$('#brand_id').val().trim();
+			// var sec_url='{{Request::segment(3)}}';     
+			filter_url='/product-filter';		 
+ 
+
+			$.ajax({
+				url: filter_url,
+				type: 'POST',
+				data:{
+					"_token": "{{ csrf_token() }}",
+					'start':start,
+					'brand_id':brand_id,
+					
+				},
+				success: function(data, textStatus, jqXHR){            
+					   //console.log(data);
+						if(data.flag == 0) {
+							$('.product-list').append(data.product_list);
+              $("#product_count").html(data.product_count);
+							$("#product-msg").css('display','none');
+              if(data.start == 0){
+                start = data.start;
+                fetch_more = true;
+              }
+              var page =data.product_count -  start;
+              // console.log("start "+start);
+              
+              $("#load_more_section").hide();
+              fetch_more = false;
+              if(page > 24)
+              {
+                $("#load_more_section").show(); 
+                fetch_more = true;
+                $("#load_more").show();
+              }
+                                         
+						} else {
+              //$('.product-list').append('No More products found');
+              $("#load_more_section").hide();
+							fetch_more = false;
+				  		}
+				},
+				error: function(jqXHR, textStatus, errorThrown){
+					var errResponse = JSON.parse(jqXHR.responseText);
+					if (errResponse.error) {
+						$.each(errResponse.error, function(index, value)
+						{ 	
+							if (value.length != 0)
+							{
+								var $inpElm = $("#" + index);
+								$inpElm.closest('.form-group').addClass('has-error');
+								$inpElm.closest('.form-group').append('<span class="col-md-12 error text-danger text-center">' + value + '</span>');
+							}
+						});
+					}
+				},
+			});
+		}
+	}
+
+	// $(document).on('change', '.filter-box', function(ev) {		
+		// 	$('#filter-products').submit();
+		// });
+		
+		// $("#filter-products").submit(function(ev){			
+		// 	ev.preventDefault();	
+		// 	$(this).find(".error.text-danger").remove();
+		// 	$(this).find(".has-error").removeClass("has-error");
+		// 	var formURL = $(this).attr("action");
+		// 	var postData = $(this).serializeArray(); 
+		// 	$.ajax({
+		// 		url: formURL,
+		// 		type: 'POST',
+		// 		data: postData,				
+		// 		success: function(data,textStatus, jqXHR){					
+          		
+		// 			$('.product-list').html(data.product_list);
+        //   $("#product-msg").css('display','none');
+        //   $("#product_count").html(data.product_count);
+        //   $("#load_more_section").hide();
+        //   fetch_more = false;
+        //   if(data.start == 0){
+        //     start = data.start;
+        //     fetch_more = true;
+        //   }
+        //   var page = data.product_count - start;
+        //   if(page > 24)
+        //   {
+        //     fetch_more = true;
+        //     $("#load_more_section").show();             
+        //   } else {
+             
+        //       $("#load_more_section").hide();
+		// 					fetch_more = false;
+		// 		  		}
+					
+		// 		},
+		// 		error: function(jqXHR, textStatus, errorThrown){
+		// 			var errResponse = JSON.parse(jqXHR.responseText);
+		// 			if (errResponse.error) {
+		// 				$.each(errResponse.error, function(index, value)
+		// 				{ 	
+		// 					if (value.length != 0)
+		// 					{
+		// 						var $inpElm = $("#" + index);
+		// 						$inpElm.closest('.form-group').addClass('has-error');
+		// 						$inpElm.closest('.form-group').append('<span class="col-md-12 error text-danger text-center">' + value + '</span>');
+		// 					}
+		// 				});
+		// 			}
+		// 		},
+		// 	});
+		// 	return false;
+		// });	
+		// $("#filter-products-mobile").submit(function(ev){
+		// 	ev.preventDefault();	
+      
+		// 	$(this).find(".error.text-danger").remove();
+		// 	$(this).find(".has-error").removeClass("has-error");
+		// 	var formURL = $(this).attr("action");
+		// 	var postData = $(this).serializeArray(); 
+		// 	$.ajax({
+		// 		url: formURL,
+		// 		type: 'POST',
+		// 		data: postData,
+		// 		success: function(data, textStatus, jqXHR){
+        //   $('.product-list').html(data.product_list);
+        //   $("#product-msg").css('display','none');
+        //   $("#product_count").html(data.product_count);
+        //   $("#load_more_section").hide();
+        //   fetch_more = true;
+        //   // var page = data.product_count - start;
+        //   $('.filter-to-left').removeClass('active');
+        //   $('.overlay-filter').removeClass('active'); 
+					
+		// 		},
+		// 		error: function(jqXHR, textStatus, errorThrown){
+		// 			var errResponse = JSON.parse(jqXHR.responseText);
+		// 			if (errResponse.error) {
+		// 				$.each(errResponse.error, function(index, value)
+		// 				{ 	
+		// 					if (value.length != 0)
+		// 					{
+		// 						var $inpElm = $("#" + index);
+		// 						$inpElm.closest('.form-group').addClass('has-error');
+		// 						$inpElm.closest('.form-group').append('<span class="col-md-12 error text-danger text-center">' + value + '</span>');
+		// 					}
+		// 				});
+		// 			}
+		// 		},
+		// 	});
+		// });	
+
+});
+</script>
 @endsection

@@ -88,7 +88,7 @@ class MainProductController extends Controller
                 //dd(Session::get('products'));
             }
         }
-        
+        Log::info($products);
         return response()->json(['error'=>false,'message'=>$msg, 'cart_items_count' => $cart_count]);
         
         
@@ -96,7 +96,7 @@ class MainProductController extends Controller
     // ==========   get the home page right cart detail ===========
     public function getCartItems() {
 		$cart_items = [];
-		 // Session::forget('products');
+		 //Session::forget('products');
 
 		if(Auth::check()) {
 			$cart_items = Cart::where('user_id', Auth::user()->id)->get();
@@ -108,15 +108,17 @@ class MainProductController extends Controller
 		{
 			$product_id_array = array();
 			foreach($cart_items as $key=>$item){
-				Log::info($cart_items[$key]->id);
-                array_push($product_id_array,$cart_items[$key]->id);
+				Log::info($cart_items[$key]->product_id);
+                array_push($product_id_array,$cart_items[$key]->product_id);
 			}
 			 
+            Log::info($product_id_array);
 			$products = Product::orderBy('id','DESC')
             ->select('products.id','title','default_image', 'actual_price','discount')
             ->whereIn('products.id',$product_id_array)
             ->get()
 			->keyBy('id'); 
+            Log::info($products);
             $sizes  = Size::get()->keyBy('id');
 			//dd($product_variants);
 		}
@@ -257,8 +259,9 @@ class MainProductController extends Controller
         $dynamicMenu =  MainWebController::dynamicMenu();
  
          $sizes = Size::all(); 
+         $brands = Brand::all();
          
-         return view('website.pages.productlist',compact('sizes','dynamicMenu','brands','products','product_count','start','sub_category')); 
+         return view('website.pages.productlist',compact('sizes','brands','dynamicMenu','brands','products','product_count','start','sub_category')); 
         
     }
  
@@ -285,6 +288,7 @@ class MainProductController extends Controller
             
         $filter_product = Product::select('products.*','brands.brand_name')
         ->leftJoin('brands','brands.id','products.brand_id')
+        ->orderBy('products.id','DESC')
         ->where('products.status', 1) ;
        
         // if(isset($request_data['sizes']))
