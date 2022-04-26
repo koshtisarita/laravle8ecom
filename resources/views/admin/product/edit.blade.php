@@ -3,6 +3,12 @@
 
 @section('contents')
 <style>
+   .dot {
+  height: 25px;
+  width: 25px; 
+  border-radius: 50%;
+  display: inline-block;
+}
     .cbxTree {
     font: 12px/1.5em Arial, "Helvetica CY", "Nimbus Sans L", sans-serif;
 }
@@ -186,6 +192,23 @@
                                                             @foreach($brands as $brand)                                        
                                                                  
                                                             <option value="{{$brand->id}}" {{{($product->brand_id==$brand->id)?"selected":""}}}>{{strtoupper($brand->brand_name)}}</option>
+                                                            @endforeach
+                                                            
+                                                    </select>
+                                                </div>
+                                            </div> 
+                                              <!-- color  -->
+                                              <div class="col-lg-12">  
+                                                <div class="form-group">
+                                                    <label for="description">Color</label>
+                                                    @error('color_id')
+                                                    <span class="text-danger">{{$message}}</span>
+                                                    @enderror
+                                                    <select id="color_id" name="color_id[]" class="form-control" multiple>
+                                                            <option value="">Select Color</option>
+                                                            @foreach($colors as $color)                                        
+                                                                
+                                                            <option value="{{$color->id}}" {{{($product->color_id==$color->id)?"selected":""}}} style="background:{{$color->color_code}}">{{ucfirst($color->name)}}</option>
                                                             @endforeach
                                                             
                                                     </select>

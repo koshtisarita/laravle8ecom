@@ -3,6 +3,12 @@
 
 @section('contents')
 <style>
+    .dot {
+  height: 25px;
+  width: 25px; 
+  border-radius: 50%;
+  display: inline-block;
+}
     .cbxTree {
     font: 12px/1.5em Arial, "Helvetica CY", "Nimbus Sans L", sans-serif;
 }
@@ -198,11 +204,28 @@
                                                     @error('brand_id')
                                                     <span class="text-danger">{{$message}}</span>
                                                     @enderror
-                                                    <select id="brand_id" name="brand_id" class="form-control" >
+                                                    <select id="color_id" name="color_id[]" class="form-control"  >
                                                             <option value="">Select Brand</option>
                                                             @foreach($brands as $brand)                                        
                                                                 
-                                                            <option value="{{$brand->id}}" >{{strtoupper($brand->brand_name)}}</option>
+                                                            <option value="{{$brand->id}}" ></span> {{ucfirst($brand->brand_name)}}</option>
+                                                            @endforeach
+                                                            
+                                                    </select>
+                                                </div>
+                                            </div> 
+                                           <!-- color  -->
+                                            <div class="col-lg-12">  
+                                                <div class="form-group">
+                                                    <label for="description">Color</label>
+                                                    @error('color_id')
+                                                    <span class="text-danger">{{$message}}</span>
+                                                    @enderror
+                                                    <select id="brand_id" name="brand_id" class="form-control" multiple >
+                                                            <option value="">Select Color</option>
+                                                            @foreach($colors as $color)                                        
+                                                                
+                                                            <option value="{{$color->id}}" style="background:{{$color->color_code}}">  <span class="dot" style="background:{{$color->color_code}}"></span>  {{ucfirst($color->name)}}</option>
                                                             @endforeach
                                                             
                                                     </select>
@@ -216,8 +239,7 @@
                                                     @enderror
                                                     <select id="size_id" name="size_id[]" class="form-control" multiple  >
                                                             <option value="">Select Size</option>
-                                                            @foreach($sizes as $size)
-                                                            
+                                                            @foreach($sizes as $size)                                                            
                                                             <option value="{{$size->id}}" >{{ $size->size_no}}/{{strtoupper($size->size_shortcut)}}</option>
                                                             @endforeach
                                                     </select>
@@ -248,7 +270,7 @@
                                             @enderror
                                             @error('sub_categories')
                                             <span class="text-danger">{{$message}}</span>
-                                            @enderror
+                                            @enderror$product
                                             <br/>
                                             <div class="panel panel-primary" style="height: 30rem;overflow-y: auto;">
                                                 <div class="panel-body" style="boadar: 1px;">

@@ -25,7 +25,8 @@ class CreateProductsTable extends Migration
             $table->tinyInteger('discount_in')->default(0)->comment('0-percentage 1- bulk');
             $table->tinyInteger('is_discount')->default(0)->comment('0-not apply 1- apply');
             $table->unsignedBigInteger('brand_id')->nullable();
-            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
+            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');            
+            $table->text('color_id')->nullable();
             $table->text('size_id')->nullable();
             $table->text('categories')->nullable()->comment("josn data store");
             $table->string('sub_categories')->nullable()->comment("josn data store");

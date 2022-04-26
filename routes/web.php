@@ -15,6 +15,7 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\CustomerfeedbackController;
 use App\Http\Controllers\Backend\SiteSettingController;
+use App\Http\Controllers\Backend\ColorController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -54,6 +55,16 @@ Route::group(['middleware' => ['IsAdmin']], function () {
         Route::get('/delete/{size}',[SizeController::class,'destroy'])->name('delete.size');
     });   
 
+
+    
+    /**-------------Color  Master Route ---------- */
+    Route::get('/view-color', [ColorController::class,'viewcolor'])->name('viewcolor');
+    Route::prefix('color')->group(function(){
+        Route::post('/add',[ColorController::class,'store'])->name('add.color'); 
+        Route::get('/get-color/{color}',[ColorController::class,'edit'])->name('get.color'); 
+        Route::post('/update',[ColorController::class,'update'])->name('update.color');
+        Route::get('/delete/{color}',[ColorController::class,'destroy'])->name('delete.color');
+    });  
     /*----------------Slider Routes -----------------------*/
     Route::get('/view-slider',  [SliderController::class,'viewslider'])->name('viewslider');
     Route::prefix('slider')->group(function(){

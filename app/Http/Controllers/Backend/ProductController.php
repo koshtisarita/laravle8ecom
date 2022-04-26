@@ -9,6 +9,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Sub_Category;
 use App\Models\Size;
+use App\Models\Color;
 use App\Models\ProductImage;
 use Carbon\Carbon;
 use Image;
@@ -118,10 +119,11 @@ class ProductController extends Controller
                 
         $brands = Brand::all();
         $sizes = Size::all();
+        $colors = Color::all();
         $categories = Category::all();
         $sub_categories = Sub_Category::all()->KeyBy('id');
 
-        return view('admin.product.add',compact('brands','sizes','categories','sub_categories'));
+        return view('admin.product.add',compact('brands','sizes','categories','sub_categories','colors'));
     }
   
     public function postStepOne(Request $request)
@@ -161,7 +163,9 @@ class ProductController extends Controller
                 'brand_id'=>'required',
                 'categories'=>'required',
                 'sub_categories'=>'required', 
-                'image'=>'mimes:jpg,bmp,png'
+                'image'=>'mimes:jpg,bmp,png',
+                'color_id'=>'required' 
+                
             ],$messages);
         }
         else
@@ -197,8 +201,8 @@ class ProductController extends Controller
                 'brand_id'=>'required',
                 'categories'=>'required',
                 'sub_categories'=>'required', 
-                'image'=>'mimes:jpg,bmp,png'
-                 
+                'image'=>'mimes:jpg,bmp,png',
+                'color_id'=>'required' 
             ],$messages);
         }
 
@@ -281,10 +285,11 @@ class ProductController extends Controller
         //  dd($product);/
          $brands = Brand::all();
         $sizes = Size::all();
+        $colors = Color::all();
         $categories = Category::all();
         $sub_categories = Sub_Category::all()->KeyBy('id');
 
-        return view('admin.product.edit',compact('product','brands','sizes','categories','sub_categories'));
+        return view('admin.product.edit',compact('product','brands','sizes','categories','sub_categories','colors'));
      }
 
      public function update(Request $request)
@@ -324,6 +329,7 @@ class ProductController extends Controller
                 'brand_id'=>'required',
                 'categories'=>'required',
                 'sub_categories'=>'required', 
+                'color_id'=>'required'
             ],$messages);
         }
         else
@@ -357,6 +363,7 @@ class ProductController extends Controller
                 'brand_id'=>'required',
                 'categories'=>'required',
                 'sub_categories'=>'required', 
+                'color_id'=>'required' 
                  
             ],$messages);
         }
@@ -378,6 +385,7 @@ class ProductController extends Controller
                 if($product_for_update != null)
                 {
                     $product = new Product();
+                  
                     $product = array_merge($request->all(),['created_at' => $now, 'updated_at' => $now]);
                     $product = array_splice($product,1, count($product)-1);                
                     
@@ -402,6 +410,7 @@ class ProductController extends Controller
                         }
                     } 
                     //update query
+                    // dd($product);
                     $product_for_update->update($product);   
                     
                       //insert default image on the current id

@@ -21,41 +21,19 @@
                        Add Size
                     </div>
                     <div class="panel-body">
-                        <form role="form" id="addForm" action="{{route('add.size')}}" method="POST">
+                        <form role="form" id="addForm" action="{{route('add.color')}}" method="POST">
                             @csrf
                             <div class="row">
                                 <div class="col-lg-3">
-                                    <label>Size Number</label>
-                                    <input type="number" class="form-control" name="size_no" id="size_no" value="{{old('size_no')}}" required> 
+                                    <label>Colour name</label>
+                                    <input type="text" class="form-control" name="name" id="name" value="{{old('name')}}" required> 
                                 </div>
                                 <div class="col-lg-3">
-                                    <label>Size Value</label>
-                                    <input type="text"  class="form-control" name="size_shortcut" id="size_shortcut" value="{{old('size_shortcut')}}" required> 
+                                    <label>Color Code</label>
+                                    <input type="color"  class="form-control" name="code" id="code" value="{{old('code')}}" required> 
                                 </div>
                             </div> 
-                            <div class="row">   
-                                <div class="col-lg-3">
-                                    <label>Waist</label>
-                                    <input type="number"  class="form-control" name="waist_size" id="waist_size" value="{{old('waist_size')}}" required> 
-                                    <p class="help-block">(In CM)</p>
-
-                                </div>
-                                <div class="col-lg-3">
-                                    <label>Hip</label>
-                                    <input type="number"  class="form-control" name="hip_size" id="hip_size" value="{{old('hip_size')}}" required> 
-                                    <p class="help-block">(In CM)</p>
-                                </div>
-                                <div class="col-lg-3">
-                                    <label>Chest</label>
-                                    <input type="number"  class="form-control" name="chest_size" id="chest_size" value="{{old('chest_size')}}" required>
-                                    <p class="help-block">(In CM)</p> 
-                                </div>
-                                <!-- <div class="col-lg-3">
-                                    <label>Length</label>
-                                    <input type="text"  class="form-control" name="name" id="name">
-                                    <p class="help-block">(In CM)</p> 
-                                </div> -->
-                            </div>
+                     
                             <div class="row">   
                                 <div class="col-lg-12">
                                     <br>
@@ -79,42 +57,21 @@
                         Edit Size
                     </div>
                      <div class="panel-body">
-                        <form role="form" id="editForm" action="{{route('update.size')}}" method="POST">
+                        <form role="form" id="editForm" action="{{route('update.color')}}" method="POST">
                             @csrf
                             <div class="row">
+                              
                                 <div class="col-lg-3">
-                                    <label>Size Number</label>
-                                    <input type="hidden" name="size_id" id="size_id">
-                                    <input type="number" class="form-control" name="size_no" id="size_no" value="{{old('size_no')}}" required> 
+                                    <label>Colour name</label>
+                                    <input type="hidden" name="color_id" id="color_id">
+                                    <input type="text" class="form-control" name="name" id="name" value="{{old('name')}}" required> 
                                 </div>
                                 <div class="col-lg-3">
-                                    <label>Size Value</label>
-                                    <input type="text"  class="form-control" name="size_shortcut" id="size_shortcut" value="{{old('size_shortcut')}}" required> 
+                                    <label>Color Code</label>
+                                    <input type="color"  class="form-control" name="code" id="code" value="{{old('code')}}" required> 
                                 </div>
                             </div> 
-                            <div class="row">   
-                                <div class="col-lg-3">
-                                    <label>Waist</label>
-                                    <input type="number"  class="form-control" name="waist_size" id="waist_size" value="{{old('waist_size')}}" required> 
-                                    <p class="help-block">(In CM)</p>
-
-                                </div>
-                                <div class="col-lg-3">
-                                    <label>Hip</label>
-                                    <input type="number"  class="form-control" name="hip_size" id="hip_size" value="{{old('hip_size')}}" required> 
-                                    <p class="help-block">(In CM)</p>
-                                </div>
-                                <div class="col-lg-3">
-                                    <label>Chest</label>
-                                    <input type="number"  class="form-control" name="chest_size" id="chest_size" value="{{old('chest_size')}}" required>
-                                    <p class="help-block">(In CM)</p> 
-                                </div>
-                                <!-- <div class="col-lg-3">
-                                    <label>Length</label>
-                                    <input type="text"  class="form-control" name="name" id="name">
-                                    <p class="help-block">(In CM)</p> 
-                                </div> -->
-                            </div>
+                          
                             <div class="row">   
                                 <div class="col-lg-12">
                                     <br>
@@ -144,24 +101,22 @@
                                 <thead>
                                     <tr>
                                         <th>S. No</th>
-                                        <th>Size No/Size Shortcut</th>
-                                        <th>Waist Size</th>
-                                        <th>Hip Size</th>
-                                        <th>Chest Size</th> 
+                                        <th>Color Name</th>
+                                        <th>Color Code</th>
+                                      
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($sizes as $key=>$size)
+                                @foreach($colors as $key=>$color)
                                 <tr class="odd gradeX">
                                     <td>{{$key+1}}</td>
-                                    <td>{{$size->size_no}}/{{$size->size_shortcut}}</td>
-                                    <td>{{$size->waist_size}}</td>
-                                    <td>{{$size->hip_size}}</td>
-                                    <td>{{$size->chest_size}}</td> 
+                                    <td>{{$color->name}}</td>
+                                    <td>{{$color->color_code}}</td>
+                                   
                                     <td class="center"> 
-                                    <a href="#" class="btn btn-warning btn-xs  edit-element" data-id="{{$size->id}}">Edit</a>
-                                    <a href="{{route('delete.size',$size->id)}}" class="btn btn-danger btn-xs " id="delete">Delete</a>
+                                    <a href="#" class="btn btn-warning btn-xs  edit-element" data-id="{{$color->id}}">Edit</a>
+                                    <a href="{{route('delete.color',$color->id)}}" class="btn btn-danger btn-xs " id="delete">Delete</a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -225,9 +180,9 @@
 <script>
     $("#tableContainer").on("click",".edit-element",function(e){
             e.preventDefault();
-            var size = $(this).attr('data-id');
+            var color = $(this).attr('data-id');
             $.ajax({
-                url: '/size/get-size/'+size,
+                url: '/color/get-color/'+color,
                 type: 'GET',                
                 success: function(data, textStatus, jqXHR) {                   
                      console.log(data);
@@ -238,12 +193,9 @@
                         $("#addToTable").hide();
                         $("#editContainer").slideDown();  
                     
-                        $("#editForm input[name='size_no']").val(data.size.size_no);
-                        $("#editForm input[name='size_shortcut']").val(data.size.size_shortcut);
-                        $("#editForm input[name='waist_size']").val(data.size.waist_size);
-                        $("#editForm input[name='hip_size']").val(data.size.hip_size);
-                        $("#editForm input[name='chest_size']").val(data.size.chest_size); 
-                        $("#editForm input[name='size_id']").val(size); 
+                        $("#editForm input[name='name']").val(data.color.name);
+                        $("#editForm input[name='code']").val(data.color.color_code);                      
+                        $("#editForm input[name='color_id']").val(color); 
 
             
                      }
