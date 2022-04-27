@@ -245,7 +245,7 @@ class ProductController extends Controller
                }
 
                
-
+                // dd($product);
              
                $id = DB::table('products')->insertGetId($product);
                DB::commit();
@@ -255,7 +255,7 @@ class ProductController extends Controller
                     $image=$request->file('image');
                     $name_gen=hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
                     Image::make($image)->resize(900,1100)->save('upload/images/'.$name_gen);
-                    $filename='upload/images/'.$name_gen;
+                    $filename='/upload/images/'.$name_gen;
 
                     //update default image
                     Product::where('id',$id)->update(['default_image'=>$filename]);                 
@@ -429,7 +429,7 @@ class ProductController extends Controller
                             $image=$request->file('image');
                             $name_gen=hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
                             Image::make($image)->resize(900,1100)->save('upload/images/'.$name_gen);
-                            $filename='upload/images/'.$name_gen;
+                            $filename='/upload/images/'.$name_gen;
 
                             //update default image
                             Product::where('id',$request->id)->update(['default_image'=>$filename]);                 
@@ -567,7 +567,7 @@ class ProductController extends Controller
                     {
                         $name_gen=hexdec(uniqid()).'.'.$request->image[$i]->getClientOriginalExtension();
                         Image::make($request->image[$i])->resize(900,1100)->save('upload/images/'.$name_gen);
-                        $filename='upload/images/'.$name_gen;
+                        $filename='/upload/images/'.$name_gen;
 
                         //insert the document one by one
 

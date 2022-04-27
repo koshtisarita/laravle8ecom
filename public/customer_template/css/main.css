@@ -396,7 +396,8 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 }
 
 .header-v3 .main-menu > li > a {
-  color: #fff;
+  /* color: #fff; */
+  color :#ffc107;
 }
 
 /*---------------------------------------------*/
@@ -1800,11 +1801,11 @@ button.mfp-close {
 }
 
 /*---------------------------------------------*/
-.filter-col1 {width: 20%;}
-.filter-col2 {width: 20%;}
-.filter-col3 {width: 20%;}
-.filter-col4 {width: 20%;}
-.filter-col5 {width: 20%;}
+.filter-col1 {width: 32%;}
+.filter-col2 {width: 32%;}
+.filter-col3 {width: 32%;}
+.filter-col4 {width: 32%;}
+.filter-col5 {width: 32%;}
 /*---------------------------------------------*/
 .filter-link {
   color: #aaa;
@@ -2201,6 +2202,7 @@ input.num-product::-webkit-inner-spin-button {
   font-size: 15px;
   line-height: 1.466667;
   text-transform: uppercase;
+  color:white;
 }
 
 .stext-102 {

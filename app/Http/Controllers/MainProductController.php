@@ -9,6 +9,7 @@ use App\Models\Size;
 use App\Models\Brand;
 use App\Models\Sub_Category;
 use App\Models\Category;
+use App\Models\Color;
 use Auth;
 use Session;
 use Log;
@@ -164,13 +165,13 @@ class MainProductController extends Controller
         } else if(Session::has('products')){
             $cart_items = Session::get('products');
         }
-        // Log::info($cart_items);
+       
         if(count($cart_items)>0)
 		{
             $product_id_array = array();
 			foreach($cart_items as $key=>$item){
 				 
-                array_push($product_id_array,$cart_items[$key]->id);
+                array_push($product_id_array,$item->product_id);
 			}
 			 
 			$products = Product::orderBy('id','DESC')
@@ -189,7 +190,7 @@ class MainProductController extends Controller
 			$products = [];
 		}
 	   
-	 
+	//   dd($product_id_array ,$cart_items,$products);
         return view('website.pages.cart')
             ->with('cart_items',$cart_items) 
             ->with('products',$products)
@@ -247,6 +248,7 @@ class MainProductController extends Controller
         ->first();
 
         //dd($sub_category);
+
         $response = $this->getProduct( $request,$sub_cat_id,'');
         // dd($response);
         $products = $response['products'];
@@ -260,11 +262,86 @@ class MainProductController extends Controller
  
          $sizes = Size::all(); 
          $brands = Brand::all();
+         $colors = Color::all();
          
-         return view('website.pages.productlist',compact('sizes','brands','dynamicMenu','brands','products','product_count','start','sub_category')); 
+         return view('website.pages.productlist',compact('sizes','brands','dynamicMenu','brands','products','product_count','start','sub_category','colors','sub_cat_id')); 
         
     }
- 
+    //Load more funtion
+    function productFilter(Request $request){
+
+        
+        $response = $this->getProduct($request,'','');
+
+        $products = $response['products'];
+        $product_count = $response['product_count'];
+        $start = $response['start']; 
+
+       
+        $product_list = '	<link rel="stylesheet" type="text/css" href="/customer_template/css/util.css">';
+        $product_list = '	<link rel="stylesheet" type="text/css" href="/customer_template/css/main.css">';
+      
+        // $wishlist = null;
+        // if(Auth::check())
+        // {
+        //     $user_id = Auth::User()->id;
+        //     $wishlist = Wishlist::where('status', 1)->where('user_id', $user_id)->get()->groupBy('product_id');
+        // }
+         
+        //Log::info($products);
+       
+        if(count($products)>0){
+           
+            foreach($products as $product)
+            {
+                $product_list .='<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item ">';
+               
+                $product_list .='<div class="block2">';
+                $product_list .='    <div class="block2-pic hov-img0">';
+                $product_list .='<img  src="'.$product->default_image.'" alt="'.$product->title.'">';
+
+
+                $product_list .='<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal2" data-id="'.$product->id.'">';
+                $product_list .=' Quick View';
+                $product_list .=' </a>';
+                $product_list .='</div>';
+
+                $product_list .='<div class="block2-txt flex-w flex-t p-t-14">';
+                $product_list .='<div class="block2-txt-child1 flex-col-l ">';
+                $product_list .='<a href="/product-detail" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">';
+                $product_list .=$product->title;
+                $product_list .='</a>';
+
+                $product_list .='<span class="stext-105 cl3">';
+                if($product->discount!="")
+                     $product_list .='<b>£'.$product->discount.'</b> <br>RRP <strike>£'.$product->actual_price.'</strike>';
+                 else
+                    $product_list .='£'.$product->actual_price;
+                
+                 $product_list .='</span>';
+                 $product_list .='</div>';
+
+                 $product_list .='<div class="block2-txt-child2 flex-r p-t-3">';
+                 $product_list .=' <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">';
+                 $product_list .=' <img class="icon-heart1 dis-block trans-04"  src="/customer_template/images/icons/icon-heart-01.png" alt="ICON">';
+                 $product_list .='<img class="icon-heart2 dis-block trans-04 ab-t-l"  src="/customer_template/images/icons/icon-heart-02.png" alt="ICON">';
+                 $product_list .='</a>';
+                 $product_list .='</div>';
+                 $product_list .='</div>';
+                 $product_list .='</div>';
+                 $product_list .=' </div>';
+            }
+            $flag = 0;
+        }else{
+            $flag = 1;
+            $product_list .='<div class="flex-c-m flex-w w-full p-t-30">No product available in this category, please select other category</h4></div>';
+        }	
+      
+        Log::info($product_list);
+        return response()->json(['product_list' => mb_convert_encoding($product_list, 'UTF-8', 'UTF-8'),
+                        'flag' => $flag,'product_count'=>$product_count , 'start' => $start], 200);		
+    }
+    //generic function for load more, filter 
     function getProduct(Request $request,$sub_cat_id,$brand_id){
         $request_data = $request->all();
         $categories = array();
@@ -277,7 +354,12 @@ class MainProductController extends Controller
             $subcategories[] = $sub_cat_id;
             
         }
-       
+
+        //request parament
+        if(isset($request->sub_cat) &&$request->sub_cat != ""){
+            $subcategories[] = $request->sub_cat;
+            
+        }
        
       
 
@@ -351,7 +433,7 @@ class MainProductController extends Controller
 
         $products = $filter_product->get();
         $product_count = count( $products);
-        $limit = 24;
+        $limit = 1;
         $start = 0;
         if(isset($request_data['start']) && $request_data['start'] != "") {
             $start = $request_data['start'];

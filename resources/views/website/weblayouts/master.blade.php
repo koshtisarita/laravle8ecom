@@ -202,7 +202,7 @@
     };
 	</script>	
 	<script>
-	  $('.js-show-modal2').on('click',function(e){
+	  $(document).on('click','.js-show-modal2',function(e){
         e.preventDefault();
         var html ='';
 		$("#quick_view_images").html(html); 

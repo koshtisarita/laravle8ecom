@@ -83,7 +83,7 @@
 							</div>
 						</div> -->
 
-						<div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10" id="update_cart_btn">
+						<div class="flex-c-m stext-101 cl2 size-119 bg3 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10" id="update_cart_btn">
 							Update Cart
 						</div>
 					</div>

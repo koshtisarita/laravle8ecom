@@ -204,7 +204,7 @@
                                                     @error('brand_id')
                                                     <span class="text-danger">{{$message}}</span>
                                                     @enderror
-                                                    <select id="color_id" name="color_id[]" class="form-control"  >
+                                                    <select id="brand_id" name="brand_id" class="form-control"  >
                                                             <option value="">Select Brand</option>
                                                             @foreach($brands as $brand)                                        
                                                                 
@@ -221,11 +221,11 @@
                                                     @error('color_id')
                                                     <span class="text-danger">{{$message}}</span>
                                                     @enderror
-                                                    <select id="brand_id" name="brand_id" class="form-control" multiple >
+                                                    <select id="color_id" name="color_id[]" class="form-control" multiple >
                                                             <option value="">Select Color</option>
                                                             @foreach($colors as $color)                                        
                                                                 
-                                                            <option value="{{$color->id}}" style="background:{{$color->color_code}}">  <span class="dot" style="background:{{$color->color_code}}"></span>  {{ucfirst($color->name)}}</option>
+                                                            <option value="{{$color->id}}" style="background:{{$color->color_code}}">    {{ucfirst($color->name)}}</option>
                                                             @endforeach
                                                             
                                                     </select>
@@ -270,7 +270,7 @@
                                             @enderror
                                             @error('sub_categories')
                                             <span class="text-danger">{{$message}}</span>
-                                            @enderror$product
+                                            @enderror 
                                             <br/>
                                             <div class="panel panel-primary" style="height: 30rem;overflow-y: auto;">
                                                 <div class="panel-body" style="boadar: 1px;">

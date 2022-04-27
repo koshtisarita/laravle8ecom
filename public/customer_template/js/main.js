@@ -142,17 +142,17 @@
 
     // init Isotope
     $(window).on('load', function () {
-        var $grid = $topeContainer.each(function () {
-            $(this).isotope({
-                itemSelector: '.isotope-item',
-                layoutMode: 'fitRows',
-                percentPosition: true,
-                animationEngine : 'best-available',
-                masonry: {
-                    columnWidth: '.isotope-item'
-                }
-            });
-        });
+        // var $grid = $topeContainer.each(function () {
+        //     $(this).isotope({
+        //         itemSelector: '.isotope-item',
+        //         layoutMode: 'fitRows',
+        //         percentPosition: true,
+        //         animationEngine : 'best-available',
+        //         masonry: {
+        //             columnWidth: '.isotope-item'
+        //         }
+        //     });
+        // });
     });
 
     var isotopeButton = $('.filter-tope-group button');
