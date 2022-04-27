@@ -52,7 +52,9 @@
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
 }
-</style>  
+</style> 
+ <!--=======================================Select 2========================================================-->
+ <link rel="stylesheet" type="text/css" href="{{asset('customer_template/vendor/select2/select2.min.css')}}"> 
 <div id="page-wrapper">
     <div class="container-fluid">
         <div class="row">
@@ -221,7 +223,7 @@
                                                     @error('color_id')
                                                     <span class="text-danger">{{$message}}</span>
                                                     @enderror
-                                                    <select id="color_id" name="color_id[]" class="form-control" multiple >
+                                                    <select id="color_id" name="color_id[]" class="form-control js-select2" multiple >
                                                             <option value="">Select Color</option>
                                                             @foreach($colors as $color)                                        
                                                                 
@@ -229,6 +231,7 @@
                                                             @endforeach
                                                             
                                                     </select>
+                                                    <div class="dropDownSelect2"></div>
                                                 </div>
                                             </div> 
                                         <div class="col-lg-12">  
@@ -237,12 +240,13 @@
                                                     @error('size_id')
                                                     <span class="text-danger">{{$message}}</span>
                                                     @enderror
-                                                    <select id="size_id" name="size_id[]" class="form-control" multiple  >
+                                                    <select id="size_id" name="size_id[]" class="form-control js-select2" multiple  >
                                                             <option value="">Select Size</option>
                                                             @foreach($sizes as $size)                                                            
                                                             <option value="{{$size->id}}" >{{ $size->size_no}}/{{strtoupper($size->size_shortcut)}}</option>
                                                             @endforeach
                                                     </select>
+                                                    <div class="dropDownSelect2"></div>
                                                 </div>
                                         </div> 
                                         <div class="col-lg-12">  
@@ -401,6 +405,16 @@
 </div>
 <!-- jQuery -->
 <script src="{{asset('template/js/jquery.js')}}"></script>
+<!--===============================================================================================-->
+<script src="{{asset('customer_template/vendor/select2/select2.min.js')}}"></script>
+	<script>
+		$(".js-select2").each(function(){
+			$(this).select2({
+				minimumResultsForSearch: 20,
+				dropdownParent: $(this).next('.dropDownSelect2')
+			});
+		})
+	</script>
 <script>
     $(document).on({
     click: function(){

@@ -385,8 +385,8 @@ class ProductController extends Controller
                 if($product_for_update != null)
                 {
                     $product = new Product();
-                  
-                    $product = array_merge($request->all(),['created_at' => $now, 'updated_at' => $now]);
+                   
+                    $product = array_merge($request->all(),['updated_at' => $now]);
                     $product = array_splice($product,1, count($product)-1);                
                     
                     if(array_key_exists('files', $product))
@@ -401,7 +401,8 @@ class ProductController extends Controller
                     foreach($product as $key=>$val)
                     {
                         if(is_array($product[$key]))
-                        {
+                        {        
+                            Log::info($key);                    
                             $product[$key] = json_encode($product[$key]);
                         }
                         if($key == 'slug')
@@ -410,13 +411,13 @@ class ProductController extends Controller
                         }
                     } 
                     //update query
-                    // dd($product);
+         
                     $product_for_update->update($product);   
-                    
+                 
                       //insert default image on the current id
                     if($request->file('image'))
                     {
-                        Log::info("image set");
+                         
                             $old_image= $product_for_update->default_image;
                             if($old_image!="")
                             {

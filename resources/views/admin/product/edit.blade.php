@@ -44,6 +44,8 @@
     display: block;
 }
 </style>  
+  <!--=======================================Select 2========================================================-->
+  <link rel="stylesheet" type="text/css" href="{{asset('customer_template/vendor/select2/select2.min.css')}}">
 <div id="page-wrapper">
     <div class="container-fluid">
         <div class="row">
@@ -204,23 +206,35 @@
                                                     @error('color_id')
                                                     <span class="text-danger">{{$message}}</span>
                                                     @enderror
-                                                    <select id="color_id" name="color_id[]" class="form-control" multiple>
+                                                    <select id="color_id" name="color_id[]" class="form-control js-select2" multiple>
                                                             <option value="">Select Color</option>
                                                             @foreach($colors as $color)                                        
-                                                                
-                                                            <option value="{{$color->id}}" {{{($product->color_id==$color->id)?"selected":""}}} style="background:{{$color->color_code}}">{{ucfirst($color->name)}}</option>
+                                                            @if(isset($product->color_id)))
+                                                                    @php $selected_color_array = json_decode($product->color_id) ; @endphp     
+                                                                    @if(is_array($selected_color_array))
+                                                                    
+                                                                        @php $color_select = (in_array($color->id,$selected_color_array)) ? "selected" : ""; @endphp
+                                                                    @else
+                                                                        @php $color_select = "";  @endphp    
+                                                                    @endif
+                                                                @else  
+                                                                    @php $color_select = ""; @endphp  
+                                                                @endif      
+                                                            <option value="{{$color->id}}"  {{$color_select}}>{{ucfirst($color->name)}}</option>
                                                             @endforeach
                                                             
                                                     </select>
+                                                    <div class="dropDownSelect2"></div>
                                                 </div>
                                             </div> 
+                                            
                                         <div class="col-lg-12">  
                                                 <div class="form-group">
                                                     <label for="description">Sizes</label>
                                                     @error('size_id')
                                                     <span class="text-danger">{{$message}}</span>
                                                     @enderror
-                                                    <select id="size_id" name="size_id[]" class="form-control" multiple  >
+                                                    <select id="size_id" name="size_id[]" class="form-control js-select2" multiple  >
                                                             <option value="">Select Size</option>
                                                             @foreach($sizes as $size)
                                                                 @if(isset($product->size_id)))
@@ -237,6 +251,7 @@
                                                             <option value="{{$size->id}}" {{$size_select}}>{{ $size->size_no}}/{{strtoupper($size->size_shortcut)}}</option>
                                                             @endforeach
                                                     </select>
+                                                    <div class="dropDownSelect2"></div>
                                                 </div>
                                         </div> 
                                         <div class="col-lg-12">  
@@ -403,6 +418,16 @@
 </div>
 <!-- jQuery -->
 <script src="{{asset('template/js/jquery.js')}}"></script>
+<!--===============================================================================================-->
+<script src="{{asset('customer_template/vendor/select2/select2.min.js')}}"></script>
+	<script>
+		$(".js-select2").each(function(){
+			$(this).select2({
+				minimumResultsForSearch: 20,
+				dropdownParent: $(this).next('.dropDownSelect2')
+			});
+		})
+	</script>
 <script>
     $(document).on({
     click: function(){

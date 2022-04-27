@@ -1,0 +1,106 @@
+[2022-04-27 10:10:23] local.INFO: array (
+  0 => '2',
+  1 => '3',
+)  
+[2022-04-27 10:10:23] local.INFO: array (
+  0 => '1',
+  1 => '2',
+  2 => '3',
+)  
+[2022-04-27 10:10:23] local.INFO: array (
+  0 => '1',
+  1 => '2',
+)  
+[2022-04-27 10:10:23] local.INFO: array (
+  0 => '1',
+  1 => '3',
+)  
+[2022-04-27 10:11:25] local.INFO: color_id  
+[2022-04-27 10:11:25] local.INFO: size_id  
+[2022-04-27 10:11:25] local.INFO: categories  
+[2022-04-27 10:11:25] local.INFO: sub_categories  
+[2022-04-27 10:19:24] local.INFO: []  
+[2022-04-27 10:19:24] local.INFO: color_id  
+[2022-04-27 10:19:24] local.INFO: size_id  
+[2022-04-27 10:19:24] local.INFO: categories  
+[2022-04-27 10:19:24] local.INFO: sub_categories  
+[2022-04-27 10:20:27] local.INFO: array (
+  'id' => '1',
+  'title' => 'TIMELESS LONDON',
+  'subtitle' => 'Timeless London Curve Pink Floral Victoria Midi Dress',
+  'slug' => 'timeless_london',
+  'short_description' => '<p>Timeless London Curve Pink Floral Victoria Midi Dress<br></p>',
+  'long_description' => '<p>Timeless London Curve Pink Floral Victoria Midi Dress</p><p><br></p><p>Our Victoria Fifties Swing Dress is a must have for every vintage inspired wardrobe! Even fitted with pockets to fit your sunglasses and lip balm!</p><p><br></p><p>Floral Print</p><p>Off Shoulder Puff Sleeves</p><p>Adjustable Centre Bow Detail</p><p>Flared Skirt</p><p>Fitted Waist</p><p>Zip Back</p><p>Material: 95% Polyester | 5% Elastane</p>',
+  'actual_price' => '65',
+  'is_discount' => '1',
+  'discount' => '12',
+  'discount_in' => '0',
+  'status' => '1',
+  'is_newarrival' => '1',
+  'brand_id' => '1',
+  'color_id' => 
+  array (
+    0 => '2',
+    1 => '3',
+  ),
+  'size_id' => 
+  array (
+    0 => '1',
+    1 => '2',
+    2 => '3',
+  ),
+  'length' => 'LONG',
+  'categories' => 
+  array (
+    0 => '1',
+    1 => '2',
+  ),
+  'sub_categories' => 
+  array (
+    0 => '1',
+    1 => '3',
+  ),
+  'model_detail' => NULL,
+  'meta_title' => 'Timeless London Curve Pink Floral Victoria Midi Dress',
+  'meta_keywords' => 'curve,new,floral,midi dress',
+  'meta_description' => 'Timeless London Curve Pink Floral Victoria Midi Dress',
+  'updated_at' => 
+  Carbon\Carbon::__set_state(array(
+     'endOfTime' => false,
+     'startOfTime' => false,
+     'constructedObjectId' => '000000003ff411f00000000037920b5e',
+     'localMonthsOverflow' => NULL,
+     'localYearsOverflow' => NULL,
+     'localStrictModeEnabled' => NULL,
+     'localHumanDiffOptions' => NULL,
+     'localToStringFormat' => NULL,
+     'localSerializer' => NULL,
+     'localMacros' => NULL,
+     'localGenericMacros' => NULL,
+     'localFormatFunction' => NULL,
+     'localTranslator' => NULL,
+     'dumpProperties' => 
+    array (
+      0 => 'date',
+      1 => 'timezone_type',
+      2 => 'timezone',
+    ),
+     'dumpLocale' => NULL,
+     'dumpDateProperties' => NULL,
+     'date' => '2022-04-27 10:20:27.204865',
+     'timezone_type' => 3,
+     'timezone' => 'UTC',
+  )),
+)  
+[2022-04-27 10:20:27] local.INFO: color_id  
+[2022-04-27 10:20:27] local.INFO: size_id  
+[2022-04-27 10:20:27] local.INFO: categories  
+[2022-04-27 10:20:27] local.INFO: sub_categories  
+[2022-04-27 10:34:55] local.INFO: color_id  
+[2022-04-27 10:34:55] local.INFO: size_id  
+[2022-04-27 10:34:55] local.INFO: categories  
+[2022-04-27 10:34:55] local.INFO: sub_categories  
+[2022-04-27 10:35:43] local.INFO: color_id  
+[2022-04-27 10:35:43] local.INFO: size_id  
+[2022-04-27 10:35:43] local.INFO: categories  
+[2022-04-27 10:35:43] local.INFO: sub_categories  
