@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestdemosController;
 use App\Http\Controllers\MainAdminController;
 use App\Http\Controllers\MainWebController;
+use App\Http\Controllers\MainProductController;
+use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SizeController;
@@ -14,6 +16,7 @@ use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\CustomerfeedbackController;
 use App\Http\Controllers\Backend\SiteSettingController;
 use App\Http\Controllers\ContactusController;
+use App\Http\Controllers\Backend\ColorController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -53,6 +56,16 @@ Route::group(['middleware' => ['IsAdmin']], function () {
         Route::get('/delete/{size}',[SizeController::class,'destroy'])->name('delete.size');
     });   
 
+
+    
+    /**-------------Color  Master Route ---------- */
+    Route::get('/view-color', [ColorController::class,'viewcolor'])->name('viewcolor');
+    Route::prefix('color')->group(function(){
+        Route::post('/add',[ColorController::class,'store'])->name('add.color'); 
+        Route::get('/get-color/{color}',[ColorController::class,'edit'])->name('get.color'); 
+        Route::post('/update',[ColorController::class,'update'])->name('update.color');
+        Route::get('/delete/{color}',[ColorController::class,'destroy'])->name('delete.color');
+    });  
     /*----------------Slider Routes -----------------------*/
     Route::get('/view-slider',  [SliderController::class,'viewslider'])->name('viewslider');
     Route::prefix('slider')->group(function(){
@@ -142,8 +155,16 @@ Route::group(['middleware' => ['IsAdmin']], function () {
 
 /*---------------- END OF ADMIN ROUTES-----------------*/
  
- 
+/*----------- LANDING PAGE ROUTE---------------*/
 Route::get('/',  [MainWebController::class,'index'])->name('index');
+Route::get('/get-quick-view-data/{product}', [MainWebController::class,'quick_view_data'])->name('get.quick_product');
+Route::post('/add-to-cart', [MainProductController::class,'addToCart'])->name('add-to-cart');
+Route::post('/cart-items', [MainProductController::class,'getCartItems'])->name('get.cart.item');
+Route::get('/remove-cart',  [MainProductController::class,'removeCartItem'])->name('remove.cart.item');
+Route::get('/cart',  [MainProductController::class,'getCartDetail'])->name('cart');
+Route::post('/update-cart',  [MainProductController::class,'updateCart'])->name('update-cart');
+/*----------- END LANDING PAGE ROUTE---------------*/
+
 Route::get('/login-registration',  [MainWebController::class,'loginpage'])->name('login-page');
 //  login with social media
 Route::get('redirect/{driver}', [MainWebController::class,'redirectToProvider']);
@@ -162,13 +183,14 @@ Route::get('/active-account/{uid}',  [MainWebController::class,'activation']);
 Route::get('/contact-us',  [MainWebController::class,'contactus'])->name('contact-us');
 Route::get('/about-us',  [MainWebController::class,'aboutus'])->name('about-us');
 Route::get('/all-brands',[MainWebController::class,'aboutus'])->name('all-brands');
-Route::get('/cart',  [MainWebController::class,'cart'])->name('cart');
-
-Route::get('/product-list',  [MainWebController::class,'product_list'])->name('product-list');
-Route::get('/product-detail',  [MainWebController::class,'product_detail'])->name('product-detail');
 
 
- 
+
+Route::any('/product-list/{sub_cat_id}',  [MainProductController::class,'product_list'])->name('product-list');
+Route::post('/product-filter',  [MainProductController::class,'productFilter'])->name('load-list');
+Route::get('/brand-list/{brand_id}',  [MainProductController::class,'product_list'])->name('brand-list');
+Route::get('/product-detail',  [MainProductController::class,'product_detail'])->name('product-detail');
+
 
 
 

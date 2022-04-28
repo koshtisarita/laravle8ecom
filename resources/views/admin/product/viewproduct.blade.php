@@ -96,8 +96,8 @@
                                     </td>
                                     <td>{{$product->brand_name}}</td>
                                     <td>
-                                        Actual Price: {{$product->actual_price}}<br>
-                                        <span style="color:blue">Discounted Price: {{$product->discount}}</span>
+                                        Actual Price: £{{$product->actual_price}}<br>
+                                        <span style="color:blue">Discounted Price: £{{$product->discount}}</span>
                                     </td>
                                     <td>
                                           @php  $p_sizes = json_decode($product->size_id); @endphp

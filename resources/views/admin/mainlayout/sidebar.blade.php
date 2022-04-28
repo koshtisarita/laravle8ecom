@@ -31,6 +31,9 @@
                         <a href="{{route('viewsize')}}" class="{{($prefix=='viewsize')?'active':''}}" >Sizes  </a>
                     </li> 
                     <li>                         
+                        <a href="{{route('viewcolor')}}" class="{{($prefix=='viewcolor')?'active':''}}" >Colors  </a>
+                    </li> 
+                    <li>                         
                         <a href="{{route('viewslider')}}">Slider </a>
                     </li>  
                     <li>                         

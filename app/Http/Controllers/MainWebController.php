@@ -10,68 +10,122 @@ use App\Models\Slider;
 use App\Models\Category;
 use App\Models\Sub_Category;
 use App\Models\Product;
+use App\Models\ProductImage;
 use App\Models\Size;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Brand;
 use Socialite;
 use Validator;
+use Session;
+use App\Models\Cart;
 use Illuminate\Support\Facades\DB;
+
+
+
 class MainWebController extends Controller
 {
      public function index(){
 
         $setting=DB::table('sitesettings')->first();
          //landing page slider
-         $sliders= Slider::where('status','=',1)->get();   
+        $sliders= Slider::where('status','=',1)->get();   
          //size for search  
-         $sizes = Size::all();
+        $sizes = Size::all();
          //category and sub_category
          $categories= Category::all()->keyBy('id');
-         
          $subCategories = Sub_Category::get()->keyBy('id');
-
+        //Brands 
+        $brands = Brand::all();
+         $dynamicMenu = $this->dynamicMenu();
+        
          $new_arrival = Product::where("status",1)->where("is_newarrival",1)->orderBy('id','DESC')->get();
 
          $most_popular= Product::where("status",1)->orderBy('id','DESC')->get();
 
          $most_viewed=Product::where("status",1)->orderBy('view_count','DESC')->get();
 
-         return view('website.pages.index',compact('sliders','categories','sizes','new_arrival','most_popular','most_viewed','setting'));
+         return view('website.pages.index',compact('sliders','categories','sizes','new_arrival','most_popular','most_viewed','setting','dynamicMenu','brands'));
         }
      
-
-    /*** contact us */  
-    
-     public function contactus(){
-        //$setting=DB::table('sitesettings')->first();
-        //added directly into the contact us page
-          return view('website.pages.contactus');
-     }
+    public function quick_view_data(Product $product)
+    { 
+        if($product){
+            $id = $product->id;
+            $product_images =[];
+            $product_images = ProductImage::where('product_id',$product->id)->get()->toArray();   
+           
+            //price
+            if($product->is_discount)
+            {
+                $price = "<b>£$product->discount</b> <br>RRP <strike>£$product->actual_price</strike>";
+            }
+            else
+            {
+                $price = "<b>£$product->actual_price</b>";
+            }
+        
+   
 
     /*--------end of contact us **/
 
+            $sizes = Size::whereIn('id',json_decode($product->size_id))->get()->toArray();  
 
-     public function aboutus(){ 
-         return view('website.pages.aboutus');
+            $response = [
+                'result'=>1,
+                'id'=>$product->id,   
+                'is_size'=> count(json_decode($product->size_id)), 
+                'product_size'=>$sizes,       
+                'price'=>$price,               
+                'short_description'=>htmlspecialchars_decode($product->short_description),
+                'title'=>$product->title,
+                'is_detail_image_div'=>count($product_images),
+                'detail_image'=>$product_images,
+                'default_image'=>$product->default_image
+                
+            ];             
+        }
+        
+        return $response;
     }
-     public function cart(){return view('website.pages.cart');}
-     public function product_list(){return view('website.pages.productlist');}
-     public function product_detail(){return view('website.pages.productdetail');}
 
-     public function loginpage(){
-        $setting=DB::table('sitesettings')->first();
-         return view('website.pages.login_registration',compact('setting'))
-         
-    ;}
+     /*** contact us */  
 
-
-    
+    //  public function contactus(){
+    //     //$setting=DB::table('sitesettings')->first();
+    //     //added directly into the contact us page
+    //       return view('website.pages.contactus');
+    //  }
+     
+    public function contactus(){ 
+         //Brands 
+         $brands = Brand::all();
+         //menu for navigation bar
+         $dynamicMenu = $this->dynamicMenu();
+        $sizes = Size::all(); return view('website.pages.contactus',compact('sizes','dynamicMenu','brands')); 
+    }
+     public function aboutus(){ 
+          //Brands 
+          $brands = Brand::all();
+          //menu for navigation bar
+          $dynamicMenu = $this->dynamicMenu();
+         $sizes = Size::all(); return view('website.pages.aboutus',compact('sizes','dynamicMenu','brands')); 
+        } 
+   
+     public function loginpage(){ 
+        $brands = Brand::all();
+        //menu for navigation bar
+        $dynamicMenu = $this->dynamicMenu();
+        $sizes = Size::all();
+            return view('website.pages.login_registration',compact('sizes','dynamicMenu','brands')); 
+        }
      //login check
      public function store(Request $request)
      {
           
             $email = trim($request->email);
 
+            
             $user = User::where('email','=',$email)->get()->first();
             Log::info($user);
             if($user != null)
@@ -89,9 +143,36 @@ class MainWebController extends Controller
                         else
                         {                             
                             if($user->status == 1)
-                             {                                  
+                             {     
+                                Auth::login($user);
+                                if(Session::has('products')) {
+                                    $products = Session::get('products');
+                            
+                                    $cart_items = Cart::where('user_id', Auth::user()->id)->get()->keyBy('product_id');
+                                    if(count($products)>0)
+                                    {					
+                                        foreach(json_decode(json_encode($products)) as $product_id => $product) {
+                                            //Log::info($product->quantity);							
+                                            if(!isset($cart_items[$product_id])) {
+                                                //Log::info($product->product_variant_id);
+                                                //Log::info($product->quantity);
+                                                $obj_cart = new Cart();
+                                                $obj_cart->user_id = Auth::user()->id;
+                                                $obj_cart->product_id = $product->product_id;
+                                                $obj_cart->size_id =$product->quick_size_id;;
+                                                $obj_cart->rental_length =$product->rental_length;
+                                                $obj_cart->from_date =$product->from_date;
+                                                $obj_cart->to_date =$product->to_date;                                                
+                                                $obj_cart->save();
+  
+                                            }
+                                        }
+                                    }
+                                    Session::forget('products');
+                                }
+
                                  $request->session()->regenerate();
-                                 Auth::login($user);
+                                
                                  return redirect()->route('index');
                                 //  return redirect()->intended(RouteServiceProvider::HOME);
                             }
@@ -228,5 +309,34 @@ class MainWebController extends Controller
                         return redirect()->back()->with('error','Some thing wen wrong');
                     }    
                 }
+     }
+     public function dynamicMenu()
+     {
+        $categories= Category::all()->keyBy('id');
+        $level_1 =array();
+        foreach($categories as $key=>$parent_category)
+        {
+           $child_categories_array = array();
+           $parent_id = $parent_category->id;
+           $child_categories = Sub_Category::where('category_id', '=', $parent_id)->get();
+           $has_child_level1 = count($child_categories)>0?true:false;
+           $level_2 = array();
+           foreach($child_categories as $child_cat)
+           {                
+               array_push($level_2,array(
+                   'level'=>2,
+                   'child_cat_id'=>$child_cat->id, 
+                   'child_cat_name'=>$child_cat->name, 
+               ));
+           }
+           array_push($level_1 ,array(
+               'level'=>1,
+               'cat_id'=>$parent_category->id, 
+               'has_child'=>$has_child_level1,
+               'cat_name'=>$parent_category->name, 
+               'child_cat_array'=>$level_2
+           ));   
+        }
+        return $level_1 ;
      }
 }

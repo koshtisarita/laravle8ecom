@@ -142,17 +142,17 @@
 
     // init Isotope
     $(window).on('load', function () {
-        var $grid = $topeContainer.each(function () {
-            $(this).isotope({
-                itemSelector: '.isotope-item',
-                layoutMode: 'fitRows',
-                percentPosition: true,
-                animationEngine : 'best-available',
-                masonry: {
-                    columnWidth: '.isotope-item'
-                }
-            });
-        });
+        // var $grid = $topeContainer.each(function () {
+        //     $(this).isotope({
+        //         itemSelector: '.isotope-item',
+        //         layoutMode: 'fitRows',
+        //         percentPosition: true,
+        //         animationEngine : 'best-available',
+        //         masonry: {
+        //             columnWidth: '.isotope-item'
+        //         }
+        //     });
+        // });
     });
 
     var isotopeButton = $('.filter-tope-group button');
@@ -268,10 +268,16 @@
     
     /*==================================================================
     [ Show modal1 ]*/
+  
+  
+    //use only for template
     $('.js-show-modal1').on('click',function(e){
-        e.preventDefault();
-        $('.js-modal1').addClass('show-modal1');
+        e.preventDefault();     
+
+       $('.js-modal1').addClass('show-modal1');
+             
     });
+
 
     $('.js-hide-modal1').on('click',function(){
         $('.js-modal1').removeClass('show-modal1');

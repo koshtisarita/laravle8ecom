@@ -21,7 +21,7 @@
                             </div>
                             <div class="col-xs-9 text-right">
                                 <div class="huge">26</div>
-                                <div>New Comments!</div>
+                                <div>Feedback</div>
                             </div>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                             </div>
                             <div class="col-xs-9 text-right">
                                 <div class="huge">12</div>
-                                <div>New Tasks!</div>
+                                <div>Contact Us Info</div>
                             </div>
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                     </a>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6">
+            <!-- <div class="col-lg-3 col-md-6">
                 <div class="panel panel-yellow">
                     <div class="panel-heading">
                         <div class="row">
@@ -103,18 +103,18 @@
                         </div>
                     </a>
                 </div>
-            </div>
+            </div> -->
         </div>
         <!-- /.row -->
         <div class="row">
-            <div class="col-lg-6 col-md-12 col-sm-12">
+            <!-- <div class="col-lg-6 col-md-12 col-sm-12">
                 
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <i class="fa fa-cart-arrow-down  fa-fw"></i> Pending Orders
                       
                     </div>
-                    <!-- /.panel-heading -->
+                 
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-12">
@@ -180,27 +180,26 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <!-- /.table-responsive -->
+                               
                             </div>
-                            <!-- /.col-lg-12 (nested) -->
+                          
                              
-                        </div>
-                        <!-- /.row -->
+                        </div> 
                     </div>
-                    <!-- /.panel-body -->
+                   
                 </div>
-                <!-- /.panel -->
                
-            </div>
+               
+            </div> -->
             <!-- /.col-lg-12 -->
-            <div class="col-lg-6 col-md-12 col-sm-12">
+            <!-- <div class="col-lg-6 col-md-12 col-sm-12">
                 
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <i class="fa fa-minus  fa-fw"></i> Cancel Orders
                       
                     </div>
-                    <!-- /.panel-heading -->
+                    
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-12">
@@ -266,18 +265,17 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <!-- /.table-responsive -->
+                               
                             </div>
-                            <!-- /.col-lg-12 (nested) -->
-                             
+                           
                         </div>
-                        <!-- /.row -->
+                      
                     </div>
-                    <!-- /.panel-body -->
+                    
                 </div>
-                <!-- /.panel -->
                
-            </div>
+               
+            </div> -->
             <!-- /.col-lg-12 -->
         </div>
         <!-- /.row -->

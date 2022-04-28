@@ -9,6 +9,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Sub_Category;
 use App\Models\Size;
+use App\Models\Color;
 use App\Models\ProductImage;
 use Carbon\Carbon;
 use Image;
@@ -119,10 +120,11 @@ class ProductController extends Controller
                 
         $brands = Brand::all();
         $sizes = Size::all();
+        $colors = Color::all();
         $categories = Category::all();
         $sub_categories = Sub_Category::all()->KeyBy('id');
 
-        return view('admin.product.add',compact('brands','sizes','categories','sub_categories'));
+        return view('admin.product.add',compact('brands','sizes','categories','sub_categories','colors'));
     }
   
     public function postStepOne(Request $request)
@@ -162,7 +164,9 @@ class ProductController extends Controller
                 'brand_id'=>'required',
                 'categories'=>'required',
                 'sub_categories'=>'required', 
-                'image'=>'mimes:jpg,bmp,png'
+                'image'=>'mimes:jpg,bmp,png',
+                'color_id'=>'required' 
+                
             ],$messages);
         }
         else
@@ -198,8 +202,8 @@ class ProductController extends Controller
                 'brand_id'=>'required',
                 'categories'=>'required',
                 'sub_categories'=>'required', 
-                'image'=>'mimes:jpg,bmp,png'
-                 
+                'image'=>'mimes:jpg,bmp,png',
+                'color_id'=>'required' 
             ],$messages);
         }
 
@@ -242,7 +246,7 @@ class ProductController extends Controller
                }
 
                
-
+                // dd($product);
              
                $id = DB::table('products')->insertGetId($product);
                DB::commit();
@@ -252,7 +256,7 @@ class ProductController extends Controller
                     $image=$request->file('image');
                     $name_gen=hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
                     Image::make($image)->resize(900,1100)->save('upload/images/'.$name_gen);
-                    $filename='upload/images/'.$name_gen;
+                    $filename='/upload/images/'.$name_gen;
 
                     //update default image
                     Product::where('id',$id)->update(['default_image'=>$filename]);                 
@@ -282,10 +286,11 @@ class ProductController extends Controller
         //  dd($product);/
          $brands = Brand::all();
         $sizes = Size::all();
+        $colors = Color::all();
         $categories = Category::all();
         $sub_categories = Sub_Category::all()->KeyBy('id');
 
-        return view('admin.product.edit',compact('product','brands','sizes','categories','sub_categories'));
+        return view('admin.product.edit',compact('product','brands','sizes','categories','sub_categories','colors'));
      }
 
      public function update(Request $request)
@@ -325,6 +330,7 @@ class ProductController extends Controller
                 'brand_id'=>'required',
                 'categories'=>'required',
                 'sub_categories'=>'required', 
+                'color_id'=>'required'
             ],$messages);
         }
         else
@@ -358,6 +364,7 @@ class ProductController extends Controller
                 'brand_id'=>'required',
                 'categories'=>'required',
                 'sub_categories'=>'required', 
+                'color_id'=>'required' 
                  
             ],$messages);
         }
@@ -379,7 +386,8 @@ class ProductController extends Controller
                 if($product_for_update != null)
                 {
                     $product = new Product();
-                    $product = array_merge($request->all(),['created_at' => $now, 'updated_at' => $now]);
+                   
+                    $product = array_merge($request->all(),['updated_at' => $now]);
                     $product = array_splice($product,1, count($product)-1);                
                     
                     if(array_key_exists('files', $product))
@@ -394,7 +402,8 @@ class ProductController extends Controller
                     foreach($product as $key=>$val)
                     {
                         if(is_array($product[$key]))
-                        {
+                        {        
+                            Log::info($key);                    
                             $product[$key] = json_encode($product[$key]);
                         }
                         if($key == 'slug')
@@ -403,12 +412,13 @@ class ProductController extends Controller
                         }
                     } 
                     //update query
+         
                     $product_for_update->update($product);   
-                    
+                 
                       //insert default image on the current id
                     if($request->file('image'))
                     {
-                        Log::info("image set");
+                         
                             $old_image= $product_for_update->default_image;
                             if($old_image!="")
                             {
@@ -421,7 +431,7 @@ class ProductController extends Controller
                             $image=$request->file('image');
                             $name_gen=hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
                             Image::make($image)->resize(900,1100)->save('upload/images/'.$name_gen);
-                            $filename='upload/images/'.$name_gen;
+                            $filename='/upload/images/'.$name_gen;
 
                             //update default image
                             Product::where('id',$request->id)->update(['default_image'=>$filename]);                 
@@ -559,7 +569,7 @@ class ProductController extends Controller
                     {
                         $name_gen=hexdec(uniqid()).'.'.$request->image[$i]->getClientOriginalExtension();
                         Image::make($request->image[$i])->resize(900,1100)->save('upload/images/'.$name_gen);
-                        $filename='upload/images/'.$name_gen;
+                        $filename='/upload/images/'.$name_gen;
 
                         //insert the document one by one
 
