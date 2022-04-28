@@ -60,6 +60,18 @@
                     </li>
                 </ul>   
             </li>
+
+            <li>
+                <a href="#" class=""><i class="fa fa-phone fa-fw"></i>Contact Message<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>                         
+                        <a href="{{route('contactus.allmessage')}}" class="">New Message</a>
+                    </li> 
+                    <li>                         
+                        <a href="" class="">All Message  </a>
+                    </li>
+                </ul>   
+            </li>
          
          
         </ul>

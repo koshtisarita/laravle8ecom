@@ -13,6 +13,7 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\CustomerfeedbackController;
 use App\Http\Controllers\Backend\SiteSettingController;
+use App\Http\Controllers\ContactusController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -128,6 +129,9 @@ Route::group(['middleware' => ['IsAdmin']], function () {
     Route::post('/update-sitesetting', [SiteSettingController::class,'updatesitesetting'])->name('sitesetting.update'); 
     
 
+    /************Contact Messages from Customer***************** */
+    Route::get('/contactus/allmessage',[ContactusController::class,'viewallmessage'])->name('contactus.allmessage');
+
 
     
    
@@ -185,4 +189,7 @@ Route::post('crop-image-upload ', [TestdemosController::class,'uploadCropImage']
 Route::get('/customerfeedback',function(){
     return view('website.pages.customerfeedback');
 })->name('customerfeedback');
+
 Route::post('/customerfeedback/store',[CustomerfeedbackController::class,'store'])->name('customerfeedback.store');
+
+Route::post('/contactus/store',[ContactusController::class,'store'])->name('contactus.store');

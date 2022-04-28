@@ -44,6 +44,7 @@ class ProductController extends Controller
 
         //size,category,subcategory 
         $sizes = Size::all()->keyBy('id');
+       // dd($sizes);
         $categories = Category::all()->keyBy('id');
         $sub_categories = Sub_Category::all()->KeyBy('id')->keyBy('id');
         return view('admin.product.viewproduct',compact('products','categories','sub_categories','sizes'));

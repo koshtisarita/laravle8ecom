@@ -11,8 +11,8 @@ use App\Models\Category;
 use App\Models\Sub_Category;
 use App\Models\Product;
 use App\Models\Size;
-use Log;
-use Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
 use Socialite;
 use Validator;
 use Illuminate\Support\Facades\DB;
@@ -43,8 +43,9 @@ class MainWebController extends Controller
     /*** contact us */  
     
      public function contactus(){
-        $setting=DB::table('sitesettings')->first();
-          return view('website.pages.contactus',compact('setting'));
+        //$setting=DB::table('sitesettings')->first();
+        //added directly into the contact us page
+          return view('website.pages.contactus');
      }
 
     /*--------end of contact us **/
