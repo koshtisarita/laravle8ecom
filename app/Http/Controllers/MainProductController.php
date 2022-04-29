@@ -272,7 +272,7 @@ class MainProductController extends Controller
 
         
         $response = $this->getProduct($request,'','');
-
+        
         $products = $response['products'];
         $product_count = $response['product_count'];
         $start = $response['start']; 
@@ -341,9 +341,15 @@ class MainProductController extends Controller
         return response()->json(['product_list' => mb_convert_encoding($product_list, 'UTF-8', 'UTF-8'),
                         'flag' => $flag,'product_count'=>$product_count , 'start' => $start], 200);		
     }
+
+    //filter function
+    
+
     //generic function for load more, filter 
     function getProduct(Request $request,$sub_cat_id,$brand_id){
+
         $request_data = $request->all();
+       
         $categories = array();
         $subcategories = array();
         $brands = array();
@@ -373,25 +379,62 @@ class MainProductController extends Controller
         ->orderBy('products.id','DESC')
         ->where('products.status', 1) ;
        
-        // if(isset($request_data['sizes']))
-        // {
-        //     $sizes = $request_data['sizes'];
-        //     $filter_product = $filter_product->whereIn('size_id', $sizes);
-        // }			
-
-
-        if(isset($brand_id) && $brand_id > 0){
-            $filter_product = $filter_product->where('brand_id', $brand_id);
-        }
-
-
-        if(isset($request_data['sizes']))
-        {
-            $size = $request_data['sizes'];
-            $filter_product = $filter_product->where('products.size_id', 'LIKE', '%"'.$size.'"%');
-        }
-
-
+        Log::info($filter_product->get());
+        
+          //size filter
+          if(isset($request_data['size_filter']))
+          {
+            Log::info('size filter');
+              $sizes = $request_data['size_filter']; 
+              if(count($sizes) > 0){
+                  // $filter_category_ids = array_unique(array_merge($subcategories));
+                  $filter_size_ids = $sizes;
+                  $filter_product =  $filter_product->where(function($query)use ($filter_size_ids) {
+                      foreach( $filter_size_ids as $key => $size_id) {
+                          if($key == 0){
+                              $query = $query->where('products.size_id', 'LIKE', '%"'.$size_id.'"%');
+                          }else{
+                              $query = $query->orWhere('products.size_id', 'LIKE', '%"'.$size_id.'"%');
+                          }
+                      }
+                  });
+      
+              } 
+          }	
+          
+          //color filter
+          if(isset($request_data['color_filter']))
+          {
+            Log::info('color filter');
+              $colors = $request_data['color_filter']; 
+              if(count($colors) > 0){
+                  // $filter_category_ids = array_unique(array_merge($subcategories));
+                  $filter_color_ids = $colors;
+                  $filter_product =  $filter_product->where(function($query)use ($filter_color_ids) {
+                      foreach( $filter_color_ids as $key => $color_id) {
+                          if($key == 0){
+                              $query = $query->where('products.color_id', 'LIKE', '%"'.$color_id.'"%');
+                          }else{
+                              $query = $query->orWhere('products.color_id', 'LIKE', '%"'.$color_id.'"%');
+                          }
+                      }
+                  });
+      
+              } 
+          }
+          
+           //Brand filter
+          if(isset($request_data['brand_filter']))
+          {
+            Log::info('brand filter');
+              $brands = $request_data['brand_filter']; 
+              if(count($brands) > 0){ 
+                  $filter_brand_ids = $brands;                
+                  $filter_product = $filter_product->whereIn('products.brand_id', $filter_brand_ids); 
+                 
+              } 
+          }
+   
     
         if(count($subcategories) > 0){
             // $filter_category_ids = array_unique(array_merge($subcategories));
@@ -407,33 +450,77 @@ class MainProductController extends Controller
             });
 
         } 
-      
+        Log::info(count($filter_product->get()));
 
-        // if(isset($request_data['other']) && $request_data['other']=='1')
-        // {
-        //     $products = $products->orderBy('product.name', 'ASC'); //1 = 'A to Z';
-        // }        
-        // elseif(isset($request_data['other']) && $request_data['other']=='2' )//2 = 'Z to A';
-        // {
-        //     $products = $products->orderBy('product.name', 'DESC');
-        // }elseif(isset($request_data['other']) && $request_data['other']=='3')//3 = 'Price high to low';
-        // {	
-        //     $ids_ordered = implode(',', $filter_product_variants_product_id);
-        //     $products = $products->orderByRaw("FIELD(product.id, $ids_ordered)");
-        // }
-        // elseif(isset($request_data['other']) && $request_data['other']=='4')//4 = 'Price low to high';
-        // {	          
-        //     $ids_ordered = implode(',', $filter_product_variants_product_id);
-        //     $products = $products->orderByRaw("FIELD(product.id, $ids_ordered)");
-        // }
-        // else if(!isset($request_data['other']))
-        // {
-        //     $products = $products->orderBy('product.name', 'ASC'); //1 = 'A to Z';
-        // }
+         //Price Filter
+         if(isset($request_data['price_filter']) && $request_data['price_filter']=='1')
+         {
+             $filter_product = $filter_product; //1 = 'All `';
+         }        
+         elseif(isset($request_data['price_filter']) && $request_data['price_filter']=='2' )//2 = '£0.00 - £ 50.00';
+         {
+             $filter_product = $filter_product->where('products.discount', '>', 0)->where('products.discount', '<=', 50);
+         }
+         elseif(isset($request_data['price_filter']) && $request_data['price_filter']=='3')//3 = '£ 50.00 - £ 100.00';
+         {	
+             $filter_product = $filter_product->where('products.discount', '>', 50)->where('products.discount', '<=', 100);
+         }
+         elseif(isset($request_data['price_filter']) && $request_data['price_filter']=='4')//4 = '£ 100.00 - £ 150.00';
+         {	          
+             $filter_product = $filter_product->where('products.discount', '>', 100)->where('products.discount', '<=', 150);
+         }
+         elseif(isset($request_data['price_filter']) && $request_data['price_filter']=='5')//5 = '£ 150.00 - £ 200.00';
+         {	          
+             $filter_product = $filter_product->where('products.discount', '>', 105)->where('products.discount', '<=', 200);
+         }
+         elseif(isset($request_data['price_filter']) && $request_data['price_filter']=='6')//6 = '£ 200.00+';
+         {
+             $filter_product = $filter_product->where('products.discount', '>', 200); //6= '£ 200.00+`';
+         }
+         
+         
+         
+        //Order by Filter
+        if(isset($request_data['order_by']) && $request_data['order_by']=='1')//1 = 'Newness `';
+        {
+            Log::info('Newness');
+            $filter_product = $filter_product->orderBy('products.id', 'DESC'); 
+            Log::info($filter_product->get());
+        }        
+        elseif(isset($request_data['order_by']) && $request_data['order_by']=='2' )//2 = 'Product: A to Z';
+        {
+            Log::info('a to z');
+            $filter_product = $filter_product->orderBy('products.title', 'ASC');
+            Log::info($filter_product->get());
+        }
+        elseif(isset($request_data['order_by']) && $request_data['order_by']=='3')//3 = 'Product: Z to A';
+        {	
+            Log::info('z to a');
+            $filter_product = $filter_product->orderBy('products.title', 'DESC');
+            Log::info($filter_product->get());
+        }
+        elseif(isset($request_data['order_by']) && $request_data['order_by']=='4')//4 = 'Price: Low to High';
+        {	    
+            Log::info('low to high');      
+            $filter_product = $filter_product->orderBy('products.discount', 'ASC');
+            Log::info($filter_product->get());
+        }
+        elseif(isset($request_data['order_by']) && $request_data['order_by']=='5')//4 = 'Price: High to Low';
+        {	     
+            Log::info('high to low');     
+            $filter_product = $filter_product->orderBy('products.discount', 'DESC');
+            Log::info($filter_product->get());
+        }
+        else
+        {
+            Log::info('default');     
+            $filter_product = $filter_product->orderBy('products.id', 'DESC'); //1 = 'Newness `';
+        }
+        
 
         $products = $filter_product->get();
         $product_count = count( $products);
-        $limit = 1;
+        $limit = 2;
         $start = 0;
         if(isset($request_data['start']) && $request_data['start'] != "") {
             $start = $request_data['start'];

@@ -104,7 +104,56 @@
 
 		<!-- Menu Mobile -->
 		<div class="menu-mobile">
+		@if(isset($dynamicMenu))
 			<ul class="main-menu-m">
+					@foreach($dynamicMenu as $cat)  
+
+				<li>
+					<a href="#">{{ucfirst($cat['cat_name'])}}</a>
+					@if($cat['has_child'])
+						
+					<ul class="sub-menu-m">
+						@foreach($cat['child_cat_array'] as $child_link)
+						
+						<li><a href="/product-list/{{$child_link['child_cat_id']}}"> {{ucfirst($child_link['child_cat_name'])}}</a></li>
+						@endforeach
+							
+					</ul>
+						@endif
+					<span class="arrow-main-menu-m">
+						<i class="fa fa-angle-right" aria-hidden="true"></i>
+					</span>
+				</li>
+				
+					@endforeach
+				<!-- <li class="label1" data-label1="hot">
+					<a href="{{route('cart')}}">Features</a>
+				</li>-->
+
+				<li class="main-menu">
+					<a href="{{route('all-brands')}}">Brands</a>
+					<ul class="sub-menu-m">
+						@foreach($brands as $brand)
+						
+						<li><a href="/brand-list/{{$brand->id}}">{{ucfirst($brand->brand_name)}}</a></li>
+						@endforeach
+							
+					</ul>
+					<span class="arrow-main-menu-m">
+						<i class="fa fa-angle-right" aria-hidden="true"></i>
+					</span>
+				</li> 
+
+				<li>
+					<a href="{{route('about-us')}}">About</a>
+				</li>
+
+				<li>
+					<a href="{{route('contact-us')}}">Contact</a>
+				</li>
+			</ul>
+		@endif	
+			<!-- <ul class="main-menu-m">
 				<li>
 					<a href="/">Home</a>
 					 
@@ -132,13 +181,13 @@
 						<i class="fa fa-angle-right" aria-hidden="true"></i>
 					</span>
 				</li>
-				<!-- <li>
+			  <li>
 					<a href="shoping-{{route('cart')}}" class="label1 rs1" data-label1="hot">Features</a>
 				</li>
 
 				<li>
 					<a href="blog.html">Blog</a>
-				</li> -->
+				</li>  
 
 				<li>
 					<a href="{{route('about-us')}}">About</a>
@@ -147,7 +196,7 @@
 				<li>
 					<a href="{{route('contact-us')}}">Contact</a>
 				</li>
-			</ul>
+			</ul> -->
 		</div>
 
 		<!-- Modal Search -->

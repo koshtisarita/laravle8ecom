@@ -49,8 +49,8 @@
                
 					<!-- Filter -->
 					<div class="dis-none panel-filter w-full p-t-10">
-					<form>
- 
+					<form id="filter-products"  method="POST" action="/products/filter"> 
+                        @csrf
 						<!--- Input values set from get method -->
 						<input type="hidden" name="sub_cat_id" id="sub_cat_id" value="{{$sub_cat_id}}">
 						<div class="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
@@ -62,12 +62,12 @@
 
 								<div class="size-204 respon6-next">
 										<div class="rs1-select2 bor8 bg0">
-											<select class="js-select2" name="time" >
-											<option value="1">Newness</option>
-												<option value="1">Product: A to Z</option>
-												<option value="1">Product: Z to A</option>
-												<option value="1">Price: Low to High</option>
-												<option value="1">Price: High to Low</option>
+											<select class="js-select2 filter-box" name="order_by" id="order_by" >
+											    <option value="1">Newness</option>
+												<option value="2">Product: A to Z</option>
+												<option value="3">Product: Z to A</option>
+												<option value="4">Price: Low to High</option>
+												<option value="5">Price: High to Low</option>
 
 											</select>
 											<div class="dropDownSelect2"></div>
@@ -81,14 +81,14 @@
 
 								<div class="size-204 respon6-next">
 										<div class="rs1-select2 bor8 bg0">
-											<select class="js-select2" name="time" >
+											<select class="js-select2 filter-box"  name="price_filter" id="price_filter">
 											 
 											    <option value="1">All</option>
-												<option value="1">£0.00 - £ 50.00</option>
-												<option value="1">£ 50.00 - £ 100.00</option>
-												<option value="1">£ 100.00 - £ 150.00</option>
-												<option value="1">£ 150.00 - £ 200.00</option>
-												<option value="1">£ 200.00+</option>
+												<option value="2">£ 0.00 - £ 50.00</option>
+												<option value="3">£ 50.00 - £ 100.00</option>
+												<option value="4">£ 100.00 - £ 150.00</option>
+												<option value="5">£ 150.00 - £ 200.00</option>
+												<option value="6">£ 200.00+</option>
 											</select>
 											<div class="dropDownSelect2"></div>
 										</div>
@@ -101,7 +101,7 @@
 
 								<div class="size-204 respon6-next">
 										<div class="rs1-select2 bor8 bg0">
-											<select class="js-select2" name="time" multiple>
+											<select class="js-select2 filter-box" name="size_filter[]" id="size_filter" multiple>
 											    @foreach($sizes as $size)
 														<option value="{{$size->id}}">{{$size->size_no}}/{{$size->size_shortcut}}</option>
 													
@@ -119,7 +119,7 @@
 
 								<div class="size-204 respon6-next">
 										<div class="rs1-select2 bor8 bg0">
-											<select class="js-select2" name="time" multiple>
+											<select class="js-select2 filter-box" name="brand_filter[]" id="brand_filter"  multiple>
 											    @foreach($brands as $brand)
 														<option value="{{$brand->id}}">{{$brand->brand_name}}</option>
 													
@@ -137,7 +137,7 @@
 
 								<div class="size-204 respon6-next">
 										<div class="rs1-select2 bor8 bg0">
-											<select class="js-select2" name="time" multiple>
+											<select class="js-select2 filter-box" name="color_filter[]" id="color_filter"  multiple>
 											    @foreach($colors as $color)
 														<option value="{{$color->id}}" style="background:{{$color->color_code}}">{{$color->name}}</option>
 													
@@ -261,15 +261,15 @@ $(function()
 				//loadNextProducts();
 			});
 
-	
+
 	$(document).on("click", "#load_more" , function() {
 		loadNextProducts();
 		});
 
 	$(document.body).on('touchmove', loadNextProducts);
-   	
+
    function loadNextProducts() 
-    { 
+   { 
       console.log('fetch more ',fetch_more);
  
 		if(fetch_more)
@@ -338,100 +338,102 @@ $(function()
 				},
 			});
 		}
-	}
+   }
 
-	// $(document).on('change', '.filter-box', function(ev) {		
-		// 	$('#filter-products').submit();
-		// });
+   $(document).on('change', '.filter-box', function(ev) {	
+	debugger;			
+			$('#filter-products').submit();
+	});
 		
-		// $("#filter-products").submit(function(ev){			
-		// 	ev.preventDefault();	
-		// 	$(this).find(".error.text-danger").remove();
-		// 	$(this).find(".has-error").removeClass("has-error");
-		// 	var formURL = $(this).attr("action");
-		// 	var postData = $(this).serializeArray(); 
-		// 	$.ajax({
-		// 		url: formURL,
-		// 		type: 'POST',
-		// 		data: postData,				
-		// 		success: function(data,textStatus, jqXHR){					
+	$("#filter-products").submit(function(ev){	
+		   debugger;		
+			ev.preventDefault();	
+			 
+			var formURL = $(this).attr("action");
+			var postData = $(this).serializeArray(); 
+			$.ajax({
+				url: formURL,
+				type: 'POST',
+				data: postData,				
+				success: function(data,textStatus, jqXHR){					
           		
-		// 			$('.product-list').html(data.product_list);
-        //   $("#product-msg").css('display','none');
-        //   $("#product_count").html(data.product_count);
-        //   $("#load_more_section").hide();
-        //   fetch_more = false;
-        //   if(data.start == 0){
-        //     start = data.start;
-        //     fetch_more = true;
-        //   }
-        //   var page = data.product_count - start;
-        //   if(page > 24)
-        //   {
-        //     fetch_more = true;
-        //     $("#load_more_section").show();             
-        //   } else {
-             
-        //       $("#load_more_section").hide();
-		// 					fetch_more = false;
-		// 		  		}
-					
-		// 		},
-		// 		error: function(jqXHR, textStatus, errorThrown){
-		// 			var errResponse = JSON.parse(jqXHR.responseText);
-		// 			if (errResponse.error) {
-		// 				$.each(errResponse.error, function(index, value)
-		// 				{ 	
-		// 					if (value.length != 0)
-		// 					{
-		// 						var $inpElm = $("#" + index);
-		// 						$inpElm.closest('.form-group').addClass('has-error');
-		// 						$inpElm.closest('.form-group').append('<span class="col-md-12 error text-danger text-center">' + value + '</span>');
-		// 					}
-		// 				});
-		// 			}
-		// 		},
-		// 	});
-		// 	return false;
-		// });	
-		// $("#filter-products-mobile").submit(function(ev){
-		// 	ev.preventDefault();	
+					debugger;
+					$('.product-list').html(data.product_list);
+					$("#product-msg").css('display','none');
+					$("#product_count").html(data.product_count);
+					$("#load_more_section").hide();
+					fetch_more = false;
+					if(data.start == 0){
+						start = data.start;
+						fetch_more = true;
+					}
+					var page = data.product_count - start;
+					if(page > 24)
+					{
+						fetch_more = true;
+						$("#load_more_section").show();             
+					} 
+					else 
+					{
+						
+					    $("#load_more_section").hide();
+						fetch_more = false;
+					}
+						
+		     },
+			error: function(jqXHR, textStatus, errorThrown){
+				var errResponse = JSON.parse(jqXHR.responseText);
+				if (errResponse.error) {
+					$.each(errResponse.error, function(index, value)
+					{ 	
+						if (value.length != 0)
+						{
+							var $inpElm = $("#" + index);
+							$inpElm.closest('.form-group').addClass('has-error');
+							$inpElm.closest('.form-group').append('<span class="col-md-12 error text-danger text-center">' + value + '</span>');
+						}
+					});
+				}
+			},
+		});
+		return false;
+	});	
+	$("#filter-products-mobile").submit(function(ev){
+			ev.preventDefault();	
       
-		// 	$(this).find(".error.text-danger").remove();
-		// 	$(this).find(".has-error").removeClass("has-error");
-		// 	var formURL = $(this).attr("action");
-		// 	var postData = $(this).serializeArray(); 
-		// 	$.ajax({
-		// 		url: formURL,
-		// 		type: 'POST',
-		// 		data: postData,
-		// 		success: function(data, textStatus, jqXHR){
-        //   $('.product-list').html(data.product_list);
-        //   $("#product-msg").css('display','none');
-        //   $("#product_count").html(data.product_count);
-        //   $("#load_more_section").hide();
-        //   fetch_more = true;
-        //   // var page = data.product_count - start;
-        //   $('.filter-to-left').removeClass('active');
-        //   $('.overlay-filter').removeClass('active'); 
-					
-		// 		},
-		// 		error: function(jqXHR, textStatus, errorThrown){
-		// 			var errResponse = JSON.parse(jqXHR.responseText);
-		// 			if (errResponse.error) {
-		// 				$.each(errResponse.error, function(index, value)
-		// 				{ 	
-		// 					if (value.length != 0)
-		// 					{
-		// 						var $inpElm = $("#" + index);
-		// 						$inpElm.closest('.form-group').addClass('has-error');
-		// 						$inpElm.closest('.form-group').append('<span class="col-md-12 error text-danger text-center">' + value + '</span>');
-		// 					}
-		// 				});
-		// 			}
-		// 		},
-		// 	});
-		// });	
+			$(this).find(".error.text-danger").remove();
+			$(this).find(".has-error").removeClass("has-error");
+			var formURL = $(this).attr("action");
+			var postData = $(this).serializeArray(); 
+			$.ajax({
+				url: formURL,
+				type: 'POST',
+				data: postData,
+				success: function(data, textStatus, jqXHR){
+					$('.product-list').html(data.product_list);
+					$("#product-msg").css('display','none');
+					$("#product_count").html(data.product_count);
+					$("#load_more_section").hide();
+					fetch_more = true;
+				 
+								
+				},
+				error: function(jqXHR, textStatus, errorThrown){
+					var errResponse = JSON.parse(jqXHR.responseText);
+					if (errResponse.error) {
+						$.each(errResponse.error, function(index, value)
+						{ 	
+							if (value.length != 0)
+							{
+								var $inpElm = $("#" + index);
+								$inpElm.closest('.form-group').addClass('has-error');
+								$inpElm.closest('.form-group').append('<span class="col-md-12 error text-danger text-center">' + value + '</span>');
+							}
+						});
+					}
+				},
+			});
+		});	
 
 });
 </script>

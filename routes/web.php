@@ -188,6 +188,7 @@ Route::get('/all-brands',[MainWebController::class,'aboutus'])->name('all-brands
 
 Route::any('/product-list/{sub_cat_id}',  [MainProductController::class,'product_list'])->name('product-list');
 Route::post('/product-filter',  [MainProductController::class,'productFilter'])->name('load-list');
+Route::post('/products/filter',  [MainProductController::class,'productFilter'])->name('product-filter');
 Route::get('/brand-list/{brand_id}',  [MainProductController::class,'product_list'])->name('brand-list');
 Route::get('/product-detail',  [MainProductController::class,'product_detail'])->name('product-detail');
 
