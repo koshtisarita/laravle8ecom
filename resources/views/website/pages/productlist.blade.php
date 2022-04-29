@@ -53,6 +53,7 @@
                         @csrf
 						<!--- Input values set from get method -->
 						<input type="hidden" name="sub_cat_id" id="sub_cat_id" value="{{$sub_cat_id}}">
+						<input type="hidden" name="start" id="start" value="0">
 						<div class="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
 					
 						    <div class="filter-col1 flex-w flex-r-m p-b-27">
@@ -276,7 +277,7 @@ $(function()
 		{
       
 			debugger;
-			start = start + 1;      
+			start = start + 2;      
       
 			var filter_url;
 		    sub_cat_id = $('#sub_cat_id').val();
@@ -309,7 +310,7 @@ $(function()
               
               $("#load_more_section").hide();
               fetch_more = false;
-              if(page > 1)
+              if(page > 2)
               {
                 $("#load_more_section").show(); 
                 fetch_more = true;
@@ -361,6 +362,7 @@ $(function()
 					$('.product-list').html(data.product_list);
 					$("#product-msg").css('display','none');
 					$("#product_count").html(data.product_count);
+					$("#start").html(data.start);
 					$("#load_more_section").hide();
 					fetch_more = false;
 					if(data.start == 0){
@@ -368,7 +370,7 @@ $(function()
 						fetch_more = true;
 					}
 					var page = data.product_count - start;
-					if(page > 24)
+					if(page > 2)
 					{
 						fetch_more = true;
 						$("#load_more_section").show();             
